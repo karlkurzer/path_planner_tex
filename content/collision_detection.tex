@@ -1,0 +1,14 @@
+\chapter{Collision Detection}
+Based on the information provided a path produced by a motion planning algorithm needs to be collision free, hence $\calP \subset \calC_{free}$. If the environment of the robot changes, so that $\calP \cap \calC_{obs} \neq \emptyset$ a new path needs to be computed. Whether it is beneficial to recompute paths on every update of the environment or only perform collision checking for the previous path given the change in the environment depends on the specific case.
+
+Collision detection can be conducted in a great variety of ways. The important thing to consider is the computational cost for checking whether any given configuration $q \in \calP \land q \notin \calC_{obs}$
+
+Collision detection of a given state $x$ is a Boolean assessment,  with regard to it being in collision with its environment or not. As a path can only be considered safe, if its entirety of states is collision free, collision detection needs to be conducted along the entire length of the same. Collision detection should obviously be conducted...
+
+Collision detection can be conducted in a variety of ways.
+
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Collision Detection}
+    \label{fig:collisionDetection}
+\end{figure}

@@ -1,0 +1,248 @@
+\chapter{Graph Search}\label{chp:graphSearch}
+This chapter explains the basic theory necessary to understand graphs and the terminology associated with it. The later part of the chapter focuses on elaborating different graph search algorithms that have lead to the implementation of the search algorithm in this thesis.
+
+\section{Fundamentals}
+
+This section shall give a brief introduction to graphs and the theory of the same. A graph such as the one depicted in \ref{fig:Graph} consists of vertices $V$ as well as edges $E$. With $G$ being a graph $V = V(G)$, is the set of vertices of the graph and $E = E(G)$, the set of Edges. Edges connect vertices of a graph. An edge of a graph can be described by ${x,y}$, as it connects the vertices $x$ and $y$. Edges that have at least one vertex in common are considered adjacent \cite{Bollobas.1979}. Graphs can be either directed or undirected. A directed graph has unidirectional, a undirected graph bidirectional edges. In the following the word nodes and vertices might be used interchangeably.
+
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Graph theory explanation}
+    \label{fig:Graph}
+\end{figure}
+
+\subsection{State Space of a Graph}
+While the chapter is termed graph search one has to understand that this term can be seen as the search for a set of actions that changes the state of an object from an initial state to a desired goal state. Given this general description graph search algorithms can be applied to a great variety of problems from motion planning to artificial intelligence \cite{LaValle.2006}.
+
+The following definition constitutes a general description of the state space of a graph, it is borrowed from Lavalle's famous book titled \emph{Planning Algorithms}. 
+
+\begin{enumerate}
+    \item A nonempty \textit{state space} $x \in X$, which is finite or countably infinite set of \textit{states}.
+    \item For each \textit{state} $x \in X$, a finite action space $U(x)$.
+    \item A \textit{state transition function f} that produces a state $f(x,u) \in X$ for every $x \in X$ and $u \in U(x)$. The \textit{state transition equation} is derived from $f$ as $x' = f(x,u)$.
+    \item An \textit{initial state} $x_s \in X$.
+    \item A \textit{goal set} $X_G \subset X$.
+\end{enumerate}
+
+The vertices $V$ of the graph $G$ can be considered the state space $X$ of the graph. Thus, each vertex holds information pertaining to a specific state. The edges $E$ are best represented by the action space $U$. Where an edge $u \in U(x)$ transitions a state $x \in X$ to a state $x' \in X$ with the state transition function $f(x,u)$.
+
+\subsection{Open and Closed Lists}
+For the explanation of the following algorithms two types of lists need special attention. On the one side there is the open list $O$, representing the set of the search frontier, the vertices, that have not yet been expanded, but have an adjacent vertex that has been expanded, hence any vertex $v_i \in O$ is part of the frontier. On the other side there is the closed list $C$, representing the set of vertices that have already been expanded.
+
+\subsubsection{Priority Queue}
+
+Depending on the algorithm these lists need to implemented as a priority queue. A priority queue is a data structure that sorts a set by a key either from large to small or vice versa. The following operations are supported by the basic priority queue. All these actions maintain the order of the queue \cite{Skiena.2008}.
+
+\begin{itemize}
+    \item insertion of a given item with a given key
+    \item find the minimum of the keys of the items in the queue
+    \item delete the item with the minimum key from the queue
+\end{itemize}
+
+Depending on the application the type of the queue chosen has a considerable impact on the on operations of the underlying data. When implementing a queue it is recommended to take this into consideration, as a more complex queue might yield considerable better performance, especially when operating on larger sets of data. While C++ implements a basic priority queue in the \emph{std} name space \url{http://en.cppreference.com/w/cpp/container/priority_queue} other more advanced queues (Binomial, Fibonacci, etc.) can be used with \emph{Boost} \url{http://www.boost.org/doc/libs/1_60_0/doc/html/heap.html}
+
+\subsection{Optimality}
+One of the great advantages of graph search algorithms compared to other approaches for path planning is that many algorithms are proven to be optimal. Bellman's principle of optimality reads below.
+\begin{quotation}
+    \noindent \emph{An optimal policy has the property that whatever the initial state and initial decision are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision.} \cite{Bellman.2003}
+\end{quotation}
+
+In essence any optimal solution for a problem that requires a sequence of decisions can only consist of optimal sub-solutions.
+
+\begin{lemma}
+    Given a weighted, directed graph $G = (V,E)$ with a cost function $g$: $E \rightarrow \mathbb{R}$ let $p = \{v_0, v_1,\ldots, v_k\}$ be a shortest path from vertex $v_0$ to vertex $v_k$ and, for any $i$ and $j$ such that $0 \leq i \leq j \leq k$, let $p_{ij} = \{v_i, v_{i+1},\ldots, v_j\}$ be the sub path of $p$ from vertex $v_i$ to vertex $v_j$. Then, $p_{ij}$ is a shortest path from $v_i$ to $v_j$.
+\end{lemma}
+ 
+\begin{proof}
+    If we decompose the path $p$ into $v_0 \xrightarrow{p_{0i}} v_i \xrightarrow{p_{ij}} v_j \xrightarrow{p_{jk}} v_k$, then we have that $g(p) = g(p_{0i}) + g(p_{ij}) + g(p_{jk})$. Now, assume that there is a path $p'_{ij}$ from $v_i$ to $v_j$ with cost $g(p'_{ij}) < g(p_{ij})$. Then, $v_0 \xrightarrow{p_{0i}} v_i \xrightarrow{p'_{ij}} v_j \xrightarrow{p_{jk}}$ is a path from $v_0$ to $v_k$, that has a lesser cost $g(p_{0i}) + g(p'_{ij}) + g(p_{jk})$ than $g(p)$, which contradicts the assumption that $p$ is the shortest path from $v_0$ to $v_k$ \cite{Cormen.2009}.
+\end{proof}
+
+\subsection{Admissibility}
+Algorithms that find optimal paths on non-negative graphs are considered admissible \cite{Hart.1968}.
+
+\subsection{Heuristics}
+In order to find an optimal path the search needs to be systematic. Various search algorithms differ most significantly in the way they expand vertexes \cite{LaValle.2006}. To avoid wasteful search of unpromising regions of a graph the search must be as informed as possible, only expanding nodes that have to be the potential to belong to the optimal path. If the search uses information that leads to skipping the expansion of a specific node, hence failing to find the optimal path, admissibility is forfeited.
+
+A heuristic is a function that provides the necessary information that allows the algorithm to converge faster towards the goal. Only an admissible heuristic can lead to optimal results \cite{Hart.1968}.
+
+\section{Breadth First Search}
+Breadth First Search (BFS) was first developed by Moore and published by Lee in 1961 \cite{LEE.1961}. The BFS algorithm works on unweighted graphs (graphs with equal edge costs). In the original paper BFS is described by the author as ``a computer model of waves expanding from a source under a form of straight-line geometry''.
+
+BFS does not consider edge costs, but only the number of expansions and can hence only be used on non-weighted graphs. On these graphs however BFS is complete and optimal, although the time and memory complexity is high, as the search is not guided.
+
+BFS traverses all vertices $V$ in a graph $G$ until the algorithm terminates (e.g. due to meeting a goal condition). While the search progresses every vertex $x \in V$ changes its state from undiscovered to discovered. In order to trace the route discovered by BFS, a direction and hence a predecessor is assigned to each vertex. The start vertex will thus be the root of the resulting tree of successor. This is the key property that makes BFS a suitable candidate to solve shortest path problems \cite{Skiena.2008}. Algorithm \ref{alg:BFS} depicts the structure of the search.
+
+\begin{algorithm}
+    \caption{Breadth First Search}\label{alg:BFS}
+    \begin{algorithmic}[1]
+        \Require $x_s \cap x_g \in X$
+        \State $O = \emptyset$
+        \State $C = \emptyset$
+        \State $Pred(x_s) \gets null$
+        \State $O.push(x_s)$
+        \While{$O \neq \emptyset$}
+            \State $x \gets$ O.pop()
+            \State $C.push(x)$
+                \For {$u \in U(x)$}
+                    \State $x_{succ} \gets f(x,u)$
+                    \If {$x_{succ} \notin C$}
+                        \If {$x_{succ} \notin O$}
+                            \State $Pred(x_{succ}) \gets x$
+                            \If{$x_{succ} = x_g$}
+                                \State \textbf{return} $x_{succ}$
+                            \EndIf
+                            \State $O.push(x_{succ})$
+                        \EndIf
+                    \EndIf
+                \EndFor
+        \EndWhile
+        \State \textbf{return} null
+    \end{algorithmic}
+\end{algorithm}
+
+\section{Dijkstra's or Uniform-Cost Search}
+While Breadth First Search delivers optimal solutions to the discrete path planning problem it does not consider edge cost and is hence in its original form only applicable to uniform cost graphs. Dijkstra's search algorithm can be seen somewhat of a refinement, even though first published two years earlier than BFS, in 1959. This chapter is also called \emph{Uniform-Cost Search} as people such as Felner have pointed out that the original Dijkstra's algorithm was much closer to UCS than it is often conveyed in today's textbooks \cite{Felner.}. In his original paper Dijstra indirectly refers to Bellman's principle of optimality, which is a needed proof for the algorithm being optimal.
+
+Dijkstra's algorithm begins to divide all vertices into three sets, the closed set $C$, the open set $O$ (implemented as a priority queue) as well as the remaining vertices. At the beginning $C$ and $O$ are the empty sets. After this the algorithm starts as depicted in \ref{alg:Dijkstra} \cite{Dijkstra.1959}. First the start vertex $x_s$ gets transferred to the open set. Next the while loop is entered, line \ref{alg:DijkstraWhile}, which either returns the goal vertex (line \ref{alg:DijkstraSolution}) or null if the $O$ is the empty set. When a vertex gets expanded it is removed from $O$ and added to $C$. Afterwards all edges connected to the vertex are evaluated and the vertexes they connect to. If any of these vertexes are not in $C$ then we calculate the cost so far the same $g(x') = g(x) + l(x,u)$. Where $g(x)$ represents the cost so far for the vertex $x$ from the start vertex and $l(x,u)$ the cost for the state transition from $x$ given the action $u$. If the resulting cost is lower than the current cost to reach that vertex or that vertex is not an element of $O$, the predecessor and the cost for that vertex will be set and the position in the priority queue will be decreased or it will added to $O$ respectively.
+
+\begin{algorithm}
+    \caption{Dijkstra's Search}\label{alg:Dijkstra}
+    \begin{algorithmic}[1]
+        \Require $x_s \cap x_g \in X$
+        \State $O = \emptyset$
+        \State $C = \emptyset$
+        \State $Pred(x_s) \gets null$
+        \State $O.push(x_s)$
+        \While{$O \neq \emptyset$} \label{alg:DijkstraWhile}
+            \State $x \gets$ O.popMin()
+            \State $C.push(x)$
+            \If{$x = x_g$}
+                \State \textbf{return} $x$ \label{alg:DijkstraSolution}
+            \Else
+                \For {$u \in U(x)$}
+                \State $x_{succ} \gets f(x,u)$
+                    \If {$x_{succ} \notin C$}
+                        \State $g \gets g(x) + l(x,u)$
+                        \If {$x_{succ} \notin O$ \textbf{or} $g < g(x_{succ})$}
+                            \State $Pred(x_{succ}) \gets x$
+                            \State $g(x_{succ}) \gets g$
+                            \If {$x_{succ} \notin O$}
+                                \State $O.push(x_{succ})$
+                            \Else
+                                \State $O.decreaseKey(x_{succ})$
+                            \EndIf
+                        \EndIf
+                    \EndIf
+                \EndFor
+            \EndIf
+        \EndWhile
+        \State \textbf{return} null
+    \end{algorithmic}
+\end{algorithm}
+
+\section{A* Search}
+If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be seen as a refinement of Dijkstra's work. While Dijkstra associated non-negative cost with each edge of a graph, A* enhances the algorithm by the use of a heuristic, allowing for much more rapid convergence under certain conditions, while still ensuring its optimality \cite{Hart.1968}. Just as Dijkstra's algorithm A* also starts with the $O$ and $C$ being the open set.
+
+\begin{algorithm}
+    \caption{A* Search}\label{alg:A*}
+    \begin{algorithmic}[1]
+        \Require $x_s \cap x_g \in X$
+        \State $O = \emptyset$
+        \State $C = \emptyset$
+        \State $Pred(x_s) \gets null$
+        \State $O.push(x_s)$
+        \While{$O \neq \emptyset$}
+            \State $x \gets$ O.popMin()
+            \State $C.push(x)$
+            \If{$x = x_g$}
+                \State \textbf{return} $x$
+            \Else
+                \For {$u \in U(x)$}
+                \State $x_{succ} \gets f(x,u)$
+                    \If {$x_{succ} \notin C$}
+                        \State $g \gets g(x) + l(x,u)$
+                        \If {$x_{succ} \notin O$ \textbf{or} $g < g(x_{succ})$}
+                            \State $Pred(x_{succ}) \gets x$
+                            \State $g(x_{succ}) \gets g$
+                            \State $f(x_{succ}) \gets g(x_{succ}) + h(x_{succ})$
+                            \If {$x_{succ} \notin O$}
+                                \State $O.push(x_{succ})$
+                            \Else
+                                \State $O.decreaseKey(x_{succ})$
+                            \EndIf
+                        \EndIf
+                    \EndIf
+                \EndFor
+            \EndIf
+        \EndWhile
+        \State \textbf{return} null
+    \end{algorithmic}
+\end{algorithm}
+
+\newpage
+\section{Hybrid A* Search}
+The hybrid A* algorithm behaves similar to the A* algorithm. The key difference is, that state transitions happen in continuous rather than discrete space. The search starts by defining the empty sets $O$ and $C$, as well as by setting the predecessor state of the start state to $null$ and pushing the start state on the open list algorithm \algref{HA*}{HA*start}.
+
+At line \ref{HA*while} the while loop starts, which only terminates if the open list is empty or the goal state has been reached line \ref{HA*solution}.
+
+\paragraph{Notations}
+\begin{itemize}
+    \item start state $x_s \in X$
+    \item goal state $x_g \in X$
+    \item open list, implemented as priority queue $O$
+    \item closed list $C$
+    \item cost so far $g(x,x_s)$
+    \item cost to go $h(x,x_g)$
+    \item total estimated cost $f(x) = g(x,x_s) + h(x,x_g)$
+\end{itemize}
+
+\begin{algorithm}
+    \caption{Hybrid A* Search}\label{HA*}
+    \begin{algorithmic}[1]
+        \Function{roundState}{$x$}
+            \State $x.Pos_X = \max\{m\in\mathbb{Z}\mid m\le x.Pos_X\}$
+            \State $x.Pos_Y = \max\{m\in\mathbb{Z}\mid m\le x.Pos_Y\}$
+            \State $x.Ang_\theta\ =\max\{m\in\mathbb{Z}\mid m\le x.Ang_\theta\}$
+            \State \textbf{return} $x$
+        \EndFunction
+        \Statex
+        \Function{exists}{$x_{succ}$,$O$}
+            \If{$\{ x \in O \mid roundState(x) = roundState(x_{succ})\} \neq \emptyset$}
+                \State \textbf{return} $f(x)$
+            \Else
+                \State \textbf{return} 0
+            \EndIf
+        \EndFunction
+        \Statex
+        \Require $x_s \cap x_g \in X$
+        \State $O = \emptyset$ \label{HA*start}
+        \State $C = \emptyset$
+        \State $Pred(x_s) \gets null$
+        \State $O.push(x_s)$
+        \While{$O \neq \emptyset$} \label{HA*while}
+            \State $x \gets$ O.popMin()
+            \State $C.push(x)$
+            \If{$roundState(x) = roundState(x_g)$}
+                \State \textbf{return} $x$ \label{HA*solution}
+            \Else
+                \For {$u \in U(x)$}
+                \State $x_{succ} \gets f(x,u)$
+                    \If {$x_{succ} \notin C$}
+                        \State $f \gets g(x) + l(x,u) + h(x_{succ})$
+                        \If {$exists(x_{succ},O) = 0$ \textbf{or} $f < exists(x_{succ},O)$}
+                            \State $Pred(x_{succ}) \gets x$
+                            \State $g(x_{succ}) \gets g$
+                            \State $f(x_{succ}) \gets g(x_{succ}) + h(x_{succ})$
+                            \If {$x_{succ} \notin O$}
+                                \State $O.push(x_{succ})$
+                            \Else
+                                \State $O.decreaseKey(x_{succ})$
+                            \EndIf
+                        \EndIf
+                    \EndIf
+                \EndFor
+            \EndIf
+        \EndWhile
+        \State \textbf{return} null
+    \end{algorithmic}
+\end{algorithm}

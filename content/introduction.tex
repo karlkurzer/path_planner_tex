@@ -1,0 +1,56 @@
+\chapter{Introduction}
+On the way to fully autonomous driving vehicles...
+
+\section{Relevance of the Topic}
+Autonomous driving vehicles might be one of the most publicly discussed and researched engineering topics at the moment of this writing. A simple query with the search term \emph{autonomous driving} on Google Trends will underline this, revealing a huge increase in search volume over the past six years [GOOGLE TRENDS, 2016].
+
+In a study titled ''Revolution in the Driver's Seat: The Road to Autonomous Vehicles'' the Boston Consulting Group defines Tesla's Autopilot released in October 2015 the first stage of several from partial to fully autonomous driving. Furthermore their estimates are, that fully autonomous driving vehicles will arrive by 2025. The most cited reasons by consumers in the USA to purchase an autonomous driving vehicle were an increase in safety, lower insurance premiums as well as the ability to be productive and multitask while the vehicle is driving \cite{XavierMosquet.2015}.
+
+\begin{figure}[h]
+\includegraphicsTex{MF.eps_tex}
+\caption{Google Trends for the query ``autonomous driving''}
+\label{fig:GoogleTrends}
+\end{figure}
+
+\section{Context of the Thesis}
+The Integrated Transport Research Lab (ITRL) at KTH is responding to the need for long-term multidisciplinary research cooperation to tackle the global environmental transport challenges by means of radically new and holistic technical solutions. Our approach is that seamless transport services, infrastructure, novel vehicle concepts, business models and policies, all need to be tuned and optimized in chorus.
+
+A key role for the research on new technical solutions at the ITRL is the Research Concept Vehicle (RCV), that serves as a test bed for a variety of research topics, that cover areas of the vehicle such as, design, control, perception, planning as well as systems integration.
+
+As autonomous driving will be a part of the solution the aim with this and other theses will be to equip the RCV step by step with the capabilities to become self driving. Hence this thesis will be a part of a much larger project.
+
+\section{Problem Description}
+Find a cost optimal solution in real-time that transitions a nonholonomic vehicle collision free from a given start pose to a desired goal pose within an unstructured environment based on the input of a two dimensional obstacle map.
+
+\begin{figure}[h]
+\includegraphicsTex{MF.eps_tex}
+\caption{Depiction of a typical path planning problem to solve}
+\label{fig:ProblemDepiction}
+\end{figure}
+
+
+\section{Scope and Aims}
+The points listed below describe the key requirements regarding this thesis.
+
+\begin{enumerate}
+    \item Planning based on local obstacle map
+    \item Incorporating non-holonomic constraints
+    \item Ensuring real-time capability
+    \item Performing analysis and evaluation of results
+    \item Demonstrating system autonomously driving (optional)
+\end{enumerate}
+
+The input to the path planning algorithm is a binary obstacle map. The second point addresses the fact that the planner should be used for vehicles that cannot turn on the spot, e.g. cars, hence the produced paths must be continuous and need to be based on a model of the vehicle. In order to use the algorithm in a car, it continuously needs to re-plan and perform collision checking. For this purpose the actual implementation needs to be as efficient as possible, thus C++ is a necessity in order to provide the update frequencies required. The development shall include a critical analysis and evaluation of the algorithm as well as its results. It is the aim to deploy the software on the RCV and demonstrate its capabilities in a real-world scenario, if time and other constraints will allow for it.
+
+Due to the time constraints of this thesis as well as the task to prototypically develop as well as implement a path planning algorithm this thesis will lack the broadness of other thesis.
+
+\section{Structure of the Thesis}
+In order to prepare the reader for the actual implementation of the algorithm, the first part of this thesis will create the theoretical foundation.
+
+At first a brief introduction about path planning is given, where the term is dissected and popular approaches are touched on.
+
+As path planning for vehicles usually has the goal to find collision free as well as drivable paths collision detection and path smoothing are explained.
+
+The basis for the algorithm used is graph search, hence chapter 6 dives deeper into the topic and explains the evolution of the algorithm.
+
+The second part of the report deals with the implementation simulation and results of the work conducted.

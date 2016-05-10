@@ -1,0 +1,142 @@
+\documentclass[a4paper, twoside, draft]{report}
+
+% FANCY HEADER CONFIGURATION
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{%
+\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{%
+\markright{\thesection\ #1}}
+\fancyhf{} % delete current header and footer
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt} % space for the rule
+\fancypagestyle{plain}{%
+\fancyhead{} % get rid of headers on plain pages
+\renewcommand{\headrulewidth}{0pt} % and the line
+}
+
+% ### PACKAGES ###
+% ENCODING
+\usepackage[utf8]{inputenc}
+% KTH TITLE PAGE
+\usepackage{KTHEEtitlepage}
+% BIBLIOGRAPHY IN TOC
+\usepackage{tocbibind}
+% APPENDIX
+\usepackage[toc,page]{appendix}
+% BIBTEX
+\usepackage{cite}
+% MATH TOOLS
+\usepackage{mathtools}
+\usepackage{amssymb} %for /neqsubset
+\usepackage{commath} %for abs values
+\usepackage{amsthm}  %for lemma and proof
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+% MATH SYMBOLS
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\S}{\mathbb{S}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calF}{\mathcal{F}}
+% ALGORITHM
+\usepackage{algorithm}
+% PSEUDO CODE
+\usepackage{algpseudocode}
+% FIGURES
+\usepackage{xcolor,graphicx}
+\usepackage{epstopdf}
+\graphicspath{ {figures/} }
+% CUSTOM --> Command to include EPS images with latex text replacement
+\newcommand{\includegraphicsTex}[2][\textwidth]{\def\svgwidth{#1}\input{figures/#2}}
+% HYPERREF
+\usepackage[pagebackref]{hyperref}
+\definecolor{urlcolor}{HTML}{1954a6}
+\definecolor{linkcolor}{HTML}{24a0d8}
+\definecolor{citecolor}{HTML}{b0c92c}
+\hypersetup{
+% PDF SPECIFIC
+    pdftitle={Path Planning for the KTH Research Concept Vehicle},
+    pdfauthor={Karl Kurzer},
+    pdfsubject={Path Planning},
+    pdfkeywords={path planning, hybrid a star, hybrid a*},
+    pdfnewwindow=true,
+% COLORS
+    colorlinks=true,
+    linkcolor=linkcolor,
+    citecolor=citecolor,
+    urlcolor=urlcolor
+}
+
+\begin{document}
+% TITLE PAGE
+\ititle{Path Planning for the KTH \mbox{Research Concept Vehicle}}
+\isubtitle{A Hybrid A* Approach}
+\iauthor{Karl Kurzer}
+\idate{July 2016}
+\iaddress{Integrated Transport Research Lab\\School of Science\\KTH Royal Institute of Technology}
+\makeititle
+
+% ROMAN
+\pagenumbering{roman}
+% TABLE OF CONTENTS
+\setcounter{tocdepth}{1}
+\tableofcontents
+% LIST OF FIGURES
+\listoffigures
+% LIST OF ALGORITHMS
+\listofalgorithms
+
+% ABSTRACT
+\include{content/abstract}
+
+\pagenumbering{arabic}
+\part{Introduction and Theoretical Framework}
+% INTRODUCTION
+\include{content/introduction}
+
+% VEHICLE SETUP
+\include{content/vehicle_setup}
+
+% PATH PLANNING
+\include{content/path_planning}
+
+% COLLISION DETECTION
+\include{content/collision_detection}
+
+% PATH SMOOTHING
+\include{content/path_smoothing}
+
+% GRAPH SEARCH
+\include{content/graph_search}
+
+\part{Method, Implementation and Results}
+% HYBRID A*
+\include{content/hybrid_a_star}
+
+% RESULT AND ANALYSIS
+\include{content/result_and_analysis}
+
+% CONCLUSION
+\include{content/conclusion}
+
+% FUTURE WORK
+\include{content/future_work}
+
+% REFERENCES
+\bibliography{literature}{}
+\bibliographystyle{plain}
+
+% APPENDIX
+\begin{appendices}
+    \chapter{First}
+\end{appendices}
+
+\end{document}

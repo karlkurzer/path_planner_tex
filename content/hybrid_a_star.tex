@@ -1,0 +1,42 @@
+\chapter{Hybrid A* Planner}
+
+\section{Vehicle Constraints}
+
+\section{Algorithm}
+
+Under the assumption that the steering actions are either maximum steering right, no steering, or maximum steering left the arc length can be simply expressed as $r\abs{x_\theta- x'_\theta}$, $r$ being the minimum turning radius of the vehicle. 
+
+Calculation of the new states $x'$, with the initial state $x$ consisting of :\\
+$x_x, x_y, x_\theta$ the turning radius $r$, the turning angle $\theta$ and distance $d$ as well as the unit vector $e = \left(\begin{smallmatrix}0\\1\end{smallmatrix}\right)$
+\begin{description}
+  \item[left] \hfill \\
+  $r_\theta = x_\theta + \frac{\pi}{2}$\\
+  $x'_\theta = x_\theta + \theta$
+  \item[right] \hfill \\
+  $r_\theta = x_\theta - \frac{\pi}{2}$\\
+  $x'_\theta = x_\theta - \theta$
+  \item[left and right] \hfill\\
+  $r_x = r(e_x\cos(r_\theta) - e_y\sin(r_\theta)) + x_x$\\
+  $r_y = r(e_x\sin(r_\theta) - e_y\cos(r_\theta)) + x_y$\\
+  $x'_x = (x_x-r_x)\cos\theta - (x_y-r_y)\sin\theta + r_x$\\
+  $x'_y = (x_x-r_x)\sin\theta - (x_y-r_y)\cos\theta + r_y$
+  \item[straight] \hfill \\
+  $x'_x = x_x - d\sin(x_\theta)$\\
+  $x'_y = x_y + d\cos(x_\theta)$
+\end{description}
+
+\section{Heuristics}
+underestimating distance, thus nodes expanded at the beginning are getting better in the end, when the real cost is being calculated
+\subsection{Constrained Heuristic}
+A constrained heuristic takes the characteristics of the vehicle into account.
+\subsubsection{Dubin's Paths}
+Shoot for the goal
+\subsection{Unconstrained Heuristic}
+An unconstrained heuristic neglects the characteristics of the vehicle.
+\subsubsection{Two Dimensional A*}
+
+\section{Collision Checking}
+
+\section{Path Smoothing}
+
+\section{Path Analysis}
