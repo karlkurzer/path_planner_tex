@@ -1,4 +1,5 @@
 \chapter{Path Planning}
+\label{ch:pathPlanning}
 This section will present and discuss a variety of different planning techniques, many of which will not only be applicable to path planning, but have much more general capabilities in solving problems that can be solved by planning.
 
 \section{Planning}
@@ -86,7 +87,7 @@ As obstacle avoidance was the original goal, potential fields come with the risk
 \end{figure}
 
 \subsection{Approximate Cell Decomposition}
-Path planning with approximate cell decomposition can be traced back to Brooks and Lozano-Peréz in the mid 80s. The basic idea is that the configuration space is divided into rectangles with edges parallel to the axes of the space. The resulting cells will be either free, occupied or mixed, depending on the configuration space of the obstacles intersecting with the respective rectangle or not, see \ref{fig:cellDecomposition}. The search for a path is conducted by finding a set of connected and free cells that include the start as well as the goal configuration \cite{Brooks.1985}. Applicable graph search algorithms are explained in more detail in chapter \ref{chp:graphSearch}.
+Path planning with approximate cell decomposition can be traced back to Brooks and Lozano-Peréz in the mid 80s. The basic idea is that the configuration space is divided into rectangles with edges parallel to the axes of the space. The resulting cells will be either free, occupied or mixed, depending on the configuration space of the obstacles intersecting with the respective rectangle or not, see \ref{fig:cellDecomposition}. The search for a path is conducted by finding a set of connected and free cells that include the start as well as the goal configuration \cite{Brooks.1985}. Applicable graph search algorithms are explained in more detail in chapter \ref{ch:graphSearch}.
 
 This approach does not represent the free space exactly, hence a conservative approach must be taken in order to avoid faulty planning. Decomposing the cells in this way, although not exact, in general allows for planning methods that are easier to implement in comparison to exact cell decomposition \cite{Latombe.1991}
 
