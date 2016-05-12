@@ -1,31 +1,51 @@
 \chapter{Introduction}
-On the way to fully autonomous driving vehicles...
+On the way to fully autonomously driving vehicles a multitude of challenges have to be overcome. One common problem is the navigation of the vehicle from a start pose to a goal pose in an environment that does not provide any specific structure (no defined lanes). Typical examples of such environments are parking lots or construction sights. In these scenarios the vehicle needs to navigate safely around obstacles ideally using the optimal (with regard to a specified parameter) path between the start and the goal pose.
 
 \section{Relevance of the Topic}
-Autonomous driving vehicles might be one of the most publicly discussed and researched engineering topics at the moment of this writing. A simple query with the search term \emph{autonomous driving} on Google Trends will underline this, revealing a huge increase in search volume over the past six years [GOOGLE TRENDS, 2016].
+Autonomous driving vehicles might be one of the most publicly discussed and researched engineering topics at the moment of this writing, with companies such as Alphabet (formerly Google), Uber, Zoox in the USA as well as Robot Taxi and SMRT in Asia developing self driving taxis, only a to name a few. A simple query with the search term \emph{autonomous driving} on Google Trends will underline this, revealing a huge increase in search volume over the past six years depicted in \Fref{fig:googleTrends}.
 
-In a study titled ''Revolution in the Driver's Seat: The Road to Autonomous Vehicles'' the Boston Consulting Group defines Tesla's Autopilot released in October 2015 the first stage of several from partial to fully autonomous driving. Furthermore their estimates are, that fully autonomous driving vehicles will arrive by 2025. The most cited reasons by consumers in the USA to purchase an autonomous driving vehicle were an increase in safety, lower insurance premiums as well as the ability to be productive and multitask while the vehicle is driving \cite{XavierMosquet.2015}.
+In a study titled ''Revolution in the Driver's Seat: The Road to Autonomous Vehicles'' the Boston Consulting Group defines Tesla's Autopilot released in October 2015 the first stage of several from partial to fully autonomous driving. Furthermore their estimates are, that fully autonomous driving vehicles will arrive by 2025. The most cited reasons by consumers in the USA to purchase an autonomous driving vehicle were an increase in safety, lower insurance premiums as well as the ability to be productive and multitask while the vehicle is driving. \cite{Mosquet.2015} 
+
+For the society at large the most important benefit will be the reduction of accidents, as 90 percent of the time human error accounts for these. Other benefits of self-driving cars are the reduction of space consumption necessary for parking (self-driving cars don't need space to open the doors, which accounts to roughly 15\%) as reported by McKinsey \& Company. \cite{Bertoncello.2015}
 
 \begin{figure}[h]
 \includegraphicsTex{MF.eps_tex}
+%\begin{tikzpicture}
+%	\begin{axis}[
+%		height=5cm,
+%		width=\textwidth,
+%		xlabel=Year, ylabel=Relative Frequency,
+%		xtick={40,197, 354, 510},
+%		xticklabels={Apr 2007, Apr 2010, Apr 2013, Apr 2016},
+%		]
+%		\addplot [black, mark=none]
+%		table [col sep=comma, x=week, y=freq] {figures/google_trends.dat};
+%%		\addplot [black, mark=-]
+%%		table[col sep=comma, x=week, y={create col/linear regression={y=freq}}] {figures/google_trends.dat};
+%	\end{axis}
+%\end{tikzpicture}
 \caption{Google Trends for the query ``autonomous driving''}
-\label{fig:GoogleTrends}
+\label{fig:googleTrends}
 \end{figure}
 
 \section{Context of the Thesis}
 The Integrated Transport Research Lab (ITRL) at KTH is responding to the need for long-term multidisciplinary research cooperation to tackle the global environmental transport challenges by means of radically new and holistic technical solutions. Our approach is that seamless transport services, infrastructure, novel vehicle concepts, business models and policies, all need to be tuned and optimized in chorus.
 
-A key role for the research on new technical solutions at the ITRL is the Research Concept Vehicle (RCV), that serves as a test bed for a variety of research topics, that cover areas of the vehicle such as, design, control, perception, planning as well as systems integration.
+A key role for the research of new technical solutions at the ITRL is the Research Concept Vehicle (RCV), that serves as a test bed for a variety of research topics, that cover areas of the vehicle such as, design, control, perception, planning as well as systems integration.
 
-As autonomous driving will be a part of the solution the aim with this and other theses will be to equip the RCV step by step with the capabilities to become self driving. Hence this thesis will be a part of a much larger project.
+As autonomous driving will be a part of the solution for global environmental transport challenges the aim with this and other theses is to equip the RCV step by step with the capabilities to become self-driving. Hence this thesis will be a part of a much larger project.
 
 \section{Problem Description}
-Find a cost optimal solution in real-time that transitions a nonholonomic vehicle collision free from a given start pose to a desired goal pose within an unstructured environment based on the input of a two dimensional obstacle map.
+The problem that this thesis aims to solve can be summarized as follows.
+
+\emph{Find a solution in real-time that transitions a nonholonomic vehicle collision free from a given start pose to a desired goal pose within an unstructured environment based on the input of a two dimensional obstacle map.}
+
+\Fref{fig:problemDepiction} depicts the problem.
 
 \begin{figure}[h]
 \includegraphicsTex{MF.eps_tex}
 \caption{Depiction of a typical path planning problem to solve}
-\label{fig:ProblemDepiction}
+\label{fig:problemDepiction}
 \end{figure}
 
 
@@ -37,20 +57,14 @@ The points listed below describe the key requirements regarding this thesis.
     \item Incorporating non-holonomic constraints
     \item Ensuring real-time capability
     \item Performing analysis and evaluation of results
-    \item Demonstrating system autonomously driving (optional)
+    \item Integrating and driving autonomously (optional)
 \end{enumerate}
 
-The input to the path planning algorithm is a binary obstacle map. The second point addresses the fact that the planner should be used for vehicles that cannot turn on the spot, e.g. cars, hence the produced paths must be continuous and need to be based on a model of the vehicle. In order to use the algorithm in a car, it continuously needs to re-plan and perform collision checking. For this purpose the actual implementation needs to be as efficient as possible, thus C++ is a necessity in order to provide the update frequencies required. The development shall include a critical analysis and evaluation of the algorithm as well as its results. It is the aim to deploy the software on the RCV and demonstrate its capabilities in a real-world scenario, if time and other constraints will allow for it.
+The input to the path planning algorithm is a grid based binary obstacle map. The second point addresses the fact that the planner should be used for vehicles that cannot turn on the spot, e.g. cars, hence the produced paths must be continuous and need to be based on a model of the vehicle. In order to use the algorithm in a car, it needs to re-plan continuously and perform collision checking. For this purpose the actual implementation needs to be as efficient as possible, thus C++ is a necessity in order to provide the frequencies required. The development shall include a critical analysis and evaluation of the algorithm as well as its results. It is the aim to deploy the software on the RCV and demonstrate its capabilities in a real-world scenario, if time and other constraints will allow for it.
 
-Due to the time constraints of this thesis as well as the task to prototypically develop as well as implement a path planning algorithm this thesis will lack the broadness of other thesis.
+The scope of the thesis is to prototypically develop as well as implement a path planning algorithm, hence this focuses on a specific solution rather than a general and will not provide a comparison between different approaches as much as other work might do.
 
 \section{Structure of the Thesis}
-In order to prepare the reader for the actual implementation of the algorithm, the first part of this thesis will create the theoretical foundation.
+This thesis is split into two distinct parts. The first part of this thesis will create the theoretical foundation, in order to prepare the reader for the actual implementation of the algorithm. Chapter 2 shortly introduces the vehicle platform the path planning is being developed for. Chapter 3 deals with a brief introduction into path planning, where the term is dissected and popular approaches are touched on. Chapter 4 focuses on collision detection, as it is a vital part for most path planning approaches. And Chapter 5, the last chapter of the first part dissects popular graph search algorithms, that form the basis of this work.
 
-At first a brief introduction about path planning is given, where the term is dissected and popular approaches are touched on.
-
-As path planning for vehicles usually has the goal to find collision free as well as drivable paths collision detection and path smoothing are explained.
-
-The basis for the algorithm used is graph search, hence chapter 6 dives deeper into the topic and explains the evolution of the algorithm.
-
-The second part of the report deals with the implementation simulation and results of the work conducted.
+The second part focuses on the method and its implementation in detail. Chapter 7 uses the theoretical framework to explain the implemented hybrid A* search in detail. Chapter 8 is primarily a collection of the results as well as analysis of the same. Chapter 9 Summarizes the entirety of the thesis, while stressing the achievements of this particular implementation. And finally chapter 10 will give the reader some suggestions regarding future work that can or should be conducted.

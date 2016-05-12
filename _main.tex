@@ -1,4 +1,4 @@
-\documentclass[a4paper, draft]{report}
+\documentclass[a4paper, twoside, draft]{report}
 % ### PACKAGES ###
 % ENCODING
 \usepackage[utf8]{inputenc}
@@ -6,7 +6,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{%
-	\markboth{#1}{}}
+	\markboth{\MakeUppercase{#1}}{}}
 	\renewcommand{\sectionmark}[1]{%
 	\markright{\thesection\ #1}}
 \fancyhf{} % delete current header and footer
@@ -29,6 +29,8 @@
 \usepackage[toc,page]{appendix}
 % BIBTEX
 \usepackage{cite}
+% PARSKIP
+%\usepackage[parfill]{parskip}
 % MATH TOOLS
 \usepackage{mathtools}
 \usepackage{amssymb} %for /neqsubset
@@ -52,6 +54,8 @@
 % FIGURES
 \usepackage{xcolor,graphicx}
 \usepackage{epstopdf}
+% PLOTS
+\usepackage{pgfplots}
 \graphicspath{ {figures/} }
 % CUSTOM --> Command to include EPS images with latex text replacement
 \newcommand{\includegraphicsTex}[2][\textwidth]{\def\svgwidth{#1}\input{figures/#2}}
@@ -110,11 +114,11 @@
 % COLLISION DETECTION
 \include{content/collision_detection}
 
-% PATH SMOOTHING
-\include{content/path_smoothing}
-
 % GRAPH SEARCH
 \include{content/graph_search}
+
+% PATH SMOOTHING
+\include{content/path_smoothing}
 
 \part{Method, Implementation and Results}
 % HYBRID A*

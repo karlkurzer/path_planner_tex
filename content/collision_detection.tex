@@ -1,11 +1,9 @@
 \chapter{Collision Detection}
-Collision detection is a basic geometric operation that is applicable for many applications such as computer games, robotics and engineering simulations \cite{Ericson.2005} \cite{Ponamgi.1997} \cite{Chazelle.1987} . While some hard to model and computational intense planning approaches produce collision free paths by nature, others such as the ones introduced in chapter \ref{ch:pathPlanning}, require explicit collision checking along the paths they produce \cite{LaValle.2006}. Collision detection as a whole is concerned with the \emph{if}, \emph{when} and \emph{where} two objects collide \cite{Ericson.2005}. The focuses in the following is primarily on the \emph{if}. Another distinction can be made, with regard to discrete or continuous checking. While static collision detection is computationally much cheaper, it comes at the risk of tunneling, where both objects might pass each other from one time step to the next and the collision goes undetected \cite{Ericson.2005}.
+Collision detection is a basic geometric operation that is applicable to many applications such as computer games, robotics and engineering simulations \cite{Ericson.2005} \cite{Ponamgi.1997} \cite{Chazelle.1987}. While some hard to model and computational intense planning approaches produce collision free paths by nature, others such as the ones introduced in chapter \ref{ch:pathPlanning}, require explicit collision checking along the paths they produce \cite{LaValle.2006}. Collision detection as a whole is concerned with the \emph{if}, \emph{when} and \emph{where} two objects collide \cite{Ericson.2005}. The following focuses primarily on the \emph{if}. Another distinction can be made, with regard to discrete or continuous checking. While static collision detection is computationally much cheaper, it comes at the risk of tunneling, where both objects might pass each other from one time step to the next and the collision goes undetected \cite{Ericson.2005}.
 
 A path $\calP$ produced by a motion planning algorithm needs to be collision free based on the information provided, hence $\calP \subset \calC_{free}$. If the environment of the robot changes, so that $\calP \cup \calC_{obs} \neq \emptyset$ a new path needs to be computed. Whether it is beneficial to recompute paths on every update of the environment or only perform collision checking for the previous path given the change in the environment depends on the specific case.
 
-Collision detection can be conducted in a great variety of ways. The important thing to consider is the computational cost for checking whether $q \in \calP \land q \notin \calC_{obs}$ is true for a given configuration $q$, which can be seen as a logical predicate. As a path can only be considered safe, if its entirety of states is collision free, collision detection needs to be conducted along the entire length of the same.
-
-While the use of the configuration space is beneficial due to its expressive power and verbosity it might not be useful during the actual collision detection \cite{LaValle.2006}
+Collision detection can be conducted in a great variety of ways. While the use of the configuration space is beneficial due to its expressive power and verbosity it might not be useful during the actual collision detection \cite{LaValle.2006}. The important thing to consider is the computational cost for checking whether $q \in \calP \land q \notin \calC_{obs}$ is true for a given configuration $q$, which can be seen as a logical predicate \cite{LaValle.2006}. As a path can only be considered safe, if its entirety of states is collision free, collision detection needs to be conducted along the entire length of the same \cite{LaValle.2006} \cite{Ericson.2005}.
 
 \begin{figure}[h]
     \includegraphicsTex{MF.eps_tex}
@@ -13,17 +11,18 @@ While the use of the configuration space is beneficial due to its expressive pow
     \label{fig:collisionDetection}
 \end{figure}
 
-\section{Hierarchical Methods}
-Hierarchical methods break up a larger complicated convex bodies into a tree. The vertices of the the tree represent a bounding region containing a subset of the body as depicted in \Fref{fig:boundingRegions}.
+\section{Bounding Space and Hierarchies}
+For reasons of performance it is usually beneficial to wrap objects with bounding spaces. Bounding spaces are simple volumes for $R^3$ or areas for $R^2$ that encapsulate the more complex object. These allow for faster overlap tests. Depending on the accuracy needed it can be sufficient to only check these bounding spaces for collisions. \cite{LaValle.2006} \cite{Ericson.2005}
 
-Lavalle defines two criteria for the choice of appropriate bounding regions
+If higher accuracy is required, hierarchical methods can be implemented, these break up a larger complicated convex bodies into a tree. The tree represents bounding spaces that contain smaller and smaller subsets of the original object as depicted in \Fref{fig:boundingRegions}. This hierachy allows for more accurate geometric description of the object, while reducing the computational cost of intersection testing, since children only need to be tested if their larger parents collide. \cite{LaValle.2006} \cite{Ericson.2005}
+
+Lavalle and Ericson define some criteria for the choice of appropriate bounding spaces.
 
 \begin{itemize}
-	\item The region should fit the intended body points as tightly as possible.
-	\item The intersection test for two regions should be as efficient as possible.
+	\item The space should fit the object as tightly as possible.
+	\item The intersection test for two spaces should be as efficient as possible.
+	\item The space should be easy to rotate.
 \end{itemize}
-
-A bounding box \cite{Ericson.2005} 
 
 \begin{figure}[h]
     \includegraphicsTex{MF.eps_tex}
@@ -32,7 +31,7 @@ A bounding box \cite{Ericson.2005}
 \end{figure}
 
 \section{Spatial Occupancy Enumeration}
-Spatial occupancy enumeration stores an exhaustive array of elements occupied by the respective body. In $\R^2$ these might be squares, in $\R^3$ cubes. This approach offers a trivial collision check that can be conducted rapidly. Enumerative schemes have the disadvantage that the respective spatial occupancy needs to be computed for each point of a given path \cite{Hayward.1986}. This problem can be avoided by discretion of the orientation values, so that the spatial occupancy enumeration can be stored in a lookup table.
+Spatial occupancy enumeration overlays the space with a grid. This subdivision of space allows the occupancy enumeration of objects, storing an exhaustive array of gric cells covered by the respective object \cite{Ericson.2005} \cite{Hayward.1986}. In $\R^2$ these might be squares, in $\R^3$ cubes. This approach offers a trivial collision check that can be conducted rapidly \cite{Ericson.2005} \cite{Hayward.1986}. Enumerative schemes have the disadvantage that the respective spatial occupancy needs to be computed for each point of a given path \cite{Hayward.1986}. This problem can be avoided by discretion of the orientation values, so that the occupancy enumeration can be stored in a lookup table \cite{Ziegler.2008} Due to its simplicity uniform grids have been a popular choice for space subdivision, however it is important to choose the right cell size, if that is an issue hierachical grids might be a solution \cite{Ericson.2005}.
 
 \begin{figure}[h]
     \includegraphicsTex{MF.eps_tex}
