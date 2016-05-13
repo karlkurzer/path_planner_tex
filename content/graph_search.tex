@@ -1,15 +1,16 @@
 \chapter{Graph Search}
-\label{ch:graphSearch}
-This chapter explains the basic theory necessary to understand graphs and the terminology associated with it. The later part of the chapter focuses on elaborating different graph search algorithms that have lead to the implementation of the search algorithm in this thesis.
+\label{chap:graphSearch}
+This chapter explains the basic theory necessary to understand graphs and the terminology associated with it. The later part of the chapter focuses on elaborating different graph search algorithms that are fundamental to understanding the implementation of the search algorithm in this thesis.
 
 \section{Fundamentals}
+A graph such as the one depicted in \fref{fig:graph} consists of vertices $V$ as well as edges $E$. With $G$ being a graph $V = V(G)$, is the set of vertices of the graph and $E = E(G)$, the set of Edges. Edges connect vertices of a graph. An edge of a graph can be described by ${x,y}$, as it connects the vertices $x$ and $y$. Edges that have at least one vertex in common are considered adjacent. \cite{Bollobas.1979}
 
-This section shall give a brief introduction to graphs and the theory of the same. A graph such as the one depicted in \ref{fig:Graph} consists of vertices $V$ as well as edges $E$. With $G$ being a graph $V = V(G)$, is the set of vertices of the graph and $E = E(G)$, the set of Edges. Edges connect vertices of a graph. An edge of a graph can be described by ${x,y}$, as it connects the vertices $x$ and $y$. Edges that have at least one vertex in common are considered adjacent \cite{Bollobas.1979}. Graphs can be either directed or undirected. A directed graph has unidirectional, a undirected graph bidirectional edges. In the following the word nodes and vertices might be used interchangeably.
+Graphs can be either directed or undirected. A directed graph has unidirectional, a undirected graph bidirectional edges. In the following the word nodes and vertices might be used interchangeably.
 
 \begin{figure}[h]
     \includegraphicsTex{MF.eps_tex}
     \caption{Graph theory explanation}
-    \label{fig:Graph}
+    \label{fig:graph}
 \end{figure}
 
 \subsection{State Space of a Graph}
@@ -25,13 +26,13 @@ The following definition constitutes a general description of the state space of
     \item A \textit{goal set} $X_G \subset X$.
 \end{enumerate}
 
-The vertices $V$ of the graph $G$ can be considered the state space $X$ of the graph. Thus, each vertex holds information pertaining to a specific state. The edges $E$ are best represented by the action space $U$. Where an edge $u \in U(x)$ transitions a state $x \in X$ to a state $x' \in X$ with the state transition function $f(x,u)$.
+The vertices $V$ of the graph $G$ can be considered the state space $X$ of the $G$. Thus, each vertex holds information pertaining to a specific state. The edges $E$ are best represented by the action space $U$. Where an edge $u \in U(x)$ transitions a state $x \in X$ to a state $x' \in X$ with the state transition function $f(x,u)$.
 
 \subsection{Open and Closed Lists}
 For the explanation of the following algorithms two types of lists need special attention. On the one side there is the open list $O$, representing the set of the search frontier, the vertices, that have not yet been expanded, but have an adjacent vertex that has been expanded, hence any vertex $v_i \in O$ is part of the frontier. On the other side there is the closed list $C$, representing the set of vertices that have already been expanded.
 
-\subsubsection{Priority Queue}
-
+\subsubsection{Priority Queues}
+% Lavalle General Forward Search
 Depending on the algorithm these lists need to implemented as a priority queue. A priority queue is a data structure that sorts a set by a key either from large to small or vice versa. The following operations are supported by the basic priority queue. All these actions maintain the order of the queue \cite{Skiena.2008}.
 
 \begin{itemize}
@@ -40,7 +41,7 @@ Depending on the algorithm these lists need to implemented as a priority queue. 
     \item delete the item with the minimum key from the queue
 \end{itemize}
 
-Depending on the application the type of the queue chosen has a considerable impact on the on operations of the underlying data. When implementing a queue it is recommended to take this into consideration, as a more complex queue might yield considerable better performance, especially when operating on larger sets of data. While C++ implements a basic priority queue in the \emph{std} name space \url{http://en.cppreference.com/w/cpp/container/priority_queue} other more advanced queues (Binomial, Fibonacci, etc.) can be used with \emph{Boost} \url{http://www.boost.org/doc/libs/1_60_0/doc/html/heap.html}
+The type of queue chosen has a considerable impact on the time complexity for the operations mentioned above. When implementing a queue it is recommended to take this into consideration, as a more complex queue might yield considerable better performance, especially when operating on larger sets of data. While C++ implements a basic priority queue in the \emph{std} name space \url{http://en.cppreference.com/w/cpp/container/priority_queue} other more advanced queues (Binomial, Fibonacci, etc.) can be used with \emph{Boost} \url{http://www.boost.org/doc/libs/1_60_0/doc/html/heap.html}
 
 \subsection{Optimality}
 One of the great advantages of graph search algorithms compared to other approaches for path planning is that many algorithms are proven to be optimal. Bellman's principle of optimality reads below.
@@ -55,23 +56,25 @@ In essence any optimal solution for a problem that requires a sequence of decisi
 \end{lemma}
  
 \begin{proof}
-    If we decompose the path $p$ into $v_0 \xrightarrow{p_{0i}} v_i \xrightarrow{p_{ij}} v_j \xrightarrow{p_{jk}} v_k$, then we have that $g(p) = g(p_{0i}) + g(p_{ij}) + g(p_{jk})$. Now, assume that there is a path $p'_{ij}$ from $v_i$ to $v_j$ with cost $g(p'_{ij}) < g(p_{ij})$. Then, $v_0 \xrightarrow{p_{0i}} v_i \xrightarrow{p'_{ij}} v_j \xrightarrow{p_{jk}}$ is a path from $v_0$ to $v_k$, that has a lesser cost $g(p_{0i}) + g(p'_{ij}) + g(p_{jk})$ than $g(p)$, which contradicts the assumption that $p$ is the shortest path from $v_0$ to $v_k$ \cite{Cormen.2009}.
+    If we decompose the path $p$ into $v_0 \xrightarrow{p_{0i}} v_i \xrightarrow{p_{ij}} v_j \xrightarrow{p_{jk}} v_k$, then we have that $g(p) = g(p_{0i}) + g(p_{ij}) + g(p_{jk})$. Now, assume that there is a path $p'_{ij}$ from $v_i$ to $v_j$ with cost $g(p'_{ij}) < g(p_{ij})$. Then, $v_0 \xrightarrow{p_{0i}} v_i \xrightarrow{p'_{ij}} v_j \xrightarrow{p_{jk}}$ is a path from $v_0$ to $v_k$, that has a lesser cost $g(p_{0i}) + g(p'_{ij}) + g(p_{jk})$ than $g(p)$, which contradicts the assumption that $p$ is the shortest path from $v_0$ to $v_k$. \cite{Cormen.2009}
 \end{proof}
 
 \subsection{Admissibility}
 Algorithms that find optimal paths on non-negative graphs are considered admissible \cite{Hart.1968}.
 
 \subsection{Heuristics}
-In order to find an optimal path the search needs to be systematic. Various search algorithms differ most significantly in the way they expand vertexes \cite{LaValle.2006}. To avoid wasteful search of unpromising regions of a graph the search must be as informed as possible, only expanding nodes that have to be the potential to belong to the optimal path. If the search uses information that leads to skipping the expansion of a specific node, hence failing to find the optimal path, admissibility is forfeited.
+In order to find an optimal path the search needs to be systematic. Various search algorithms differ most significantly in the way they expand vertices \cite{LaValle.2006}. To avoid wasteful search of unpromising regions of a graph the search must be as informed as possible, only expanding nodes that have the potential to belong to the optimal path. If the search uses information that leads to skipping the expansion of a specific node, hence failing to find the optimal path, admissibility is forfeited.
+
+Heuristics are used as an aid for approximating a solution in order to address the limitations of processing power, in some cases drastically reducing the search space. A finite amount of time only allows for a finite number of calculations. Although this comes without a suprise it still is a major limitation to problems that grow exponentially with search depth. While searching a graph the search needs to decide which vertex to expand and which edge to take. Information that aims to answer this question is considered a heuristic. A heuristic might be based on some cost estimates between the current vertex and the goal vertex. \cite{Newell.1976} 
 
 A heuristic is a function that provides the necessary information that allows the algorithm to converge faster towards the goal. Only an admissible heuristic can lead to optimal results \cite{Hart.1968}.
 
 \section{Breadth First Search}
-Breadth First Search (BFS) was first developed by Moore and published by Lee in 1961 \cite{LEE.1961}. The BFS algorithm works on unweighted graphs (graphs with equal edge costs). In the original paper BFS is described by the author as ``a computer model of waves expanding from a source under a form of straight-line geometry''.
+Breadth First Search (BFS) was first developed by Moore and published by Lee in 1961 \cite{Lee.1961}. The BFS algorithm works on unweighted graphs (graphs with equal edge costs). In the original paper BFS is described by the author as ``a computer model of waves expanding from a source under a form of straight-line geometry''. BFS traverses a graph layer by layer, all vertices with depth $k$ in the graph are visited before it proceeds to vertices with depth $k+1$.
 
-BFS does not consider edge costs, but only the number of expansions and can hence only be used on non-weighted graphs. On these graphs however BFS is complete and optimal, although the time and memory complexity is high, as the search is not guided.
+BFS does not consider edge costs, but only the number of expansions and can hence only be used on non-weighted graphs. On these graphs however BFS is complete and optimal, although the time and memory complexity is high, as the search is not guided \cite{Lee.1961,LaValle.2006} .
 
-BFS traverses all vertices $V$ in a graph $G$ until the algorithm terminates (e.g. due to meeting a goal condition). While the search progresses every vertex $x \in V$ changes its state from undiscovered to discovered. In order to trace the route discovered by BFS, a direction and hence a predecessor is assigned to each vertex. The start vertex will thus be the root of the resulting tree of successor. This is the key property that makes BFS a suitable candidate to solve shortest path problems \cite{Skiena.2008}. Algorithm \ref{alg:BFS} depicts the structure of the search.
+BFS traverses all vertices $V$ in a graph $G$ until the algorithm terminates (e.g. due to meeting a goal condition). While the search progresses every vertex $x \in V$ changes its state from undiscovered to discovered. In order to trace the route discovered by BFS, a direction and hence a predecessor is assigned to each vertex. The start vertex will thus be the root of the resulting tree of successor. This is the key property that makes BFS a suitable candidate to solve shortest path problems \cite{Skiena.2008}. \Fref[plain]{alg:BFS} depicts the structure of the search.
 
 \begin{algorithm}
     \caption{Breadth First Search}\label{alg:BFS}
@@ -102,9 +105,9 @@ BFS traverses all vertices $V$ in a graph $G$ until the algorithm terminates (e.
 \end{algorithm}
 
 \section{Dijkstra's or Uniform-Cost Search}
-While Breadth First Search delivers optimal solutions to the discrete path planning problem it does not consider edge cost and is hence in its original form only applicable to uniform cost graphs. Dijkstra's search algorithm can be seen somewhat of a refinement, even though first published two years earlier than BFS, in 1959. This chapter is also called \emph{Uniform-Cost Search} as people such as Felner have pointed out that the original Dijkstra's algorithm was much closer to UCS than it is often conveyed in today's textbooks \cite{Felner.}. In his original paper Dijstra indirectly refers to Bellman's principle of optimality, which is a needed proof for the algorithm being optimal.
+While Breadth First Search delivers optimal solutions to the discrete path planning problem it does not consider edge cost and is hence in its original form only applicable to uniform cost graphs. Dijkstra's search algorithm can be seen somewhat of a refinement, even though first published two years earlier than BFS, in 1959. This chapter is also called \emph{Uniform-Cost Search} as people such as Felner have pointed out that the original Dijkstra's algorithm was much closer to UCS than it is often conveyed in today's textbooks \cite{Felner.2011}. In his original paper Dijkstra indirectly refers to Bellman's principle of optimality, which is a needed proof for the algorithm being optimal.
 
-Dijkstra's algorithm begins to divide all vertices into three sets, the closed set $C$, the open set $O$ (implemented as a priority queue) as well as the remaining vertices. At the beginning $C$ and $O$ are the empty sets. After this the algorithm starts as depicted in \ref{alg:Dijkstra} \cite{Dijkstra.1959}. First the start vertex $x_s$ gets transferred to the open set. Next the while loop is entered, line \ref{alg:DijkstraWhile}, which either returns the goal vertex (line \ref{alg:DijkstraSolution}) or null if the $O$ is the empty set. When a vertex gets expanded it is removed from $O$ and added to $C$. Afterwards all edges connected to the vertex are evaluated and the vertexes they connect to. If any of these vertexes are not in $C$ then we calculate the cost so far the same $g(x') = g(x) + l(x,u)$. Where $g(x)$ represents the cost so far for the vertex $x$ from the start vertex and $l(x,u)$ the cost for the state transition from $x$ given the action $u$. If the resulting cost is lower than the current cost to reach that vertex or that vertex is not an element of $O$, the predecessor and the cost for that vertex will be set and the position in the priority queue will be decreased or it will added to $O$ respectively.
+Dijkstra's algorithm begins to divide all vertices into three sets, the closed set $C$, the open set $O$ (implemented as a priority queue) as well as the remaining vertices. At the beginning $C$ and $O$ are the empty sets. After this the algorithm starts as depicted in \fref{alg:Dijkstra} \cite{Dijkstra.1959}. First the start vertex $x_s$ gets transferred to the open set. Next the while loop is entered, line \ref{alg:DijkstraWhile}, which either returns the goal vertex (line \ref{alg:DijkstraSolution}) or null if the $O$ is the empty set. When a vertex gets expanded it is removed from $O$ and added to $C$. Afterwards all edges connected to the vertex are evaluated and the vertexes they connect to. If any of these vertexes are not in $C$ then we calculate the cost so far the same $g(x') = g(x) + l(x,u)$. Where $g(x)$ represents the cost-so-far for the vertex $x$ from the start vertex and $l(x,u)$ the cost for the state transition from $x$ to $x'$ given the action $u$. If the resulting cost is lower than the current cost to reach that vertex or that vertex is not an element of $O$, the predecessor and the cost for that vertex will be set and the position in the priority queue will be decreased or it will added to $O$ respectively. \cite{Dijkstra.1959,LaValle.2006,Cormen.2009} 
 
 \begin{algorithm}
     \caption{Dijkstra's Search}\label{alg:Dijkstra}
@@ -142,7 +145,7 @@ Dijkstra's algorithm begins to divide all vertices into three sets, the closed s
 \end{algorithm}
 
 \section{A* Search}
-If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be seen as a refinement of Dijkstra's work. While Dijkstra associated non-negative cost with each edge of a graph, A* enhances the algorithm by the use of a heuristic, allowing for much more rapid convergence under certain conditions, while still ensuring its optimality \cite{Hart.1968}. Just as Dijkstra's algorithm A* also starts with the $O$ and $C$ being the open set.
+If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be seen as a refinement of Dijkstra's work. While Dijkstra associated a cost-so-far $g$ with each vertex of a graph to determine the next vertex to expand, A* enhances the algorithm by the use of a heuristic, allowing for much more rapid convergence under certain conditions, while still ensuring its optimality \cite{Hart.1968}. The heuristic $h(x)$ is the cost-to-come, based on an estimate of the cost from state $x$ to the goal state $x_g$. Just as Dijkstra's algorithm A* also starts with $O$ and $C$ being the open and closed list respectively.
 
 \begin{algorithm}
     \caption{A* Search}\label{alg:A*}
