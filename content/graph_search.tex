@@ -185,7 +185,10 @@ If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be 
 
 \newpage
 \section{Hybrid A* Search}
-The hybrid A* algorithm behaves similar to the A* algorithm. The key difference is, that state transitions happen in continuous rather than discrete space. The search starts by defining the empty sets $O$ and $C$, as well as by setting the predecessor state of the start state to $null$ and pushing the start state on the open list algorithm \algref{HA*}{HA*start}.
+The hybrid A* algorithm behaves similar to the A* algorithm. The key difference is, that state transitions happen in continuous rather than discrete space. One of the largest drawbacks of the previous approaches for path planning of non-holonomic robots is that the resulting paths are discrete and thus often not executable as changes of direction are sudden rather than smooth \cite{Montemerlo.2008,Dolgov2010}.
+
+
+The search starts by defining the empty sets $O$ and $C$, as well as by setting the predecessor state of the start state to $null$ and pushing the start state on the open list algorithm \algref{HA*}{HA*start}.
 
 At line \ref{HA*while} the while loop starts, which only terminates if the open list is empty or the goal state has been reached line \ref{HA*solution}.
 

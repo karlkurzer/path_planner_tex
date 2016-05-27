@@ -22,15 +22,13 @@ While Latombe uses the term motion planning, Lavalle uses path planning, while t
 \section{Basic Problem}
 The problem addressed in this thesis shall be further specified and a general formulation be established. The robot is the only moving object in the world. The dynamics of the robot are not considered, hence removing any time dependencies. As collisions shall not occur they will not be modeled either.
 
-Based on these simplifications the basic problem can be described as follows:
+Based on these simplifications the basic problem can be described as follows \cite{Latombe.1991,LaValle.2006}:
 \begin{itemize}
 \item $\calA \subset \calW$, the robot, is a single moving rigid object in world $\calW$ represented in the Euclidean space as $\R^2$
 \item $\calO \subset \calW$, the obstacles, are stationary rigid objects in $\calW$
 \item geometry, position and orientation of $\calA$ and $\calO$ are known a priori
 \item \textbf{Problem:} given a start and goal pose of $\calA \subset \calW$, plan a path $\calP \subset \calW$ denoting the set of poses so that $\calA(p) \cap \calO = \emptyset$ for any pose  $p \in \calP$ along the path from start to goal, terminate and report $\calP$ or $\emptyset$, if a path has been found or no such path exists
 \end{itemize}
-
-\cite{Latombe.1991,LaValle.2006}
 
 \section{Configuration Space}
 In the literature of motion planning the concept of the configuration space has been well established, as it facilitates the formulation of path planning problems, presenting various concepts with an underlying scheme yielding greater expressive power \cite{LaValle.2006,Latombe.1991}. Configuration spaces have been extensively used by Lozano-P\'{e}rez in the 80s for the description of spatial planning problems, e.g. the search for an appropriate space to place an object or the search for a path of an object in an unstructured environment with obstacles \cite{Latombe.1991}. The search for the appropriated placement or the path an object should take, is a problem often encountered in design and manufacturing, where compactness needs to be achieved but maintainability shall not be sacrificed. The advantage of the configuration space representation is that it reduces the problem from a rigid body to a point and thus eases the search \cite{LozanoPerez.1983}.
@@ -115,6 +113,58 @@ A common case for drivers of cars is to parallel park, in order to achieve a con
     \label{fig:kinematicConstraints}
 \end{figure}
 
-\subsection{Reeds-Shepp Car}
+\subsection{Dubins Curves}
+In 1957 Dubins published a paper, showing that there exists an analytic solution for the minimum path length between to states $x_0, x_1 \in X$ of a particle. Such a path will have a curvature along the its entirety, where the curvature $r^{-1}$ is upper bound by a minimum turning radius $r$. He showed that even the most complex of these shortest paths can be represented by a using a maximum of three segments, consisting only of curves $C$ with the upper bound curvature $r^{-1}$ as well as straights $S$, $CCC$ or $CSC$. A depiction of Dubins curves can be seen in  \Fref{fig:shortestPaths}.  \cite{Dubins.1957} With this Dubins created the first analytic solution to solve path planning problem giving an upper bound curvature in constant time. Dubins' approach is especially useful for path planning in obstacle sparse environments. Furthermore Dubins' solution applies to the non-holonomic nature of a normal car.
 
-\subsection{Dubins Car}
+\subsection{Reeds-Shepp Curves}
+More than thirty years later in 1990, Reeds and Shepp solved a problem seemingly similar to the one of Dubins. They developed a solution for calculating paths of upper bound curvature under the assumption that the car could drive forward as well as backwards. The solution with a maximum of 2 cusps (due to reversing) can be found among a set of possible paths that will never exceed 68. The minimum lenght path in the pool of possible paths is the solution. Just like Dubins Curves Reeds-Shepp curves also are made up of curved and straight segments. Due to the possibility of reversing the paths will consist at most of five segments, $CCSCC$ \cite{Reeds.1990}
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Dubins as well as Reeds-Shepp Curves}
+    \label{fig:shortestPaths}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
