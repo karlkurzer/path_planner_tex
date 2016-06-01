@@ -1,49 +1,140 @@
 \chapter{Path Smoothing}
 
-\paragraph{Obstacle Term}
-This term penalizes collisions with obstacles.
+\section{Cost Function}
+\subsection{Obstacle Term}
 
-\[P_{obs} = w_{obs} \displaystyle\sum_{i=1}^{N} \sigma_{obs}(|\bldx_i-\bldo_i|-d_{max})\]
+This term penalizes collisions with obstacles. For all nodes $\bldx_i$ where $|\bldx_i - \bldo_i| \leq d_{obs}^{\lor}$ the cost $P_{vor}$ is defined. It based on the the distance to the next obstacle.
+
+\begin{equation}
+P_{obs} = w_{obs} \displaystyle\sum_{i=1}^{N} \sigma_{obs}(|\bldx_i-\bldo_i|-d_{obs}^{\lor})
+\end{equation}
 
 \begin{itemize}
 \item $\bldo_i$ the location of the closest obstacle to $\bldx_i$
 \item $\bldx_i$ the location of a vertex on the path
-\item $d_{max}$ the maximum road width
+\item $d_{obs}^{\lor}$  the maximum distance obstacles affect the cost
 \item $w_{obs}$ the obstacle weight
-\item $\sigma_{obs}$ penalty function
+\item $\sigma_{obs}$ quadratic penalty function
 \end{itemize}
 
-\paragraph{Curvature Term}
+\subsubsection{Gradient}
+
+\begin{equation}
+\frac{\partial \sigma_{obs}}{\partial \bldx_i} = \frac{2(|\bldx_i-\bldo_i|-d_{obs}^{\lor})\bldx_i-\bldo_i}{|\bldx_i-\bldo_i|}
+\end{equation}
+
+\subsection{Curvature Term}
 This term upper-bounds the instantaneous curvature of the path at every node, ensuring driveability.
 
-\[ P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\phi_i}{|\Delta\bldx_i|} - \kappa_{max}\right)\]
+\begin{equation}
+P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\phi_i}{|\Delta\bldx_i|} - \kappa_{max}\right)
+\end{equation}
 
 \begin{itemize}
 \item $\Delta\bldx_i = \bldx_i - \bldx_{i-1}$ the displacement vector at the vertex $\bldx_i$
-\item $\Delta\phi_i$ = $|\arctan\frac{\Delta y_{i+1}}{\Delta x_{i+1}} - \arctan\frac{\Delta y_{i}}{\Delta x_{i}}|$ the change in tangential angle at the vertex $\bldx_i$
+\item $\Delta\phi_i$ = $\cos^{-1}\frac{\bldx_{i}\cdot\bldx_{i+1}}{|\bldx_{i+1}||\bldx_{i+1}| }$ the change in tangential angle at the vertex $\bldx_i$
 \item $\kappa_{max}$ the maximum allowable curvature
 \item $w_{cur}$ the curvature weight
-\item $\sigma_{cur}$ penalty function
+\item $\sigma_{cur}$ quadratic penalty function
 \end{itemize}
 
-\paragraph{Smoothness Term}
+\subsection{Gradients}
+
+\begin{equation}
+\frac{\partial \kappa_i}{\partial \bldx_i} = \frac{1}{|\Delta\bldx_i|}\frac{\partial\Delta\phi_i}{\partial\cos\Delta\phi_i}\frac{\partial\cos\Delta\phi_i}{\partial\bldx_i}-\frac{\Delta\phi_i}{{\Delta\bldx_i}^2}\frac{\partial\Delta\bldx_i}{\partial\bldx_i}
+\end{equation}
+
+\begin{equation}
+\frac{\partial \kappa_i}{\partial \bldx_{i-1}} = \frac{1}{|\Delta\bldx_i|}\frac{\partial\Delta\phi_i}{\partial\cos\Delta\phi_i}\frac{\partial\cos\Delta\phi_i}{\partial\bldx_{i-1}}-\frac{\Delta\phi_i}{{\Delta\bldx_i}^2}\frac{\partial\Delta\bldx_i}{\partial\bldx_{i-1}}
+\end{equation}
+
+\begin{equation}
+\frac{\partial \kappa_i}{\partial \bldx_{i+1}} = \frac{1}{|\Delta\bldx_i|}\frac{\partial\Delta\phi_i}{\partial\cos\Delta\phi_i}\frac{\partial\cos\Delta\phi_i}{\partial\bldx_{i+1}}
+\end{equation}
+
+\subsection{Smoothness Term}
 This term is a measure of the smoothness of the path.
 
-\[ P_{smo} = w_{smo} \displaystyle\sum_{i=1}^{N-1} (\Delta\bldx_{i+1} - \Delta\bldx_i)^2\]
+\begin{equation}
+P_{smo} = w_{smo} \displaystyle\sum_{i=1}^{N-1} (\Delta\bldx_{i+1} - \Delta\bldx_i)^2
+\end{equation}
 
 \begin{itemize}
 \item $\Delta\bldx_i = \bldx_i - \bldx_{i-1}$ the displacement vector at the vertex $\bldx_i$
 \item $w_{smo}$ the smoothness weight
 \end{itemize}
 
-\paragraph{Voronoi Term}
-This term guides the smoother away from obstacles.
+\subsection{Voronoi Term}
+This term guides the path away from obstacles. For $d_{obs} \leq d_{vor}^{\lor}$ the cost $P_{vor}$ is defined. It is based on the position of the node in the Voronoi field.
 
-\[ P_{vor} = w_{vor} \displaystyle\sum_{i=1}^{N} \left(\frac{\alpha}{\alpha + d_{obs}(x,y)}\right)\left(\frac{d_{vor}(x,y)}{d_{obs} + d_{vor}(x,y)}\right)\left(\frac{(d_{obs}(x,y) - d_{obs_{max}})^2}{(d_{obs_{max}})^2}\right)\]
+\begin{equation}
+P_{vor} = w_{vor} \displaystyle\sum_{i=1}^{N} \left(\frac{\alpha}{\alpha + d_{obs}(x,y)}\right)\left(\frac{d_{vor}(x,y)}{d_{obs} + d_{vor}(x,y)}\right)\left(\frac{(d_{obs}(x,y) - d_{vor}^{\lor})^2}{(d_{vor}^{\lor})^2}\right)
+\end{equation}
 
 \begin{itemize}
-\item $d_{obs}$ the distance to the nearest obstacle
-\item $d_{edg}$ the distance to the nearest edge of the GVD
-\item $\alpha$ controls the falloff rate of the field
+\item $d_{obs} > 0$ the distance to the nearest obstacle
+\item $d_{edg} > 0$ the distance to the nearest edge of the GVD
+\item $d_{vor}^{\lor}$ the maximum distance obstacles affect the Voronoi potential
+\item $\alpha > 0$ controls the falloff rate of the field
 \item $w_{vor}$ the Voronoi weight
 \end{itemize}
+
+\subsubsection{Gradients}
+
+\begin{equation}
+\frac{\partial d_{obs}}{\partial \bldx_i} = \frac{\bldx_i-\bldo_i}{|\bldx_i-\bldo_i|}
+\end{equation}
+
+\begin{equation}
+\frac{\partial d_{edg}}{\partial \bldx_i} =\frac{\bldx_i-\blde_i}{|\bldx_i-\blde_i|}
+\end{equation}
+
+\begin{equation}
+\frac{\partial\rho_{vor}}{\partial d_{obs}} = \frac{\alpha d_{edg}\left(d_{obs}-d_{vor}^{\lor}\right)\left(\left(d_{edg}+2d_{vor}^{\lor}+\alpha\right) d_{obs}+\left(d_{vor}^{\lor}+2\alpha\right)d_{edg}+\alpha d_{vor}^{\lor}\right)}{{d_{vor}^{\lor}}^2\left(d_{obs}+\alpha\right)^2\left(d_{obs}+d_{edg}\right)^2}
+\end{equation}
+
+\begin{equation}
+\frac{\partial\rho_{vor}}{\partial d_{edg}} =  \frac{\alpha d_{obs}\left(d_{obs}-d_{vor}^{\lor}\right)^2}{{d_{vor}^{\lor}}^2\left(d_{obs}+\alpha\right)\left(d_{edg}+d_{obs}\right)^2}
+\end{equation}
+
+\section{Gradient Descent}
+
+%\begin{algorithm}
+%    \caption{Gradient Descent}\label{alg:gradientDescent}
+%    \begin{algorithmic}[1]
+%        \Require $x_s \cap x_g \in X$
+%        \State $O = \emptyset$
+%        \State $C = \emptyset$
+%        \State $Pred(x_s) \gets null$
+%        \State $O.push(x_s)$
+%        \While{$O \neq \emptyset$}
+%            \State $x \gets$ O.pop()
+%            \State $C.push(x)$
+%                \For {$u \in U(x)$}
+%                    \State $x_{succ} \gets f(x,u)$
+%                    \If {$x_{succ} \notin C$}
+%                        \If {$x_{succ} \notin O$}
+%                            \State $Pred(x_{succ}) \gets x$
+%                            \If{$x_{succ} = x_g$}
+%                                \State \textbf{return} $x_{succ}$
+%                            \EndIf
+%                            \State $O.push(x_{succ})$
+%                        \EndIf
+%                    \EndIf
+%                \EndFor
+%        \EndWhile
+%        \State \textbf{return} null
+%    \end{algorithmic}
+%\end{algorithm}
+
+\begin{algorithm}
+    \caption{Gradient Descent}\label{alg:gradientDescent}
+    \begin{algorithmic}[1]
+    \State $maxIterations = 1000$
+    \State $iterations = 0$
+        \While{$iterations < maxIterations$}
+        \State $iterations \gets iterations + 1$
+        \EndWhile
+        \State \textbf{return} null
+    \end{algorithmic}
+\end{algorithm}
