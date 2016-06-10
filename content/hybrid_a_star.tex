@@ -1,8 +1,10 @@
-\chapter{Hybrid A* Planner}
+\section{Hybrid A* Planner}
+As described in \fref{sec:HA} the hybrid A* search expands vertices in continuous rather than discrete space. Using this fact, the action set $U$ for a given vertex $x$ could take any shape. In order to adhere to the constraints imposed by a non-holonomic vehicle, vertex will be expanded by one of three actions; maximum steering left, maximum steering right as well as no steering. This will ensure that the resulting paths are always drivable even though they might result in excessive steering actions.
 
-\section{Vehicle Constraints}
+The velocity of the vehicle is not modeled during the planning phase.
+\subsection{Vehicle Constraints}
 
-\section{Algorithm}
+\subsection{Algorithm}
 
 Under the assumption that the steering actions are either maximum steering right, no steering, or maximum steering left the arc length can be simply expressed as $r\abs{x_\theta- x'_\theta}$, $r$ being the minimum turning radius of the vehicle. 
 
@@ -25,18 +27,13 @@ $x_x, x_y, x_\theta$ the turning radius $r$, the turning angle $\theta$ and dist
   $x'_y = x_y + d\cos(x_\theta)$
 \end{description}
 
-\section{Heuristics}
+
+\subsection{Heuristics}
 underestimating distance, thus nodes expanded at the beginning are getting better in the end, when the real cost is being calculated
-\subsection{Constrained Heuristic}
+\subsubsection{Constrained Heuristic}
 A constrained heuristic takes the characteristics of the vehicle into account.
-\subsubsection{Dubin's Paths}
+\paragraph{Dubin's Paths}
 Shoot for the goal
-\subsection{Unconstrained Heuristic}
+\subsubsection{Unconstrained Heuristic}
 An unconstrained heuristic neglects the characteristics of the vehicle.
-\subsubsection{Two Dimensional A*}
-
-\section{Collision Checking}
-
-\section{Path Smoothing}
-
-\section{Path Analysis}
+\paragraph{Two Dimensional A*}

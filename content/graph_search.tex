@@ -41,7 +41,7 @@ Depending on the algorithm these lists need to implemented as a priority queue. 
     \item delete the item with the minimum key from the queue
 \end{itemize}
 
-The type of queue chosen has a considerable impact on the time complexity for the operations mentioned above. When implementing a queue it is recommended to take this into consideration, as a more complex queue might yield considerable better performance, especially when operating on larger sets of data. While C++ implements a basic priority queue in the \emph{std} name space \url{http://en.cppreference.com/w/cpp/container/priority_queue} other more advanced queues (Binomial, Fibonacci, etc.) can be used with \emph{Boost} \url{http://www.boost.org/doc/libs/1_60_0/doc/html/heap.html}
+The type of queue chosen has a considerable impact on the time complexity for the operations mentioned above. When implementing a queue it is recommended to take this into consideration, as a more complex queue might yield considerable better performance, especially when operating on larger sets of data. \footnote{While C++ implements a basic priority queue in the \emph{std} name space \url{http://en.cppreference.com/w/cpp/container/priority_queue} other more advanced queues (Binomial, Fibonacci, etc.) can for example easily implemented with a library such as \emph{Boost} \url{http://www.boost.org/doc/libs/1_60_0/doc/html/heap.html}}
 
 \subsection{Optimality}
 One of the great advantages of graph search algorithms compared to other approaches for path planning is that many algorithms are proven to be optimal. Bellman's principle of optimality reads below.
@@ -60,7 +60,10 @@ In essence any optimal solution for a problem that requires a sequence of decisi
 \end{proof}
 
 \subsection{Admissibility}
-Algorithms that find optimal paths on non-negative graphs are considered admissible \cite{Hart.1968}.
+Algorithms that find optimal paths on non-negative graphs are considered admissible \cite{Hart.1968}. Algorithms that are using heuristic estimates need to use heuristics that always underestimate the cost in order to be considered admissible.
+
+\subsection{Completeness}
+Algorithms that find a solution if a solution exists or correctly report that there is no solution to the problem are considered complete. \cite{LaValle.2006}
 
 \subsection{Heuristics}
 In order to find an optimal path the search needs to be systematic. Various search algorithms differ most significantly in the way they expand vertices \cite{LaValle.2006}. To avoid wasteful search of unpromising regions of a graph the search must be as informed as possible, only expanding nodes that have the potential to belong to the optimal path. If the search uses information that leads to skipping the expansion of a specific node, hence failing to find the optimal path, admissibility is forfeited.
@@ -74,7 +77,7 @@ Breadth First Search (BFS) was first developed by Moore and published by Lee in 
 
 BFS does not consider edge costs, but only the number of expansions and can hence only be used on non-weighted graphs. On these graphs however BFS is complete and optimal, although the time and memory complexity is high, as the search is not guided \cite{Lee.1961,LaValle.2006} .
 
-BFS traverses all vertices $V$ in a graph $G$ until the algorithm terminates (e.g. due to meeting a goal condition). While the search progresses every vertex $x \in V$ changes its state from undiscovered to discovered. In order to trace the route discovered by BFS, a direction and hence a predecessor is assigned to each vertex. The start vertex will thus be the root of the resulting tree of successor. This is the key property that makes BFS a suitable candidate to solve shortest path problems \cite{Skiena.2008}. \Fref[plain]{alg:BFS} depicts the structure of the search.
+BFS traverses all vertices $V$ in a graph $G$ until the algorithm terminates (e.g. due to meeting a goal condition). While the search progresses every vertex $x \in V$ changes its state from undiscovered to discovered. In order to trace the route discovered by BFS, a direction and hence a predecessor is assigned to each vertex. The start vertex will thus be the root of the resulting tree of successor. This is the key property that makes BFS a suitable candidate to solve shortest path problems \cite{Skiena.2008}. \Fref[plain]{alg:BFS} depicts the structure of the search. BFS expands vertices in a \textit{first in, first out} system, the closed list $C$ is used to avoid unnecessary expansion of vertices that have previously been visited.
 
 \begin{algorithm}
     \caption{Breadth First Search}\label{alg:BFS}
@@ -105,9 +108,9 @@ BFS traverses all vertices $V$ in a graph $G$ until the algorithm terminates (e.
 \end{algorithm}
 
 \section{Dijkstra's or Uniform-Cost Search}
-While Breadth First Search delivers optimal solutions to the discrete path planning problem it does not consider edge cost and is hence in its original form only applicable to uniform cost graphs. Dijkstra's search algorithm can be seen somewhat of a refinement, even though first published two years earlier than BFS, in 1959. This chapter is also called \emph{Uniform-Cost Search} as people such as Felner have pointed out that the original Dijkstra's algorithm was much closer to UCS than it is often conveyed in today's textbooks \cite{Felner.2011}. In his original paper Dijkstra indirectly refers to Bellman's principle of optimality, which is a needed proof for the algorithm being optimal.
+While Breadth First Search delivers optimal solutions to the discrete path planning problem it does not consider edge cost and is hence in its original form only applicable to uniform cost graphs. Dijkstra's search algorithm can be seen somewhat of a refinement, even though first published two years earlier than BFS, in 1959. This section is also called \emph{Uniform-Cost Search} as people such as Felner have pointed out that the original Dijkstra's algorithm was much closer to UCS than it is often conveyed in today's textbooks \cite{Felner.2011}. In his original paper Dijkstra indirectly refers to Bellman's principle of optimality, which is a needed proof for the algorithm being optimal.
 
-Dijkstra's algorithm begins to divide all vertices into three sets, the closed set $C$, the open set $O$ (implemented as a priority queue) as well as the remaining vertices. At the beginning $C$ and $O$ are the empty sets. After this the algorithm starts as depicted in \fref{alg:Dijkstra} \cite{Dijkstra.1959}. First the start vertex $x_s$ gets transferred to the open set. Next the while loop is entered, line \ref{alg:DijkstraWhile}, which either returns the goal vertex (line \ref{alg:DijkstraSolution}) or null if the $O$ is the empty set. When a vertex gets expanded it is removed from $O$ and added to $C$. Afterwards all edges connected to the vertex are evaluated and the vertexes they connect to. If any of these vertexes are not in $C$ then we calculate the cost so far the same $g(x') = g(x) + l(x,u)$. Where $g(x)$ represents the cost-so-far for the vertex $x$ from the start vertex and $l(x,u)$ the cost for the state transition from $x$ to $x'$ given the action $u$. If the resulting cost is lower than the current cost to reach that vertex or that vertex is not an element of $O$, the predecessor and the cost for that vertex will be set and the position in the priority queue will be decreased or it will added to $O$ respectively. \cite{Dijkstra.1959,LaValle.2006,Cormen.2009} 
+Dijkstra's algorithm begins to divide all vertices into three sets, the closed set $C$, the open set $O$ (implemented as a priority queue) as well as the remaining vertices. At the beginning $C$ and $O$ are the empty sets. After this the algorithm starts as depicted in \fref{alg:Dijkstra} \cite{Dijkstra.1959}. First the start vertex $x_s$ gets transferred to the open set. Next the while loop is entered, line \ref{alg:DijkstraWhile}, which either returns the goal vertex (line \ref{alg:DijkstraSolution}) or null if the $O$ is the empty set. When a vertex gets expanded it is removed from $O$ and added to $C$. Afterwards all edges connected to the vertex are evaluated and the vertexes they connect to. If any of these vertexes are not in $C$ then we calculate the \textit{cost-so-far} the same $g(x') = g(x) + l(x,u)$. Where $g(x)$ represents the \textit{cost-so-far} for the vertex $x$ from the start vertex and $l(x,u)$ the cost for the state transition from $x$ to $x'$ given the action $u$. If the resulting cost is lower than the current cost to reach that vertex or that vertex is not an element of $O$, the predecessor and the cost for that vertex will be set and the position in the priority queue will be decreased or it will added to $O$ respectively. \cite{Dijkstra.1959,LaValle.2006,Cormen.2009} 
 
 \begin{algorithm}
     \caption{Dijkstra's Search}\label{alg:Dijkstra}
@@ -145,7 +148,7 @@ Dijkstra's algorithm begins to divide all vertices into three sets, the closed s
 \end{algorithm}
 
 \section{A* Search}
-If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be seen as a refinement of Dijkstra's work. While Dijkstra associated a cost-so-far $g$ with each vertex of a graph to determine the next vertex to expand, A* enhances the algorithm by the use of a heuristic, allowing for much more rapid convergence under certain conditions, while still ensuring its optimality \cite{Hart.1968}. The heuristic $h(x)$ is the cost-to-come, based on an estimate of the cost from state $x$ to the goal state $x_g$. Just as Dijkstra's algorithm A* also starts with $O$ and $C$ being the open and closed list respectively.
+If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be seen as a refinement of Dijkstra's work. While Dijkstra associated a \textit{cost-so-far} $g$ with each vertex of a graph to determine the next vertex to expand, A* enhances the algorithm by the use of a heuristic, allowing for much more rapid convergence under certain conditions, while still ensuring its optimality \cite{Hart.1968}. The heuristic $h(x)$ is the  \textit{cost-to-come}, based on an estimate of the cost from state $x$ to the goal state $x_g$. Just as Dijkstra's algorithm A* also starts with $O$ and $C$ being the open and closed list respectively. Just as Dijkstra's algorithm A* the starts with a empty closed set $C$ open set $O$. The search is depicted in \fref{alg:A*} the key difference happens in line \ref{alg:A*Heuristic}, here the heuristic estimate comes into play so that the cost for a state $x$ is thus $f(x) = g(x) + h(x)$ by which the priority queue will be sorted. A standard heuristic estimate that can speed up search significantly, while maintaining admissibility and thus optimality, is the Euclidean norm for two dimensional problems.
 
 \begin{algorithm}
     \caption{A* Search}\label{alg:A*}
@@ -168,7 +171,7 @@ If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be 
                         \If {$x_{succ} \notin O$ \textbf{or} $g < g(x_{succ})$}
                             \State $Pred(x_{succ}) \gets x$
                             \State $g(x_{succ}) \gets g$
-                            \State $f(x_{succ}) \gets g(x_{succ}) + h(x_{succ})$
+                            \State $h(x_{succ}) \gets Heuristic(x_{succ}, x_g)$ \label{alg:A*Heuristic}
                             \If {$x_{succ} \notin O$}
                                 \State $O.push(x_{succ})$
                             \Else
@@ -184,13 +187,20 @@ If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be 
 \end{algorithm}
 
 \newpage
-\section{Hybrid A* Search}
-The hybrid A* algorithm behaves similar to the A* algorithm. The key difference is, that state transitions happen in continuous rather than discrete space. One of the largest drawbacks of the previous approaches for path planning of non-holonomic robots is that the resulting paths are discrete and thus often not executable as changes of direction are sudden rather than smooth \cite{Montemerlo.2008,Dolgov2010}.
+\section{Hybrid A* Search}\label{sec:HA}
+The hybrid A* algorithm\footnote{The naming has not been consistent, variants are: hybrid A* and hybrid-state A*} was successfully used in the DARPA Urban Challenge, a robot competition organized by the U.S. Government in 2007. In the follwoing years insights to the algorithm were given by Dolgov et al. in \cite{Montemerlo.2008,Dolgov.2008,Dolgov.2009,Dolgov.2010}. The hybrid A* algorithm behaves similar to the A* algorithm. The key difference is, that state transitions happen in continuous rather than discrete space. One of the largest drawbacks of the previous approaches for path planning of non-holonomic robots is that the resulting paths are discrete and thus often not executable as changes of direction are sudden rather than smooth \cite{Montemerlo.2008,Dolgov.2010}.
 
+While the hybrid A* search implicitly builds the graph on a discretized grid, vertices can reach any continuous point on the grid. As a continuous search space would not be finite a discretization in form of grid cells is taken. Since transitions from vertex to vertex have no predefined form it is easy to incorporate the non-holonomic nature in the state transition. In order to distinguish different vertices that occupy a grid cell in $\R^2$ the heading of a node can be added so that the state space $X$ consists of $x,y,\theta$.
 
-The search starts by defining the empty sets $O$ and $C$, as well as by setting the predecessor state of the start state to $null$ and pushing the start state on the open list algorithm \algref{HA*}{HA*start}.
+\Fref{alg:HA*} outlines the steps in the hybrid A* search. Just as the ordinary A* search, it starts by defining the empty sets $O$ and $C$, as well as by setting the predecessor state of the start state to $null$ and pushing the start state on the open list, line \ref{alg:HA*start}. At line \ref{alg:HA*while} the \textit{while} loop starts, which only terminates if the open list is empty or the goal state has been reached, line \ref{alg:HA*solution} since a goal state might not be reached exactly the function \textit{RoundState} in \ref{alg:HA*solution} is used to round both the current as well as the goal state before comparison.
+If the current vertex being expanded is no the goal vertex new successors will be generated for all available actions $u  \in U(x)$, line \ref{alg:HA*successor}. Is the successor is not in $C$, then the estimated total cost for the vertex are calculated. If the vertex is not in $O$ or the estimated total cost are smaller than the cost for a vertex with the same index, that is also part of the $O$ then the successor will be assigned a pointer to its predecessor, the \textit{cost-so-far} and the \textit{cost-to-come will be updated}. After that the vertex is pushed on the open list or the key is decreased using the new value $f(x_{succ})$.
+It is important to note, that even though hybrid A* is rounding the state in order to prune branches that are similar, the expansion will always happen from the actual value of the state as opposed to the rounded one.
 
-At line \ref{HA*while} the while loop starts, which only terminates if the open list is empty or the goal state has been reached line \ref{HA*solution}.
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Dijkstra's Algorithm, A* and hybrid A*}
+    \label{fig:searchComparison}
+\end{figure}
 
 \paragraph{Notations}
 \begin{itemize}
@@ -204,7 +214,7 @@ At line \ref{HA*while} the while loop starts, which only terminates if the open 
 \end{itemize}
 
 \begin{algorithm}
-    \caption{Hybrid A* Search}\label{HA*}
+    \caption{Hybrid A* Search}\label{alg:HA*}
     \begin{algorithmic}[1]
         \Function{roundState}{$x$}
             \State $x.Pos_X = \max\{m\in\mathbb{Z}\mid m\le x.Pos_X\}$
@@ -213,34 +223,34 @@ At line \ref{HA*while} the while loop starts, which only terminates if the open 
             \State \textbf{return} $x$
         \EndFunction
         \Statex
-        \Function{exists}{$x_{succ}$,$O$}
-            \If{$\{ x \in O \mid roundState(x) = roundState(x_{succ})\} \neq \emptyset$}
-                \State \textbf{return} $f(x)$
+        \Function{exists}{$x_{succ}$,$\calL$}
+            \If{$\{ x \in \calL \mid roundState(x) = roundState(x_{succ})\} \neq \emptyset$}
+                \State \textbf{return} true
             \Else
-                \State \textbf{return} 0
+                \State \textbf{return} false
             \EndIf
         \EndFunction
         \Statex
         \Require $x_s \cap x_g \in X$
-        \State $O = \emptyset$ \label{HA*start}
+        \State $O = \emptyset$ \label{alg:HA*start}
         \State $C = \emptyset$
         \State $Pred(x_s) \gets null$
         \State $O.push(x_s)$
-        \While{$O \neq \emptyset$} \label{HA*while}
+        \While{$O \neq \emptyset$} \label{alg:HA*while}
             \State $x \gets$ O.popMin()
             \State $C.push(x)$
-            \If{$roundState(x) = roundState(x_g)$}
-                \State \textbf{return} $x$ \label{HA*solution}
+            \If{$roundState(x) = roundState(x_g)$} \label{alg:HA*solution}
+                \State \textbf{return} $x$
             \Else
                 \For {$u \in U(x)$}
-                \State $x_{succ} \gets f(x,u)$
-                    \If {$x_{succ} \notin C$}
-                        \State $f \gets g(x) + l(x,u) + h(x_{succ})$
-                        \If {$exists(x_{succ},O) = 0$ \textbf{or} $f < exists(x_{succ},O)$}
+                \State $x_{succ} \gets f(x,u)$\label{alg:HA*successor}
+                    \If {$\neg exists(x_{succ},C)$}
+                        \State $f(x_{succ}) \gets g(x) + l(x,u) + Heuristic(x_{succ}, x_g)$
+                        \If {$\neg exists(x_{succ},O)$ \textbf{or} $f < f(x)$}
                             \State $Pred(x_{succ}) \gets x$
                             \State $g(x_{succ}) \gets g$
-                            \State $f(x_{succ}) \gets g(x_{succ}) + h(x_{succ})$
-                            \If {$x_{succ} \notin O$}
+                            \State $h(x_{succ}) \gets Heuristic(x_{succ}, x_g)$
+                            \If {$\neg exists(x_{succ},O)$}
                                 \State $O.push(x_{succ})$
                             \Else
                                 \State $O.decreaseKey(x_{succ})$

@@ -1,7 +1,9 @@
-\chapter{Path Smoothing}
+\section{Path Smoothing}
 
-\section{Cost Function}
-\subsection{Obstacle Term}
+As the paths produced by the hybrid A* algorithm are drivable, but often are made up of unnecessary steering actions it is beneficial to post process the result with a smoother that attains a higher degree of comfort and safety \cite{Dolgov.2010} .
+
+\subsection{Cost Function}
+\subsubsection{Obstacle Term}
 
 This term penalizes collisions with obstacles. For all nodes $\bldx_i$ where $|\bldx_i - \bldo_i| \leq d_{obs}^{\lor}$ the cost $P_{vor}$ is defined. It based on the the distance to the next obstacle.
 
@@ -17,13 +19,13 @@ P_{obs} = w_{obs} \displaystyle\sum_{i=1}^{N} \sigma_{obs}(|\bldx_i-\bldo_i|-d_{
 \item $\sigma_{obs}$ quadratic penalty function
 \end{itemize}
 
-\subsubsection{Gradient}
+\paragraph{Gradient}
 
 \begin{equation}
 \frac{\partial \sigma_{obs}}{\partial \bldx_i} = \frac{2(|\bldx_i-\bldo_i|-d_{obs}^{\lor})\bldx_i-\bldo_i}{|\bldx_i-\bldo_i|}
 \end{equation}
 
-\subsection{Curvature Term}
+\subsubsection{Curvature Term}
 This term upper-bounds the instantaneous curvature of the path at every node, ensuring driveability.
 
 \begin{equation}
@@ -38,7 +40,7 @@ P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\p
 \item $\sigma_{cur}$ quadratic penalty function
 \end{itemize}
 
-\subsection{Gradients}
+\subsubsection{Gradients}
 
 \begin{equation}
 \frac{\partial \kappa_i}{\partial \bldx_i} = \frac{1}{|\Delta\bldx_i|}\frac{\partial\Delta\phi_i}{\partial\cos\Delta\phi_i}\frac{\partial\cos\Delta\phi_i}{\partial\bldx_i}-\frac{\Delta\phi_i}{{\Delta\bldx_i}^2}\frac{\partial\Delta\bldx_i}{\partial\bldx_i}
@@ -52,7 +54,7 @@ P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\p
 \frac{\partial \kappa_i}{\partial \bldx_{i+1}} = \frac{1}{|\Delta\bldx_i|}\frac{\partial\Delta\phi_i}{\partial\cos\Delta\phi_i}\frac{\partial\cos\Delta\phi_i}{\partial\bldx_{i+1}}
 \end{equation}
 
-\subsection{Smoothness Term}
+\subsubsection{Smoothness Term}
 This term is a measure of the smoothness of the path.
 
 \begin{equation}
@@ -64,7 +66,7 @@ P_{smo} = w_{smo} \displaystyle\sum_{i=1}^{N-1} (\Delta\bldx_{i+1} - \Delta\bldx
 \item $w_{smo}$ the smoothness weight
 \end{itemize}
 
-\subsection{Voronoi Term}
+\subsubsection{Voronoi Term}
 This term guides the path away from obstacles. For $d_{obs} \leq d_{vor}^{\lor}$ the cost $P_{vor}$ is defined. It is based on the position of the node in the Voronoi field.
 
 \begin{equation}
@@ -79,7 +81,7 @@ P_{vor} = w_{vor} \displaystyle\sum_{i=1}^{N} \left(\frac{\alpha}{\alpha + d_{ob
 \item $w_{vor}$ the Voronoi weight
 \end{itemize}
 
-\subsubsection{Gradients}
+\paragraph{Gradients}
 
 \begin{equation}
 \frac{\partial d_{obs}}{\partial \bldx_i} = \frac{\bldx_i-\bldo_i}{|\bldx_i-\bldo_i|}
@@ -96,36 +98,6 @@ P_{vor} = w_{vor} \displaystyle\sum_{i=1}^{N} \left(\frac{\alpha}{\alpha + d_{ob
 \begin{equation}
 \frac{\partial\rho_{vor}}{\partial d_{edg}} =  \frac{\alpha d_{obs}\left(d_{obs}-d_{vor}^{\lor}\right)^2}{{d_{vor}^{\lor}}^2\left(d_{obs}+\alpha\right)\left(d_{edg}+d_{obs}\right)^2}
 \end{equation}
-
-\section{Gradient Descent}
-
-%\begin{algorithm}
-%    \caption{Gradient Descent}\label{alg:gradientDescent}
-%    \begin{algorithmic}[1]
-%        \Require $x_s \cap x_g \in X$
-%        \State $O = \emptyset$
-%        \State $C = \emptyset$
-%        \State $Pred(x_s) \gets null$
-%        \State $O.push(x_s)$
-%        \While{$O \neq \emptyset$}
-%            \State $x \gets$ O.pop()
-%            \State $C.push(x)$
-%                \For {$u \in U(x)$}
-%                    \State $x_{succ} \gets f(x,u)$
-%                    \If {$x_{succ} \notin C$}
-%                        \If {$x_{succ} \notin O$}
-%                            \State $Pred(x_{succ}) \gets x$
-%                            \If{$x_{succ} = x_g$}
-%                                \State \textbf{return} $x_{succ}$
-%                            \EndIf
-%                            \State $O.push(x_{succ})$
-%                        \EndIf
-%                    \EndIf
-%                \EndFor
-%        \EndWhile
-%        \State \textbf{return} null
-%    \end{algorithmic}
-%\end{algorithm}
 
 \begin{algorithm}
     \caption{Gradient Descent}\label{alg:gradientDescent}
