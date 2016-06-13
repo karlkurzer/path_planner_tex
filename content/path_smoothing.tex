@@ -1,23 +1,19 @@
 \section{Path Smoothing}
+As the paths produced by the hybrid A* algorithm are drivable, but often are made up of unnecessary steering actions it is beneficial to post process the result with a smoother that attains a higher degree of comfort and safety \cite{Dolgov.2010}. For this purpose a gradient descent smoother is used that aims to minimize $P$ consisting of the following four terms with respect to the path.
 
-As the paths produced by the hybrid A* algorithm are drivable, but often are made up of unnecessary steering actions it is beneficial to post process the result with a smoother that attains a higher degree of comfort and safety \cite{Dolgov.2010} .
+\begin{equation}
+P = P_{obs} + P_{cur} + P_{smo} + P_{vor}
+\end{equation}
 
-\subsection{Cost Function}
-\subsubsection{Obstacle Term}
+\subsection{Obstacle Term}
 
-This term penalizes collisions with obstacles. For all nodes $\bldx_i$ where $|\bldx_i - \bldo_i| \leq d_{obs}^{\lor}$ the cost $P_{vor}$ is defined. It based on the the distance to the next obstacle.
+This term penalizes collisions with obstacles. For all vertices $\bldx_i$ where $|\bldx_i - \bldo_i| \leq d_{obs}^{\lor}$ the cost $P_{vor}$ is defined. It based on the the distance to the next obstacle.
 
 \begin{equation}
 P_{obs} = w_{obs} \displaystyle\sum_{i=1}^{N} \sigma_{obs}(|\bldx_i-\bldo_i|-d_{obs}^{\lor})
 \end{equation}
 
-\begin{itemize}
-\item $\bldo_i$ the location of the closest obstacle to $\bldx_i$
-\item $\bldx_i$ the location of a vertex on the path
-\item $d_{obs}^{\lor}$  the maximum distance obstacles affect the cost
-\item $w_{obs}$ the obstacle weight
-\item $\sigma_{obs}$ quadratic penalty function
-\end{itemize}
+Where $\bldx_i$ is the $x,y$-position of a vertex on the path, $\bldo_i$ the location of the closest obstacle to $\bldx_i$. $d_{obs}^{\lor}$ acts as a threshold for the the maximum distance obstacles can affect the cost of the path. In order to penalize heavier when getting close to obstacles $\sigma_{obs}$ is a quadratic penalty function. The obstacle weight $w_{obs}$ is used to influence the impact on the change of the path.
 
 \paragraph{Gradient}
 
@@ -25,22 +21,16 @@ P_{obs} = w_{obs} \displaystyle\sum_{i=1}^{N} \sigma_{obs}(|\bldx_i-\bldo_i|-d_{
 \frac{\partial \sigma_{obs}}{\partial \bldx_i} = \frac{2(|\bldx_i-\bldo_i|-d_{obs}^{\lor})\bldx_i-\bldo_i}{|\bldx_i-\bldo_i|}
 \end{equation}
 
-\subsubsection{Curvature Term}
-This term upper-bounds the instantaneous curvature of the path at every node, ensuring driveability.
+\subsection{Curvature Term}
+In order to ensure driveabiliy the curvature term upper-bounds the instantaneous curvature of the path at every vertex. It is defined for $\frac{\Delta\phi_i}{|\Delta\bldx_i|} > \kappa_{max}$
 
 \begin{equation}
 P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\phi_i}{|\Delta\bldx_i|} - \kappa_{max}\right)
 \end{equation}
 
-\begin{itemize}
-\item $\Delta\bldx_i = \bldx_i - \bldx_{i-1}$ the displacement vector at the vertex $\bldx_i$
-\item $\Delta\phi_i$ = $\cos^{-1}\frac{\bldx_{i}\cdot\bldx_{i+1}}{|\bldx_{i+1}||\bldx_{i+1}| }$ the change in tangential angle at the vertex $\bldx_i$
-\item $\kappa_{max}$ the maximum allowable curvature
-\item $w_{cur}$ the curvature weight
-\item $\sigma_{cur}$ quadratic penalty function
-\end{itemize}
+The the displacement vector at the vertex $\bldx_i$ is defined as $\Delta\bldx_i= \bldx_i - \bldx_{i-1}$. The change in tangential angle at a vertex can be expressed by $\Delta\phi_i$ = $\cos^{-1}\frac{\bldx_{i}\cdot\bldx_{i+1}}{|\bldx_{i+1}||\bldx_{i+1}| }$.  The maximum allowable curvature is denoted by $\kappa_{max}$. Deviations from the maximum allowable curvature are penalized with a quadratic penalty function $\sigma_{cur}$. The curvature weight $w_{cur}$  controls the impact on the change of the path.
 
-\subsubsection{Gradients}
+\paragraph{Gradients}
 
 \begin{equation}
 \frac{\partial \kappa_i}{\partial \bldx_i} = \frac{1}{|\Delta\bldx_i|}\frac{\partial\Delta\phi_i}{\partial\cos\Delta\phi_i}\frac{\partial\cos\Delta\phi_i}{\partial\bldx_i}-\frac{\Delta\phi_i}{{\Delta\bldx_i}^2}\frac{\partial\Delta\bldx_i}{\partial\bldx_i}
@@ -54,32 +44,21 @@ P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\p
 \frac{\partial \kappa_i}{\partial \bldx_{i+1}} = \frac{1}{|\Delta\bldx_i|}\frac{\partial\Delta\phi_i}{\partial\cos\Delta\phi_i}\frac{\partial\cos\Delta\phi_i}{\partial\bldx_{i+1}}
 \end{equation}
 
-\subsubsection{Smoothness Term}
-This term is a measure of the smoothness of the path.
+\subsection{Smoothness Term}
+The smoothness term evaluates the displacement vectors between vertices. The result is that it assigns cost to vertices that are unevenly spaced as well as change direction. $w_{smo}$ denotes the smoothness weight and hence the impact of the term on the change of the path.
 
 \begin{equation}
 P_{smo} = w_{smo} \displaystyle\sum_{i=1}^{N-1} (\Delta\bldx_{i+1} - \Delta\bldx_i)^2
 \end{equation}
 
-\begin{itemize}
-\item $\Delta\bldx_i = \bldx_i - \bldx_{i-1}$ the displacement vector at the vertex $\bldx_i$
-\item $w_{smo}$ the smoothness weight
-\end{itemize}
-
-\subsubsection{Voronoi Term}
+\subsection{Voronoi Term}
 This term guides the path away from obstacles. For $d_{obs} \leq d_{vor}^{\lor}$ the cost $P_{vor}$ is defined. It is based on the position of the node in the Voronoi field.
 
 \begin{equation}
 P_{vor} = w_{vor} \displaystyle\sum_{i=1}^{N} \left(\frac{\alpha}{\alpha + d_{obs}(x,y)}\right)\left(\frac{d_{vor}(x,y)}{d_{obs} + d_{vor}(x,y)}\right)\left(\frac{(d_{obs}(x,y) - d_{vor}^{\lor})^2}{(d_{vor}^{\lor})^2}\right)
 \end{equation}
 
-\begin{itemize}
-\item $d_{obs} > 0$ the distance to the nearest obstacle
-\item $d_{edg} > 0$ the distance to the nearest edge of the GVD
-\item $d_{vor}^{\lor}$ the maximum distance obstacles affect the Voronoi potential
-\item $\alpha > 0$ controls the falloff rate of the field
-\item $w_{vor}$ the Voronoi weight
-\end{itemize}
+The positive distance to the nearest obstacle is denoted by $d_{obs}$, $d_{edg}$ is the positive distance to the nearest edge of the GVD. $d_{vor}^{\lor}$ represents the maximum distance obstacles affect the Voronoi potential. $\alpha > 0$ controls the falloff rate of the field and $w_{vor}$, the Voronoi weight, influences the impact on the path.
 
 \paragraph{Gradients}
 
@@ -98,15 +77,3 @@ P_{vor} = w_{vor} \displaystyle\sum_{i=1}^{N} \left(\frac{\alpha}{\alpha + d_{ob
 \begin{equation}
 \frac{\partial\rho_{vor}}{\partial d_{edg}} =  \frac{\alpha d_{obs}\left(d_{obs}-d_{vor}^{\lor}\right)^2}{{d_{vor}^{\lor}}^2\left(d_{obs}+\alpha\right)\left(d_{edg}+d_{obs}\right)^2}
 \end{equation}
-
-\begin{algorithm}
-    \caption{Gradient Descent}\label{alg:gradientDescent}
-    \begin{algorithmic}[1]
-    \State $maxIterations = 1000$
-    \State $iterations = 0$
-        \While{$iterations < maxIterations$}
-        \State $iterations \gets iterations + 1$
-        \EndWhile
-        \State \textbf{return} null
-    \end{algorithmic}
-\end{algorithm}

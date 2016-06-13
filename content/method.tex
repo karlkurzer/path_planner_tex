@@ -1,11 +1,14 @@
 \chapter{Method}
 The second part of this thesis shall give an overview over the actual method used, its implementation as well as the results. This chapter will talk about the method used to solve the navigation problem.
 
-\input{content/hybrid_a_star}
+The navigation of a mobile robot in the real as opposed to a discretized world, boils down to a complex, continuous-variable optimization problem. While there are a great variety of optimal and fast planners for discrete space, these planners often produces solutions that are not suitable for non-holonomic vehicles as they are not smooth and do not incorporate the vehicle constraints properly.
+Other approaches, such as RRT's do produce continuous solutions, but inherently come with disadvantages of being highly nondeterministic or finding solutions that are far from the optimum. The problem regarding the optimality of RRT* has been solved elegantly by Karman et al\cite{Karaman.2011}.
 
-\section{Collision Checking}
+Building on A*, hybrid A* can be seen as the extension of an optimal, deterministic and complete algorithm. Hybrid A* is resolution complete, deterministic and due to the usage of admissible heuristics as well as path post processing the solutions produced are in the neighborhood of the global optimum.
+
+The hybrid A* planner can be split in three distinct parts. The hybrid A* search that incorporates the vehicles constraints, the heuristics that make the search a well informed, allowing for fast convergence; and the path smoothing that improves the found solution using gradient descent.
+
+\input{content/hybrid_a_star}
 
 % PATH SMOOTHING
 \input{content/path_smoothing}
-
-\section{Path Analysis}

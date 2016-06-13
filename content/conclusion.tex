@@ -1,1 +1,6 @@
 \chapter{Conclusion}
+While the research in the area of autonomous driving continuous to grow, the DARPA Grand Challenge and especially the Urban Challenge have marked important milestones, greatly propelling the development. The hybrid A* algorithm a complex planner used for the planning in unstructured environments by the Standford team, Dolgov et al., participating with Junior in the DUC is analyzed and reproduced in C++ and ROS for the KTH RCV.
+
+Since there are many ways to solve navigation problems of this kind the choice might seem arbitrary, the resulting hybrid A* planner addresses the problem of finding a solution to the problem described in \fref{sec:problemDescription} properly. The planner models the non-holonomic nature of the vehicle in all stages of the process, vertex expansion, heuristic estimates, as well as path smoothing. Thus, the most important characteristic of the paths is given--they are driveable. 
+
+The HA* planner solves a challenging problem in an elegant manner. Ideal scenarios for the planner are slow speed driving in unstructured environments. An example of that might be navigating parking lots as well as parking.

@@ -100,7 +100,7 @@ This approach does not represent the free space exactly, hence a conservative ap
     \label{fig:cellDecomposition}
 \end{figure}
 
-\section{Differential/Kinematic Constraints}
+\section{Differential/Kinematic Constraints}\label{sec:differentialConstraints}
 This section focuses on the differential constraints of a car-like robot. Most of the time these differential constraints are inherent to the kinematics and dynamics of the robot itself. These constraints need to be taken into account at some point, ideally during the actual path planning process ensuring the path matching the robot's constraints. In case that considering the constraints during the planning process is infeasible one could also unload this task on the controller, which given the constraints will not be an easy task either. \cite{LaValle.2006}
 
 Even though a car can reach any position and orientation in the Euclidean plane, with a configuration as $q = (x,y,\theta)$, its configuration space is thus $\calC = \R^2 \times \S^1$, it cannot translate or rotate freely. A car can move forward as well as backward, but it cannot move sideways. This means that there are less possible actions than degrees of freedom, systems such as this are called underactuated, \cite{LaValle.2006}.

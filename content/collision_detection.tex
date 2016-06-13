@@ -30,7 +30,7 @@ Lavalle and Ericson define some criteria for the choice of appropriate bounding 
     \label{fig:boundingRegions}
 \end{figure}
 
-\section{Spatial Occupancy Enumeration}
+\section{Spatial Occupancy Enumeration} \label{sec:spatialOccupancyEnumeration}
 Spatial occupancy enumeration overlays the space with a grid. This subdivision of space allows the occupancy enumeration of objects, storing an exhaustive array of grid cells covered by the respective object \cite{Ericson.2005,Hayward.1986}. In $\R^2$ these might be squares, in $\R^3$ cubes. This approach offers a trivial collision check that can be conducted rapidly \cite{Ericson.2005,Hayward.1986}. Enumerative schemes have the disadvantage that the respective spatial occupancy needs to be recomputed for each point of a given path \cite{Hayward.1986}. This problem can be avoided by discretion of the orientation values, so that the occupancy enumeration can be stored in a lookup table \cite{Ziegler.2008} Due to its simplicity uniform grids have been a popular choice for space subdivision, however it is important to choose the right cell size, if a fixed cell size is an issue hierachical grids might be a solution \cite{Ericson.2005}.
 
 \begin{figure}[h]

@@ -1,39 +1,35 @@
-\section{Hybrid A* Planner}
-As described in \fref{sec:HA} the hybrid A* search expands vertices in continuous rather than discrete space. Using this fact, the action set $U$ for a given vertex $x$ could take any shape. In order to adhere to the constraints imposed by a non-holonomic vehicle, vertex will be expanded by one of three actions; maximum steering left, maximum steering right as well as no steering. This will ensure that the resulting paths are always drivable even though they might result in excessive steering actions.
+\section{Hybrid A* Search}
+As described in \fref{sec:HA} the hybrid A* (HA*) search expands vertices in continuous rather than discrete space. Even though it works in continuous space, HA* uses a discretized description of the world by pruning search branches that have similar leaf states. This is done in order to avoid growth of similar branches that add only very little to the solution, but vastly increase the search space. A state is characterized by $\bldx = (x, y, \theta)$, where $x$ and $y$ denote the position and $\theta$ the heading of the vertex respectively. The action set $U$ for a given vertex $x$ can take any shape\footnote{an opposing method is to use a state lattice, where a large amount of motion primitives connect cells always in a predefined manner}. In order to adhere to the constraints imposed by a non-holonomic vehicle, a vertex is expanded by one of three actions; maximum steering left, maximum steering right as well as no steering. Each of this control actions is applied for a certain amount of time, resulting in an arc of a circle with a lower bound turning radius based on the vehicle constraints. This will ensure that the resulting paths are always drivable,as the actual vehicle model is used to expand vertices, even though they might result in excessive steering actions. HA* does not take the velocity of the vehicle into account, using the information that is already available for HA* a reasonable velocity profile for the proposed path can be calculated.
 
-The velocity of the vehicle is not modeled during the planning phase.
-\subsection{Vehicle Constraints}
+To incorporate the heading of the vehicle a finite three dimensional grid, which represents all possible states of the vehicle is used. During the expansions of vertices with the actions $u \in U(x)$ new states are generated. If a new state falls into a grid cell that is already occupied with another vertex and the new vertex has a lower \textit{cost-so-far} the old vertex gets pruned (deleted). The search continues until a vertex reaches the goal grid cell, or all reachable cells have been reached and thus the open list is empty.
 
-\subsection{Algorithm}
+\subsection{Optimal Solution Probing}
+HA* sporadically calculates Dubins curves from vertices to the goal. This is done partly as the exact continuous goal location will not be reachable by the discretized control actions alone and in order to increase search speed. The calculated path is checked for collisions with the environment, if none exist the search terminates. In order to reduce computational load it is not beneficial to probe for optimal solutions from each state, but rather every n-th iteration. Furthermore it is more reasonable to do so when approaching the goal or in a very obstacle sparse environment.
 
-Under the assumption that the steering actions are either maximum steering right, no steering, or maximum steering left the arc length can be simply expressed as $r\abs{x_\theta- x'_\theta}$, $r$ being the minimum turning radius of the vehicle. 
+\subsection{Collision Checking}
+While there are many ways to determine whether a configuration of the vehicle is $q \in \calC_{free}$. The approach presented in \fref{sec:spatialOccupancyEnumeration} is used for collision checking. The advantage of this approach is that the collision checking can be conducted rapidly in constant time for any configuration of the vehicle.
 
-Calculation of the new states $x'$, with the initial state $x$ consisting of :\\
-$x_x, x_y, x_\theta$ the turning radius $r$, the turning angle $\theta$ and distance $d$ as well as the unit vector $e = \left(\begin{smallmatrix}0\\1\end{smallmatrix}\right)$
-\begin{description}
-  \item[left] \hfill \\
-  $r_\theta = x_\theta + \frac{\pi}{2}$\\
-  $x'_\theta = x_\theta + \theta$
-  \item[right] \hfill \\
-  $r_\theta = x_\theta - \frac{\pi}{2}$\\
-  $x'_\theta = x_\theta - \theta$
-  \item[left and right] \hfill\\
-  $r_x = r(e_x\cos(r_\theta) - e_y\sin(r_\theta)) + x_x$\\
-  $r_y = r(e_x\sin(r_\theta) - e_y\cos(r_\theta)) + x_y$\\
-  $x'_x = (x_x-r_x)\cos\theta - (x_y-r_y)\sin\theta + r_x$\\
-  $x'_y = (x_x-r_x)\sin\theta - (x_y-r_y)\cos\theta + r_y$
-  \item[straight] \hfill \\
-  $x'_x = x_x - d\sin(x_\theta)$\\
-  $x'_y = x_y + d\cos(x_\theta)$
-\end{description}
+\section{Heuristics}
+While the goal is to produce drivable solutions that are approaching the optimum, it is important to make use of A* being an informed search, implementing heuristics allowing the algorithm converge quickly towards the solution. HA* is using estimates from two heuristics. As both of the heuristics are admissible the maximum of the two is chosen for any given state. The two heuristics capture very different parts of the problem; the constrained heuristic incorporates the restrictions of the vehicle, ignoring the environment, while the unconstrained heuristic disregards the vehicle's constraints and only accounts for obstacles.
 
+%underestimating distance, thus nodes expanded at the beginning are getting better in the end, when the real cost is being calculated
 
-\subsection{Heuristics}
-underestimating distance, thus nodes expanded at the beginning are getting better in the end, when the real cost is being calculated
-\subsubsection{Constrained Heuristic}
-A constrained heuristic takes the characteristics of the vehicle into account.
-\paragraph{Dubin's Paths}
-Shoot for the goal
-\subsubsection{Unconstrained Heuristic}
-An unconstrained heuristic neglects the characteristics of the vehicle.
-\paragraph{Two Dimensional A*}
+\subsection{Constrained Heuristic}
+The constrained heuristic takes the characteristics of the vehicle into account, while neglecting the environment. Suitable candidates are either Dubins or Reeds-Shepp curves. These curves introduced in \fref{sec:differentialConstraints} are the paths of minimal length with an upper bound curvature for the forward and the forward as well as backward driving car respectively.
+
+The constrained heuristic takes the heading of the vehicle into account and hence ensures, that the vehicle approaches the goal with the correct heading.
+
+Given that both Dubins as well as Reeds-Shepp curves are minimal, this heuristic is clearly admissible.
+
+\subsection{Unconstrained Heuristic}
+The unconstrained heuristic neglects the characteristics of the vehicle and only accounts for obstacles. The estimate is based on the shortest distance between the goal node and the vertex currently being expanded. This distance is determined using the standard A* search in two dimensions ($x,y$ position) with an Euclidean distance heuristic.
+
+The unconstrained heuristic guides the vehicle away from dead ends and around u-shaped obstacles.
+
+Since HA* can reach any point in a cell the unconstrained heuristic needs to be discounted by the absolute difference of the continuous coordinate of the current and the goal vertex.
+
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Unconstrained and constrained heuristic for a sample configuration}
+    \label{fig:heuristics}
+\end{figure}
