@@ -1,26 +1,15 @@
 \chapter{Implementation}
 The development of the algorithm is solely conducted in simulation and open-loop experiments.
 
+Receiving a binary obstacle map as an input, the hybrid A* planner is able to plan a path from an initial state $x_s$ to a final state $x_g$ in a matter of milliseconds on medium grade consumer hardware (Intel Core i5-5200U 2.2GHz), making the planner a highly viable option for real world driving in unstructured environments.
+
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Dijkstra's Algorithm, A* and hybrid A*}
+    \label{fig:searchComparison}
+\end{figure}
+
 \section{Path Smoothing}
-\begin{algorithm}
-    \caption{Gradient Descent}\label{alg:gradientDescent}
-    \begin{algorithmic}[1]
-    \State $iterations \gets 1000$
-    \State $i \gets 0$
-        \While{$i < iterations$}
-        	\ForAll {$\bldx \in \calP$}
-        		\State $cor \gets  (0,0)$
-        		\State $cor \gets  cor - obstacleTerm(\bldx_{i})$
-        		\State $cor \gets  cor - smoothnessTerm(\bldx_{i-1},\bldx_{i},\bldx_{i+1})$
-        		\State $cor \gets  cor - curvatureTerm(\bldx_{i-1},\bldx_{i},\bldx_{i+1})$
-        		\State $cor \gets  cor - voronoiTerm(\bldx_{i})$
-        		\State $\bldx_{i} \gets \bldx_{i} + cor$
-        	\EndFor
-        \State $i++$
-        \EndWhile
-        \State \textbf{return} null
-    \end{algorithmic}
-\end{algorithm}
 
 \section{Algorithm}
 

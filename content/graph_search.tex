@@ -67,12 +67,12 @@ In essence any optimal solution for a problem that requires a sequence of decisi
 \end{proof}
 
 \subsection{Admissibility and Consistency}
-Algorithms that find optimal paths on non-negative graphs are considered admissible \cite{Hart.1968}. Algorithms that are using heuristic estimates need to use heuristics that never overestimates the cost in order to be considered admissible \cite{Russel.2010}. It is clear, that the Euclidean distance between two points in $R^2$ is admissible since the shortest distance between two points in is a straight line.
+Algorithms that find optimal paths on non-negative graphs are considered admissible \cite{Hart.1968}. Algorithms that are using heuristic estimates need to use heuristics that never overestimates the cost in order to be considered admissible \cite{Russell.2010}. It is clear, that the Euclidean distance between two points in $R^2$ is admissible since the shortest distance between two points in is a straight line.
 
-Consistency of a heuristic implies, that the heuristic estimate for reaching the goal vertex from a vertex $v$ must be less or equal to the estimate for $v'$ plus the action cost,  $h(v) \leq c(v, u, v')+ h(v')$. This is a case of the triangle inequality, which constitutes that each side of a triangle cannot be longer than then sum of the other two sides. \cite{Russel.2010}
+Consistency of a heuristic implies, that the heuristic estimate for reaching the goal vertex from a vertex $v$ must be less or equal to the estimate for $v'$ plus the action cost,  $h(v) \leq c(v, u, v')+ h(v')$. This is a case of the triangle inequality, which constitutes that each side of a triangle cannot be longer than then sum of the other two sides. \cite{Russell.2010}
 
 \subsection{Completeness}
-Algorithms that find a solution if a solution exists or correctly report that there is no solution to the problem are considered complete. \cite{LaValle.2006,Russel.2010}
+Algorithms that find a solution if a solution exists or correctly report that there is no solution to the problem are considered complete. \cite{LaValle.2006,Russell.2010}
 
 \section{Breadth First Search}
 Breadth First Search (BFS) was first developed by Moore and published by Lee in 1961 \cite{Lee.1961}. The BFS algorithm works on unweighted graphs (graphs with equal edge costs). In the original paper BFS is described by the author as ``a computer model of waves expanding from a source under a form of straight-line geometry''. BFS traverses a graph layer by layer, all vertices with depth $k$ in the graph are visited before it proceeds to vertices with depth $k+1$.
@@ -190,30 +190,30 @@ If one thinks of Dijkstra's search as a refinement of BFS then A* Search can be 
 
 \newpage
 \section{Hybrid A* Search}\label{sec:HA}
-The hybrid A* algorithm\footnote{The naming has not been consistent, variants are: hybrid A* and hybrid-state A*} was successfully used in the DARPA Urban Challenge, a robot competition organized by the U.S. Government in 2007. In the follwoing years insights to the algorithm were given by Dolgov et al. in \cite{Montemerlo.2008,Dolgov.2008,Dolgov.2009,Dolgov.2010}. The hybrid A* algorithm behaves similar to the A* algorithm. The key difference is, that state transitions happen in continuous rather than discrete space. One of the largest drawbacks of the previous approaches for path planning of non-holonomic robots is that the resulting paths are discrete and thus often not executable as changes of direction are sudden rather than smooth \cite{Montemerlo.2008,Dolgov.2010}.
+The hybrid A* algorithm\footnote{The naming has not been consistent, variants are: hybrid A* and hybrid-state A*} was successfully used in the DARPA Urban Challenge, a robot competition organized by the U.S. Government in 2007. In the following years insights to the algorithm were given by Dolgov et al. in \cite{Montemerlo.2008,Dolgov.2008,Dolgov.2009,Dolgov.2010}. The hybrid A* algorithm behaves similar to the A* algorithm. The key difference is, that state transitions happen in continuous rather than discrete space. One of the largest drawbacks of the previous approaches for path planning of non-holonomic robots is that the resulting paths are discrete and thus often not executable as changes of direction are sudden rather than smooth \cite{Montemerlo.2008,Dolgov.2010}.
 
-While the hybrid A* search implicitly builds the graph on a discretized grid, vertices can reach any continuous point on the grid. As a continuous search space would not be finite a discretization in form of grid cells is taken. Since transitions from vertex to vertex have no predefined form it is easy to incorporate the non-holonomic nature in the state transition. In order to distinguish different vertices that occupy a grid cell in $\R^2$ the heading of a node can be added so that the state space $X$ consists of $x,y,\theta$.
+While the hybrid A* search implicitly builds the graph on a discretized grid, vertices can reach any continuous point on the grid. As a continuous search space would not be finite a discretization in form of grid cells is taken, limiting the grow of the graph. Since transitions from vertex to vertex have no predefined form it is easy to incorporate the non-holonomic nature in the state transition. The search space is usually three dimensional so that the state space $X$ consists of $x,y,\theta$, creating a discretized cuboid with the base representing the $x,y$ position and the height the heading $theta$ of a vertex.
 
 \Fref{alg:HA*} outlines the steps in the hybrid A* search. Just as the ordinary A* search, it starts by defining the empty sets $O$ and $C$, as well as by setting the predecessor state of the start state to $null$ and pushing the start state on the open list, line \ref{alg:HA*start}. At line \ref{alg:HA*while} the \textit{while} loop starts, which only terminates if the open list is empty or the goal state has been reached, line \ref{alg:HA*solution} since a goal state might not be reached exactly the function \textit{RoundState} in \ref{alg:HA*solution} is used to round both the current as well as the goal state before comparison.
-If the current vertex being expanded is no the goal vertex new successors will be generated for all available actions $u  \in U(x)$, line \ref{alg:HA*successor}. Is the successor is not in $C$, then the estimated total cost for the vertex are calculated. If the vertex is not in $O$ or the estimated total cost are smaller than the cost for a vertex with the same index, that is also part of the $O$ then the successor will be assigned a pointer to its predecessor, the \textit{cost-so-far} and the \textit{cost-to-come will be updated}. After that the vertex is pushed on the open list or the key is decreased using the new value $f(x_{succ})$.
+If the current vertex being expanded is no the goal vertex new successors will be generated for all available actions $u  \in U(x)$, line \ref{alg:HA*successor}. Is the successor is not in $C$, then the \textit{cost-so-far} for the vertex are calculated. If the vertex is not in $O$ or the \textit{cost-so-far} are smaller than the cost for a vertex with the same index, that is also part of the $O$ then the successor will be assigned a pointer to its predecessor, the \textit{cost-so-far} and the \textit{cost-to-come} will be updated. After that the vertex is pushed on the open list or the key is decreased using the new value $f(x_{succ})$.
 It is important to note, that even though hybrid A* is rounding the state in order to prune branches that are similar, the expansion will always happen from the actual value of the state as opposed to the rounded one.
 
 \begin{figure}[h]
-    \includegraphicsTex{MF.eps_tex}
-    \caption{Dijkstra's Algorithm, A* and hybrid A*}
+    \includegraphicsTex{searchComparison.pdf_tex}
+    \caption{Dijkstra's Algorithm and A*}
     \label{fig:searchComparison}
 \end{figure}
 
-\paragraph{Notations}
-\begin{itemize}
-    \item start state $x_s \in X$
-    \item goal state $x_g \in X$
-    \item open list, implemented as priority queue $O$
-    \item closed list $C$
-    \item cost so far $g(x,x_s)$
-    \item cost to go $h(x,x_g)$
-    \item total estimated cost $f(x) = g(x,x_s) + h(x,x_g)$
-\end{itemize}
+%\paragraph{Notations}
+%\begin{itemize}
+%    \item start state $x_s \in X$
+%    \item goal state $x_g \in X$
+%    \item open list, implemented as priority queue $O$
+%    \item closed list $C$
+%    \item cost so far $g(x,x_s)$
+%    \item cost to go $h(x,x_g)$
+%    \item total estimated cost $f(x) = g(x,x_s) + h(x,x_g)$
+%\end{itemize}
 
 \begin{algorithm}
     \caption{Hybrid A* Search}\label{alg:HA*}
@@ -247,8 +247,8 @@ It is important to note, that even though hybrid A* is rounding the state in ord
                 \For {$u \in U(x)$}
                 \State $x_{succ} \gets f(x,u)$\label{alg:HA*successor}
                     \If {$\neg exists(x_{succ},C)$}
-                        \State $f(x_{succ}) \gets g(x) + l(x,u) + Heuristic(x_{succ}, x_g)$
-                        \If {$\neg exists(x_{succ},O)$ \textbf{or} $f < f(x)$}
+                        \State $g \gets g(x) + l(x,u)$
+                        \If {$\neg exists(x_{succ},O)$ \textbf{or} $g < g(x_{succ})$}
                             \State $Pred(x_{succ}) \gets x$
                             \State $g(x_{succ}) \gets g$
                             \State $h(x_{succ}) \gets Heuristic(x_{succ}, x_g)$

@@ -77,3 +77,23 @@ The positive distance to the nearest obstacle is denoted by $d_{obs}$, $d_{edg}$
 \begin{equation}
 \frac{\partial\rho_{vor}}{\partial d_{edg}} =  \frac{\alpha d_{obs}\left(d_{obs}-d_{vor}^{\lor}\right)^2}{{d_{vor}^{\lor}}^2\left(d_{obs}+\alpha\right)\left(d_{edg}+d_{obs}\right)^2}
 \end{equation}
+
+\begin{algorithm}
+    \caption{Gradient Descent}\label{alg:gradientDescent}
+    \begin{algorithmic}[1]
+    \State $iterations \gets 1000$
+    \State $i \gets 0$
+        \While{$i < iterations$}
+        	\ForAll {$\bldx \in \calP$}
+        		\State $cor \gets  (0,0)$
+        		\State $cor \gets  cor - obstacleTerm(\bldx_{i})$
+        		\State $cor \gets  cor - smoothnessTerm(\bldx_{i-1},\bldx_{i},\bldx_{i+1})$
+        		\State $cor \gets  cor - curvatureTerm(\bldx_{i-1},\bldx_{i},\bldx_{i+1})$
+        		\State $cor \gets  cor - voronoiTerm(\bldx_{i})$
+        		\State $\bldx_{i} \gets \bldx_{i} + cor$
+        	\EndFor
+        \State $i++$
+        \EndWhile
+        \State \textbf{return} null
+    \end{algorithmic}
+\end{algorithm}

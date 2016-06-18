@@ -1,5 +1,7 @@
 \chapter{Introduction}
-On the way to fully autonomously driving vehicles a multitude of challenges have to be overcome. One common problem is the navigation of the vehicle from a start pose to a goal pose in an environment that does not provide any specific structure (no defined lanes). Typical examples of such environments are parking lots or construction sights. In these scenarios the vehicle needs to navigate safely around obstacles ideally using the optimal (with regard to a specified parameter) path between the start and the goal pose.
+On the way to fully autonomously driving vehicles a multitude of challenges have to be overcome. A crucial part for autonomously driving vehicles is a planning system that typically encompasses different abstraction layers, such as mission, behavioral, and motion planning. While the mission planner provides a suitable route in a road network to arrive at the goal, the behavioral planner determines appropriate actions in traffic, such as changing lanes as well as stopping at intersections; the motion planner on the other hand operates on a lower level, avoiding obstacles, while progressing towards local goals \cite{Urmson.2008}.
+
+An even more specialized problem is the navigation of the vehicle from a start pose to a goal pose in an environment that does not provide any specific structure; unstructured driving as opposed to structured driving (road following). Typical examples of such environments are parking lots or construction site. In these scenarios the vehicle needs to navigate safely around obstacles without any kind of path reference, such as lane markings, ideally using the optimal\footnote{with regard to a specified parameter, such as time, length, velocity, lateral acceleration, distance to obstacles, etc.}path between the start and the goal pose.
 
 \section{Relevance of the Topic}
 Autonomous driving vehicles might be one of the most publicly discussed and researched engineering topics at the moment of this writing. While the traditional car makers seem to pick up speed only very slowly, new entrants such as Alphabet (formerly Google) Comma.ai, drive.ai, Uber in the USA as well as OXBOTICA in the UK, and ZMP, Robot Taxi and nuTonomy in Asia are accelerating the advancement in self driving car technology at a rapid pace, releasing autonomous vehicles before the decade's end. A simple query with the search term \emph{autonomous driving} on Google Trends will underline this, revealing a huge increase in search volume over the past six years depicted in \Fref{fig:googleTrends}.
@@ -40,10 +42,10 @@ The problem that this thesis aims to solve can be summarized as follows.
 
 \emph{Find a solution in real-time that transitions a nonholonomic vehicle collision free from a given start pose to a desired goal pose within an unstructured environment based on the input of a two dimensional obstacle map, or report the existence of such a solution.}
 
-\Fref{fig:problemDepiction} depicts the problem.
+\Fref{fig:problemDepiction} depicts the problem. The path transitions the vehicle from the start state $x_s$ safely to the goal state $x_g$, while adhering to the minimal turning radius $r$ of the vehicle and avoiding obstacles.
 
 \begin{figure}[h]
-\includegraphicsTex{MF.eps_tex}
+\includegraphicsTex{problemDepiction.pdf_tex}
 \caption{Depiction of a typical path planning problem to solve}
 \label{fig:problemDepiction}
 \end{figure}
@@ -60,7 +62,7 @@ The points listed below describe the key requirements regarding this thesis.
     \item Integrating and driving autonomously (optional)
 \end{enumerate}
 
-The input to the path planning algorithm is a grid based binary obstacle map. The second point addresses the fact that the planner should be used for vehicles that cannot turn on the spot, e.g. cars, hence the produced paths must be continuous and need to be based on a model of the vehicle. In order to use the algorithm in a car, it needs to re-plan continuously and perform collision checking. For this purpose the actual implementation needs to be as efficient as possible, thus C++ is a necessity in order to provide the frequencies required. The development shall include a critical analysis and evaluation of the algorithm as well as its results. It is the aim to deploy the software on the RCV and demonstrate its capabilities in a real-world scenario, if time and other constraints will allow for it.
+The input to the path planning algorithm is a grid based binary obstacle map. The second point addresses the fact that the planner should be used for vehicles that cannot turn on the spot, e.g. cars, hence the produced paths must be continuous and need to be based on a model of the vehicle. In order to use the algorithm in a car, it needs to re-plan continuously and perform collision checking. For this purpose the actual implementation needs to be as efficient as possible, thus C++ is a necessity in order to provide the re-planning frequencies required. The development shall include a critical analysis and evaluation of the algorithm as well as its results. It is the aim to deploy the software on the RCV and demonstrate its capabilities in a real-world scenario, if time and other constraints will allow for it.
 
 The scope of the thesis is to prototypically develop as well as implement a path planning algorithm, hence this focuses on a specific solution rather than a general and will not provide a comparison between different approaches as much as other work might do.
 
