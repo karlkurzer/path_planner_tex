@@ -6,13 +6,13 @@ A path $\calP$ produced by a motion planning algorithm needs to be collision fre
 Collision detection can be conducted in a great variety of ways. While the use of the configuration space is beneficial due to its expressive power and verbosity it might not be useful during the actual collision detection \cite{LaValle.2006}. The important thing to consider is the computational cost for checking whether $q \in \calP \land q \in \calC_{free}$ is true for a given configuration $q$, which can be seen as a logical predicate \cite{LaValle.2006}. As a path can only be considered safe, if its entirety of states is collision free, collision detection needs to be conducted along the entire length of the same \cite{LaValle.2006,Ericson.2005}. Two methods shall now be introduced.
 
 \begin{figure}[h]
-    \includegraphicsTex{MF.eps_tex}
-    \caption{Collision Detection}
+    \includegraphicsTex{collisionDetection.pdf_tex}
+    \caption{Collision detection}
     \label{fig:collisionDetection}
 \end{figure}
 
 \section{Bounding Space and Hierarchies}
-For reasons of performance it is usually beneficial to wrap objects with bounding spaces. Bounding spaces are simple volumes for $R^3$ or areas for $R^2$ that encapsulate the more complex object. These allow for faster overlap tests. Depending on the accuracy needed it can be sufficient to only check these bounding spaces for collisions. \cite{LaValle.2006,Ericson.2005}
+For reasons of performance it is usually beneficial to wrap objects with bounding spaces. Bounding spaces are simple volumes for $\R^3$ or areas for $\R^2$ that encapsulate the more complex object. These allow for faster overlap tests. Depending on the accuracy needed it can be sufficient to only check these bounding spaces for collisions. \cite{LaValle.2006,Ericson.2005}
 
 If higher accuracy is required, hierarchical methods can be implemented, these break up a larger complicated convex bodies into a tree. The tree represents bounding spaces that contain smaller and smaller subsets of the original object as depicted in \Fref{fig:boundingRegions}. This hierachy allows for more accurate geometric description of the object, while reducing the computational cost of intersection testing, since children only need to be tested if their larger parents collide. \cite{LaValle.2006,Ericson.2005}
 
@@ -24,7 +24,7 @@ Lavalle and Ericson define some criteria for the choice of appropriate bounding 
 	\item The space should be easy to rotate.
 \end{itemize}
 
-\Fref{fig:boundingRegions} illustrate two different ways bounding regions can be used. On the left a rectangular shape for approximation is used, while on the right the shape is broken down into a hierarchy with two levels using circles for approximation.
+\Fref{fig:boundingRegions} illustrates two different ways bounding regions can be used. On the left a rectangular shape for approximation is used, while on the right the shape is broken down into a hierarchy with two levels using circles for approximation.
 
 \begin{figure}[h]
     \includegraphicsTex{boundingRegions.pdf_tex}
@@ -33,7 +33,9 @@ Lavalle and Ericson define some criteria for the choice of appropriate bounding 
 \end{figure}
 
 \section{Spatial Occupancy Enumeration} \label{sec:spatialOccupancyEnumeration}
-Spatial occupancy enumeration overlays the space with a grid. This subdivision of space allows the occupancy enumeration of objects, storing an exhaustive array of grid cells covered by the respective object \cite{Ericson.2005,Hayward.1986}. In $\R^2$ these might be squares, in $\R^3$ cubes. This approach offers a trivial collision check that can be conducted rapidly \cite{Ericson.2005,Hayward.1986}. Enumerative schemes have the disadvantage that the respective spatial occupancy needs to be recomputed for each point of a given path \cite{Hayward.1986}. This problem can be avoided by discretion of the orientation values, so that the occupancy enumeration can be stored in a lookup table \cite{Ziegler.2008} Due to its simplicity uniform grids have been a popular choice for space subdivision, however it is important to choose the right cell size, if a fixed cell size is an issue hierachical grids might be a solution \cite{Ericson.2005}.
+Spatial occupancy enumeration overlays the space with a grid. This subdivision of space allows the occupancy enumeration of objects, storing an exhaustive array of grid cells covered by the respective object \cite{Ericson.2005,Hayward.1986}. In $\R^2$ these might be squares, in $\R^3$ cubes. This approach offers a trivial collision check that can be conducted rapidly \cite{Ericson.2005,Hayward.1986}. Enumerative schemes have the disadvantage that the respective spatial occupancy needs to be recomputed for each point of a given path \cite{Hayward.1986}. This problem can be avoided by discretization of the orientation values, so that the occupancy enumeration can be stored in a lookup table \cite{Ziegler.2008} 
+
+Due to its simplicity uniform grids have been a popular choice for space subdivision, however it is important to choose the right cell size. It is important that the cell size is appropriate for the size of the objects in the environment as well as the fidelity of the sensor information. If the grid is too fine, the collision detection will take too long as many more grid cells need to be checked and the amount of sensor information per cell will be lower. If the grid is too coarse then the free space will be underestimated, making the collision check conservative and risking that the path planning algorithm will not find a solution even though one exists. In case, that a fixed cell size is an issue hierachical grids might be a solution \cite{Ericson.2005}.
 
 \begin{figure}[h]
     \includegraphicsTex{spatialOccupancyEnumeration.pdf_tex}

@@ -1,0 +1,78 @@
+%% Creator: Inkscape 0.91_64bit, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'heuristicComparison.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{1089.98207393bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.16007192)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{heuristicComparison.pdf}}%
+    \put(0.85828767,1.02301795){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_g$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{heuristicComparison.pdf}}%
+    \put(0.20593417,0.85356177){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$r$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{heuristicComparison.pdf}}%
+    \put(0.28053589,1.02333373){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_g$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{heuristicComparison.pdf}}%
+    \put(0.0705312,1.05483679){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_s$}}}%
+    \put(0.64828299,1.05483679){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_s$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{heuristicComparison.pdf}}%
+    \put(0.96076487,0.44041749){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_g$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{heuristicComparison.pdf}}%
+    \put(0.65284549,0.27146859){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_s$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{heuristicComparison.pdf}}%
+    \put(0.38552329,0.44041749){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_g$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{heuristicComparison.pdf}}%
+    \put(0.07760391,0.27146859){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_s$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{heuristicComparison.pdf}}%
+    \put(0.30378868,0.38269076){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$r$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{heuristicComparison.pdf}}%
+    \put(0.57489588,0.2243983){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(1.22098822,0.79325882){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33682428\unitlength}\raggedright \end{minipage}}}%
+    \put(0.00580731,0.73435567){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The unconstrained heuristic accounting for the goal heading.\end{minipage}}}%
+    \put(0.57743319,0.73435567){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The constrained heuristic heavily underestimating the cost of the path, due to the wront heading.\end{minipage}}}%
+    \put(0.57743319,0.14651502){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The constrained heuristic heavily underestimating the cost of the path, due to the wront heading.\end{minipage}}}%
+  \end{picture}%
+\endgroup%

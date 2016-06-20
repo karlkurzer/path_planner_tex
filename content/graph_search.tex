@@ -3,12 +3,12 @@
 This chapter explains the basic theory necessary to understand graphs and the terminology associated with it. The later part of the chapter focuses on elaborating different graph search algorithms that are fundamental to understanding the implementation of the search algorithm in this thesis.
 
 \section{Fundamentals}
-A graph such as the one depicted in \fref{fig:graph} consists of vertices $V$ as well as edges $E$. With $G$ being a graph $V = V(G)$, is the set of vertices of the graph and $E = E(G)$, the set of Edges. Edges connect vertices of a graph. An edge of a graph can be described by ${x,y}$, as it connects the vertices $x$ and $y$. Edges that have at least one vertex in common are considered adjacent. \cite{Bollobas.1979}
+A graph such as the one depicted in \fref{fig:graph} consists of vertices $V$ as well as edges $E$. With $G$ being a graph $V = V(G)$, is the set of vertices of the graph and $E = E(G)$, the set of Edges. Edges connect vertices of a graph. An edge of a graph can be described by ${x,y}$, as it connects the vertices $x$ and $y$. Edges that have at least one vertex in common are considered adjacent. Vertices that have at least one edge in common are called neighboring \cite{Bollobas.1979}
 
-Graphs can be either directed or undirected. A directed graph has unidirectional, a undirected graph bidirectional edges. In the following the word nodes and vertices might be used interchangeably.
+Graphs can be either directed or undirected. A directed graph has unidirectional edges, a undirected graph has bidirectional edges. In the following the word nodes and vertices might be used interchangeably.
 
 \begin{figure}[h]
-    \includegraphicsTex{MF.eps_tex}
+    \includegraphicsTex{graph.pdf_tex}
     \caption{Graph theory explanation}
     \label{fig:graph}
 \end{figure}
@@ -69,7 +69,7 @@ In essence any optimal solution for a problem that requires a sequence of decisi
 \subsection{Admissibility and Consistency}
 Algorithms that find optimal paths on non-negative graphs are considered admissible \cite{Hart.1968}. Algorithms that are using heuristic estimates need to use heuristics that never overestimates the cost in order to be considered admissible \cite{Russell.2010}. It is clear, that the Euclidean distance between two points in $R^2$ is admissible since the shortest distance between two points in is a straight line.
 
-Consistency of a heuristic implies, that the heuristic estimate for reaching the goal vertex from a vertex $v$ must be less or equal to the estimate for $v'$ plus the action cost,  $h(v) \leq c(v, u, v')+ h(v')$. This is a case of the triangle inequality, which constitutes that each side of a triangle cannot be longer than then sum of the other two sides. \cite{Russell.2010}
+Consistency of a heuristic implies, that the heuristic estimate for reaching the goal vertex from a vertex $v$ must be less or equal to the estimate for $v'$ plus the action cost,  $h(v) \leq c(v, u, v')+ h(v')$. This is a case of the triangle inequality, which constitutes that each side of a triangle cannot be longer than the sum of the other two sides. \cite{Russell.2010}
 
 \subsection{Completeness}
 Algorithms that find a solution if a solution exists or correctly report that there is no solution to the problem are considered complete. \cite{LaValle.2006,Russell.2010}
