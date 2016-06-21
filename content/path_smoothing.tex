@@ -1,5 +1,5 @@
 \section{Path Smoothing}
-As the paths produced by the hybrid A* algorithm are drivable, but often are made up of unnecessary steering actions it is beneficial to post process the result with a smoother that attains a higher degree of comfort and safety \cite{Dolgov.2010}. For this purpose a gradient descent smoother is used that aims to minimize $P$ consisting of the following four terms with respect to the path.
+As the paths produced by the hybrid A* algorithm are drivable, but often are made up of unnecessary steering actions it is beneficial to post process the result with a smoother that attains a higher degree of comfort and safety \cite{Dolgov.2008,Dolgov.2010}. For this purpose a gradient descent smoother is used that aims to minimize $P$ consisting of the following four terms with respect to the path.
 
 \begin{equation}
 P = P_{obs} + P_{cur} + P_{smo} + P_{vor}
@@ -22,13 +22,13 @@ Where $\bldx_i$ is the $x,y$-position of a vertex on the path, $\bldo_i$ the loc
 \end{equation}
 
 \subsection{Curvature Term}
-In order to ensure driveabiliy the curvature term upper-bounds the instantaneous curvature of the path at every vertex. It is defined for $\frac{\Delta\phi_i}{|\Delta\bldx_i|} > \kappa_{max}$
+In order to ensure driveability the curvature term upper-bounds the instantaneous curvature of the path at every vertex. It is defined for $\frac{\Delta\phi_i}{|\Delta\bldx_i|} > \kappa_{max}$
 
 \begin{equation}
 P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\phi_i}{|\Delta\bldx_i|} - \kappa_{max}\right)
 \end{equation}
 
-The the displacement vector at the vertex $\bldx_i$ is defined as $\Delta\bldx_i= \bldx_i - \bldx_{i-1}$. The change in tangential angle at a vertex can be expressed by $\Delta\phi_i$ = $\cos^{-1}\frac{\bldx_{i}\cdot\bldx_{i+1}}{|\bldx_{i+1}||\bldx_{i+1}| }$.  The maximum allowable curvature is denoted by $\kappa_{max}$. Deviations from the maximum allowable curvature are penalized with a quadratic penalty function $\sigma_{cur}$. The curvature weight $w_{cur}$  controls the impact on the change of the path.
+The displacement vector at the vertex $\bldx_i$ is defined as $\Delta\bldx_i= \bldx_i - \bldx_{i-1}$. The change in tangential angle at a vertex can be expressed by $\Delta\phi_i$ = $\cos^{-1}\frac{\bldx_{i}\cdot\bldx_{i+1}}{|\bldx_{i+1}||\bldx_{i+1}| }$.  The maximum allowable curvature is denoted by $\kappa_{max}$. Deviations from the maximum allowable curvature are penalized with a quadratic penalty function $\sigma_{cur}$. The curvature weight $w_{cur}$  controls the impact on the change of the path.
 
 \paragraph{Gradients}
 

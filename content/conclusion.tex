@@ -1,9 +1,9 @@
 \chapter{Conclusion}
-While the research in the area of autonomous driving continuous to grow, the DARPA Grand Challenge and especially the Urban Challenge have marked important milestones, greatly propelling the development. Hence it is not astonishing, that a large part of the engineers at companies heavily engaged in autonomous driving, such as Alphabet (formerly Google) or Uber recruited are past participants of these challenges.
+While the research in the area of autonomous driving continues to grow, the DARPA Grand Challenge and especially the Urban Challenge have marked important milestones, greatly propelling the development. Hence it is not astonishing, that a large part of the engineers at companies heavily engaged in autonomous driving, such as Alphabet (formerly Google) or Uber recruited are past participants of these challenges.
 
 Since there are many ways to solve navigation problems of this kind the choice might seem arbitrary. While the team from CMU and winner of the DUC used a lattice planner with D* \cite{Ferguson.2008b,Likhachev.2005}, the MIT team used an heavily modified version of RRT both for structured as well as unstructured driving \cite{Kuwata.2008}.
 
-The hybrid A* algorithm is yet another approach. It is a fast and complex planner used for the planning in unstructured environments by the Standford team, developed by Dolgov (Google Self-Driving Cars), Thrun (Google Self-Driving Cars), Montemerlo (Google Self-Driving Cars), Diebel (Cedar Lake Ventures), participating with Junior in the DUC is analyzed and reconstructed in C++ and ROS for the KTH RCV.
+The hybrid A* algorithm is yet another approach. It is a fast and complex planner used for planning in unstructured environments by the Standford team, developed by Dolgov, Thrun, Montemerlo (Google Self-Driving Cars), Diebel (Cedar Lake Ventures), participating with Junior in the DUC is analyzed and reconstructed in C++ and ROS for the KTH RCV.
 
 The resulting hybrid A* planner addresses the problem of finding a solution to the problem described in \fref{sec:problemDescription} properly. The planner models the non-holonomic nature of the vehicle in all stages of the process, vertex expansion, heuristic estimates, as well as path smoothing. Thus, the most important characteristic of the paths is given--they are driveable. 
 

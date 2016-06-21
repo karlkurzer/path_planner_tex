@@ -68,7 +68,7 @@ Given that both Dubins as well as Reeds-Shepp curves are minimal, this heuristic
 
 \subsection{Unconstrained Heuristic}
 The unconstrained heuristic neglects the characteristics of the vehicle and only accounts for obstacles. The estimate is based on the shortest distance between the goal node and the vertex currently being expanded. This distance is determined using the standard A* search in two dimensions ($x,y$ position) with an Euclidean distance heuristic.
-The two dimensional A* search uses the current vertex as the goal vertex, and the goal vertex of the HA* search as the start vertex. This is beneficial, since the closed list of 
+The two dimensional A* search uses the current vertex as the goal vertex, and the goal vertex of the HA* search as the start vertex. This is beneficial, since the closed list of the A* search stores all shortest distances $g(x)$ to the goal and can thus be used as a lookup table, instead of initiating a new search.
 
 The unconstrained heuristic guides the vehicle away from dead ends and around u-shaped obstacles.
 
