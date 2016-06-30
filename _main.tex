@@ -1,5 +1,5 @@
-%\documentclass[a4paper, twoside, draft]{report}
-\documentclass[a4paper]{report}
+\documentclass[a4paper, twoside]{report}
+%\documentclass[a4paper]{report}
 % ### PACKAGES ###
 % ENCODING
 \usepackage[utf8]{inputenc}
@@ -72,6 +72,9 @@
 \usepackage{epstopdf}
 % PLOTS
 \usepackage{pgfplots}
+% SUBFIGURES
+\usepackage{caption}
+\usepackage{subcaption}
 \graphicspath{ {figures/} }
 % CUSTOM --> Command to include EPS images with latex text replacement
 \newcommand{\includegraphicsTex}[2][\textwidth]{\def\svgwidth{#1}\input{figures/#2}}

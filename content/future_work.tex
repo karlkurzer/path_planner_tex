@@ -1,11 +1,33 @@
 \chapter{Future Work}
+While the algorithm developed in this thesis has already been successfully tested on the RCV there are still aspects that are reasonable to consider and would either improve the search speed or the quality of the overall solution.
 
 \section{Performance Optimizations}
-	\subsection{Jump Point Search}
-	\subsection{Variable Resolution Search}
-	\subsection{LUT for Reeds-Shepp}
+These are 
+
+\subsection{Variable Resolution Search}
+The underlying grid for the HA* planner uses a constant cell size and arc length for the vertex expansion. 
+
+\subsection{LUT for Reeds-Shepp}
+	
+\subsection{Jump Point Search}
+
 \section{Additions}
-	\subsection{Velocity Profile Generation}
-	\subsection{Path Commitment}
-	\subsection{Higher Resolution Obstacle Representation}
-	\subsection{Reversing 4th Dimension}
+
+\subsection{Velocity Profile Generation}
+	A reasonable addition to the HA* planner is the calculation of a velocity profile. Based on the smoothed path a reference velocity could be calculated in different ways. A simple approach would be an upper bound lateral acceleration $a_y$ of the vehicle based on the curvature of each segment of the path. If one also wants to consider the yaw rate of the vehicle $\dot{\theta}$ a linear single track model of the vehicle could be used to simulate the lateral dynamics at a given velocity $v_x$. 
+
+\subsection{Path Commitment and Replanning}
+	As the vehicle is progressing towards the goal the sensors will detect new obstacles in the environment that have previously been out of range or covered by other obstacles. In order to incorporate possible changes in the environment in the path planning HA* recomputes the path to the goal with every update of the environment it receives.
+	
+	This is often not necessary. Given the fact, that the sensor information in the vicinity of the car is of high quality replanning, if at all, does not need to start at the vehicles current position. A path commitment can significantly reduce the planning effort. Commitment to the path means that as new sensor information arrives the path will not be replanned at the vehicle's current position, but rather at the $n$-th vertex that is still in an area where the sensors reliably perceive the environment.
+	
+	As planning an entire path takes considerably more time than merely checking the same for collisions one has to ask, whether it is feasible to replann a path as opposed to just check the current path for collisions given the updated model of the environment.
+	
+	Another aspect are dynamic obstacles that temporarily collide with the path. The current version of HA* cannot distinguish between dynamic and static obstacles, as a dynamic obstacle, like a static obstacles, only leaves a binary footprint on the occupancy grid. This will leave the planner to believe that replanning is the right way to solve this problem. While for the static case it would be reasonable to replann based on the new information it is undesirable for dynamic obstacles since the planner does not account for the velocity of the obstacle and hence does not guarantee the path being safe.
+	
+\subsection{Higher Resolution Occupancy Grid}
+As the cell size ($1 m by 1 m$) for the HA* planner and the occupancy grid is the same the free space is underestimated and the size of the car is overestimated.
+	
+\subsection{Reversing 4th Dimension}
+
+\subsection{Pop Closest to Goal}

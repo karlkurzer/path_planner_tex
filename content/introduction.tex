@@ -11,21 +11,21 @@ In a study titled ''Revolution in the Driver's Seat: The Road to Autonomous Vehi
 For the society at large the most important benefit will be the reduction of accidents, as 90 percent of the time human error accounts for these. Other benefits of self-driving cars are the reduction of space consumption necessary for parking (self-driving cars don't need space to open the doors, which accounts to roughly 15\%) as reported by McKinsey \& Company. \cite{Bertoncello.2015}
 
 \begin{figure}[h]
-%\includegraphicsTex{MF.eps_tex}
-\begin{tikzpicture}
-	\begin{axis}[
-		height=5cm,
-		width=\textwidth,
-		xlabel=Year, ylabel=Relative Frequency,
-		xtick={40,197, 354, 510},
-		xticklabels={Apr 2007, Apr 2010, Apr 2013, Apr 2016},
-		]
-		\addplot [black, mark=none]
-		table [col sep=comma, x=week, y=freq] {figures/google_trends.dat};
-%		\addplot [black, mark=-]
-%		table[col sep=comma, x=week, y={create col/linear regression={y=freq}}] {figures/google_trends.dat};
-	\end{axis}
-\end{tikzpicture}
+\includegraphicsTex{MF.eps_tex}
+%\begin{tikzpicture}
+%	\begin{axis}[
+%		height=5cm,
+%		width=\textwidth,
+%		xlabel=Year, ylabel=Relative Frequency,
+%		xtick={40,197, 354, 510},
+%		xticklabels={Apr 2007, Apr 2010, Apr 2013, Apr 2016},
+%		]
+%		\addplot [black, mark=none]
+%		table [col sep=comma, x=week, y=freq] {figures/google_trends.dat};
+%%		\addplot [black, mark=-]
+%%		table[col sep=comma, x=week, y={create col/linear regression={y=freq}}] {figures/google_trends.dat};
+%	\end{axis}
+%\end{tikzpicture}
 \caption{Google Trends for the query ``autonomous driving''}
 \label{fig:googleTrends}
 \end{figure}

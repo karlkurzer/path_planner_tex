@@ -54,7 +54,7 @@
     \put(0,0){\includegraphics[width=\unitlength,page=2]{heuristicComparison.pdf}}%
     \put(0.20593417,0.85356177){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$r$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{heuristicComparison.pdf}}%
-    \put(0.28053589,1.02333373){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_g$}}}%
+    \put(0.2805359,1.02333373){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_g$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{heuristicComparison.pdf}}%
     \put(0.0705312,1.05483679){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_s$}}}%
     \put(0.64828299,1.05483679){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_s$}}}%
@@ -69,10 +69,12 @@
     \put(0,0){\includegraphics[width=\unitlength,page=9]{heuristicComparison.pdf}}%
     \put(0.30378868,0.38269076){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$r$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=10]{heuristicComparison.pdf}}%
-    \put(0.57489588,0.2243983){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.57489589,0.2243983){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
     \put(1.22098822,0.79325882){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.33682428\unitlength}\raggedright \end{minipage}}}%
-    \put(0.00580731,0.73435567){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The unconstrained heuristic accounting for the goal heading.\end{minipage}}}%
-    \put(0.57743319,0.73435567){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The constrained heuristic heavily underestimating the cost of the path, due to the wront heading.\end{minipage}}}%
-    \put(0.57743319,0.14651502){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The constrained heuristic heavily underestimating the cost of the path, due to the wront heading.\end{minipage}}}%
+    \put(0.00580731,0.73435567){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The constrained heuristic accounting for the goal heading.\end{minipage}}}%
+    \put(0.5774332,0.14651502){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The unconstrained heuristic accounting for the detour due to obstacles.\end{minipage}}}%
+    \put(0.00580731,0.14651502){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.41086757\unitlength}\raggedright The constrained heuristic heavily underestimating the cost of the path, due to ignoring obstacles.\end{minipage}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{heuristicComparison.pdf}}%
+    \put(0.57783407,0.72896778){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.4153519\unitlength}\raggedright The unconstrained heuristic heavily underestimating the cost of the path, due to the wrong heading.\end{minipage}}}%
   \end{picture}%
 \endgroup%
