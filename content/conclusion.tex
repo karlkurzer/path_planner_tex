@@ -3,8 +3,9 @@ While the research in the area of autonomous driving continuous to grow, the DAR
 
 Since there are many ways to solve navigation problems of this kind the choice might seem arbitrary. While the team from CMU and winner of the DUC used a lattice planner with D* \cite{Ferguson.2008b,Likhachev.2005}, the MIT team used an heavily modified version of RRT both for structured as well as unstructured driving \cite{Kuwata.2008}.
 
-The hybrid A* algorithm is yet another approach. It is a fast and complex planner used for planning in unstructured environments by the Standford team, developed by Dolgov, Thrun, Montemerlo (Google Self-Driving Cars), Diebel (Cedar Lake Ventures), participating with Junior in the DUC is analyzed and reconstructed in C++ and ROS for the KTH RCV.
+The hybrid A* algorithm is yet another approach. It is a fast planner used for planning in unstructured environments by the Standford team, developed by Dolgov, Thrun, Montemerlo (Google Self-Driving Cars), Diebel (Cedar Lake Ventures), participating with Junior in the DUC.
+This thesis has analyzed HA* thoroughly and developed a very similar version for the KTH RCV in \texttt{C++} and ROS.
 
 The resulting hybrid A* planner addresses the problem of finding a solution to the problem described in \fref{sec:problemDescription} properly. The planner models the non-holonomic nature of the vehicle in all stages of the process, vertex expansion, heuristic estimates, as well as path smoothing. Thus, the most important characteristic of the paths is given--they are driveable. 
 
-The HA* planner solves a challenging problem in an elegant manner. Ideal scenarios for the planner are slow speed driving in unstructured environments. An example of that might be navigating parking lots as well as parking.
+The HA* planner solves a challenging problem in an elegant manner. HA* is fast, as it reduces the search space with the help of well informed heuristics, allowing it to converge to the goal quickly. Based on the initial solution the local smoothing attains a solution approaching the global optimum, while respecting the vehicle constraints. Ideal scenarios for the planner are slow speed driving in unstructured environments. An example of that might be navigating parking lots as well as automated parking and valet parking.

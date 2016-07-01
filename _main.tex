@@ -1,5 +1,5 @@
-\documentclass[a4paper, twoside]{report}
-%\documentclass[a4paper]{report}
+%\documentclass[a4paper, twoside]{report}
+\documentclass[a4paper]{report}
 % ### PACKAGES ###
 % ENCODING
 \usepackage[utf8]{inputenc}
@@ -78,6 +78,12 @@
 \graphicspath{ {figures/} }
 % CUSTOM --> Command to include EPS images with latex text replacement
 \newcommand{\includegraphicsTex}[2][\textwidth]{\def\svgwidth{#1}\input{figures/#2}}
+% CUSTOM ACKNOWLEDGEMENT ENVIRONMENT
+\newenvironment{acknowledgements}
+  {\renewcommand{\abstractname}{Acknowledgments}% Abstract > Acknowledgements
+   \begin{abstract}}
+  {\end{abstract}
+   \clearpage}
 % HYPERREF
 \usepackage[pagebackref]{hyperref}
 \definecolor{urlcolor}{HTML}{1954a6}
@@ -99,11 +105,12 @@
 
 \begin{document}
 % TITLE PAGE
-\ititle{Path Planning for the KTH \mbox{Research Concept Vehicle}}
-\isubtitle{A Hybrid A* Approach}
+\ititle{Path Planning in Unstructured Environments}
+% for the KTH \mbox{Research Concept Vehicle}
+\isubtitle{A Real-time Hybrid A* Implementation\\for Fast and Deterministic Path Generation\\for the KTH \mbox{Research Concept Vehicle}}
 \iauthor{Karl Kurzer}
 \idate{July 2016}
-\iaddress{Integrated Transport Research Lab\\School of Science\\KTH Royal Institute of Technology}
+\iaddress{Integrated Transport Research Lab School of Science KTH Royal Institute of Technology}
 \makeititle
 
 % ROMAN
