@@ -9,6 +9,12 @@ P = P_{obs} + P_{cur} + P_{smo} + P_{vor}
 
 This term penalizes collisions with obstacles. For all vertices $\bldx_i$ where $|\bldx_i - \bldo_i| \leq d_{obs}^{\lor}$ the cost $P_{vor}$ is defined. It based on the the distance to the next obstacle.
 
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Impact of the obstacle term}
+    \label{fig:obstacleTerm}
+\end{figure}
+
 \begin{equation}
 P_{obs} = w_{obs} \displaystyle\sum_{i=1}^{N} \sigma_{obs}(|\bldx_i-\bldo_i|-d_{obs}^{\lor})
 \end{equation}
@@ -23,6 +29,12 @@ Where $\bldx_i$ is the $x,y$-position of a vertex on the path, $\bldo_i$ the loc
 
 \subsection{Curvature Term}
 In order to ensure driveability the curvature term upper-bounds the instantaneous curvature of the path at every vertex. It is defined for $\frac{\Delta\phi_i}{|\Delta\bldx_i|} > \kappa_{max}$
+
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Impact of the curvature term}
+    \label{fig:curvatureTerm}
+\end{figure}
 
 \begin{equation}
 P_{cur} = w_{cur} \displaystyle\sum_{i=1}^{N-1} \sigma_{cur}\left(\frac{\Delta\phi_i}{|\Delta\bldx_i|} - \kappa_{max}\right)
@@ -47,12 +59,25 @@ The displacement vector at the vertex $\bldx_i$ is defined as $\Delta\bldx_i= \b
 \subsection{Smoothness Term}
 The smoothness term evaluates the displacement vectors between vertices. The result is that it assigns cost to vertices that are unevenly spaced as well as change direction. $w_{smo}$ denotes the smoothness weight and hence the impact of the term on the change of the path.
 
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Impact of the smoothness term}
+    \label{fig:smoothnessTerm}
+\end{figure}
+
 \begin{equation}
 P_{smo} = w_{smo} \displaystyle\sum_{i=1}^{N-1} (\Delta\bldx_{i+1} - \Delta\bldx_i)^2
 \end{equation}
 
 \subsection{Voronoi Term}
 This term guides the path away from obstacles. For $d_{obs} \leq d_{vor}^{\lor}$ the cost $P_{vor}$ is defined. It is based on the position of the node in the Voronoi field.
+
+\begin{figure}[h]
+    \includegraphicsTex{MF.eps_tex}
+    \caption{Impact of the Voronoi term}
+    \label{fig:VoronoiTerm}
+\end{figure}
+
 
 \begin{equation}
 P_{vor} = w_{vor} \displaystyle\sum_{i=1}^{N} \left(\frac{\alpha}{\alpha + d_{obs}(x,y)}\right)\left(\frac{d_{vor}(x,y)}{d_{obs} + d_{vor}(x,y)}\right)\left(\frac{(d_{obs}(x,y) - d_{vor}^{\lor})^2}{(d_{vor}^{\lor})^2}\right)
