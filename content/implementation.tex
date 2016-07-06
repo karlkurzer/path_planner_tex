@@ -1,35 +1,25 @@
 \chapter{Implementation}
-The development of the algorithm is solely conducted in simulation and open-loop experiments.
+The development of the algorithm is conducted in simulation as well as in real driving experiments. Since the algorithm only requires a binary obstacle grid as an input to compute the output, the poses of the path, the implementation behaves in the same way in simulation as in real driving experiments.
 
-Receiving a binary obstacle map as an input, the hybrid A* planner is able to plan a path from an initial state $x_s$ to a final state $x_g$ in a matter of milliseconds on medium grade consumer hardware (Intel Core i5-5200U 2.2GHz), making the planner a highly viable option for real world driving in unstructured environments.
+As the path planning algorithm is developed for a real vehicle, the RCV, it does require fast computation of paths. The RCV's top speed is around 12 m/s, the theoretical lower limit of the planner for paths of 30 meters length would thus be around 2.5\,s for a full replanning cycle, avoiding stops due to computation. Since the length is not the only factor that determines the complexity of the search a much higher frequency needs to be attained.
 
-%\begin{figure}[h]
-%    \includegraphicsTex{MF.eps_tex}
-%    \caption{Dijkstra's Algorithm, A* and hybrid A*}
-%    \label{fig:searchComparison}
-%\end{figure}
+The developed hybrid A* planner is able to plan a path from an initial state $x_s$ to a final state $x_g$ with a frequency of approximately 3--10\,Hz\footnote{\label{fot:grid}Assuming a 50\,m $\times$ 100\,m grid with a cell size of 1\,m and heading discretization of 5$\degree$, which results in 360,000 different possible cells} using medium grade consumer hardware (Intel Core i5-5200U 2.2\,GHz), making the planner a highly viable option for real world driving in unstructured environments.
 
-\section{Path Smoothing}
+The algorithm is wrapped with ROS (Robot Operating System). ROS is chosen as it facilitates the interaction between different modules and hence the deployment in the actual vehicle. At its core, ROS uses a standard messaging system, that allows to publish and listen to different topics between modules that provide different functionality, so that the output of one can be easily fed into another. Another benefit of ROS are transforms. Transforms are timestamped coordinate frames that automatically conduct necessary coordinate transformations between modules publishing and listening in different coordinate frames.
 
-\section{Algorithm}
+\Fref{fig:programStructure} depicts the structure of the program. The inputs are the obstacle grid as well as the goal pose. During program initialization a collision lookup table as well as a distance map lookup are generated. Once a occupancy grid and a valid goal pose have been received the hybrid A* search begins. To calculate the constrained heuristic Reeds Shepp curves are calculated. For the unconstrained heuristic a 2D A* search is conducted. In addition to that the algorithm sporadically creates an analytical solution with Reeds Shepp curves and if it is collision free terminates and passes the found path to the smoother. In the smoother the path is optimized for distance based on closeness to obstacles as well as smoothness. Once the gradient descent terminates the path is published via ROS to the next module--the controller.
 
-Under the assumption that the steering actions are either maximum steering right, no steering, or maximum steering left the arc length can be simply expressed as $r\abs{x_\theta- x'_\theta}$, $r$ being the minimum turning radius of the vehicle. 
+\begin{figure}[h]
+    \includegraphicsTex{structure.pdf_tex}
+    \caption{Structure of the program with its inputs and outputs}
+    \label{fig:programStructure}
+\end{figure}
 
-Calculation of the new states $x'$, with the initial state $x$ consisting of :\\
-$x_x, x_y, x_\theta$ the turning radius $r$, the turning angle $\theta$ and distance $d$ as well as the unit vector $e = \left(\begin{smallmatrix}0\\1\end{smallmatrix}\right)$
-\begin{description}
-  \item[left] \hfill \\
-  $r_\theta = x_\theta + \frac{\pi}{2}$\\
-  $x'_\theta = x_\theta + \theta$
-  \item[right] \hfill \\
-  $r_\theta = x_\theta - \frac{\pi}{2}$\\
-  $x'_\theta = x_\theta - \theta$
-  \item[left and right] \hfill\\
-  $r_x = r(e_x\cos(r_\theta) - e_y\sin(r_\theta)) + x_x$\\
-  $r_y = r(e_x\sin(r_\theta) - e_y\cos(r_\theta)) + x_y$\\
-  $x'_x = (x_x-r_x)\cos\theta - (x_y-r_y)\sin\theta + r_x$\\
-  $x'_y = (x_x-r_x)\sin\theta - (x_y-r_y)\cos\theta + r_y$
-  \item[straight] \hfill \\
-  $x'_x = x_x - d\sin(x_\theta)$\\
-  $x'_y = x_y + d\cos(x_\theta)$
-\end{description}
+Although the current implementation is useful to conduct experiments with, it can be improved up on with regard to runtime considerably.
+
+The constrained heuristic can be completely precomputed as it does not account for obstacles. For that purpose the Reeds Shepp distance from all cells in a specified area around the goal to the goal can be saved in a lookup table.
+
+While a lookup table cannot be created before runtime for the unconstrained heuristic. The two dimensional A* search can be changed in a way, so that allows for multiple queries. Currently the heuristic stores all closed cells for future queries. However, once a cell gets entered by HA* for which the two dimensional cost are unknown a new A* search from the goal to that cell gets initiated visiting cells that have already been discovered in a previous search.
+
+
+%A part of the time the algorithm spends on allocating and freeing the memory necessary for the search. On a grid of the before mentioned size \footnotemark[\value{footnote}] the program will need to allocate memory for each of the 360,000 possible cells. As each cell consists of two \texttt{bool} values (2 byte), two \texttt{int} values (8 byte), five \texttt{float} values (20 byte) and one \texttt{double} value (8 byte) the total size of a cell is 38 byte--13.68\,MB currently all cells get dynamically allocated on the heap. While this size is not to large it grows cubically, especially for larger amounts of cells it might be feasible to either increase the size of the stack and allocate all cells beforehand on the stack, which increases speed, but consumes the same amount of memory. Or allocate each cell individually during runtime, this would however require more complicated memory and access management, but would increase performance as well as decrease memory demand. The current approach is chosen because of its ease of implementation.

@@ -1,0 +1,70 @@
+%% Creator: Inkscape inkscape 0.48.4, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'structure.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{862.27929688bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.26376575)%
+    \put(0,0){\includegraphics[width=\unitlength]{structure.pdf}}%
+    \put(0.07397726,0.18043518){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$O$}}}%
+    \put(0.07397726,0.24966794){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$q_g$}}}%
+    \put(0.07397726,0.11259321){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Collision Lookup}}}%
+    \put(0.07397726,0.04418491){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Distance Map}}}%
+    \put(0.18296493,0.23557013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{hybrid A* Search}}}%
+    \put(0.28845388,0.14456793){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Reeds Shepp Distance
+(constrained)}}}%
+    \put(0.4938646,0.14418366){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{2D A* Search
+(unconstrained)}}}%
+    \put(0.3913699,0.02705402){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Reeds Shepp Solution
+(analytical expansion)}}}%
+    \put(0.64482272,0.23557013){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Path Smoothing}}}%
+    \put(0.71363562,0.14456793){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Obstacle Term
+}}}%
+    \put(0.91904637,0.14418366){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Smoothness Term}}}%
+    \put(0.8173731,0.02029233){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\calP$}}}%
+  \end{picture}%
+\endgroup%
