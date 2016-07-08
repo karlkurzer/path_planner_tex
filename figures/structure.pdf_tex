@@ -1,4 +1,4 @@
-%% Creator: Inkscape 0.91_64bit, www.inkscape.org
+%% Creator: Inkscape inkscape 0.48.4, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
 %% Accompanies image file 'structure.pdf' (pdf, eps, ps)
 %%
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{450.77729492bp}%
+    \setlength{\unitlength}{457.43359375bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,23 +48,22 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.93119535)%
-    \put(0.00865519,0.55519578){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Obstacle Map}}}%
-    \put(0.00796194,0.63013009){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$q_g$}}}%
-    \put(0.35941217,0.72122313){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Hybrid A* Search}}}%
-    \put(0.43713035,1.07184822){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
-    \put(0.35941217,0.32914533){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Path Smoothing\\ }}}%
-    \put(0.70269074,0.13457316){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\calP_{smooth}$}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{structure.pdf}}%
-    \put(0.39138982,0.29294927){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.3087135\unitlength}\raggedright Obstacle Term\end{minipage}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{structure.pdf}}%
-    \put(0.7326205,0.29294927){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.3087135\unitlength}\raggedright Smoothness Term\end{minipage}}}%
-    \put(0.70313358,0.69101565){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30870494\unitlength}\raggedright 2D A* Search (unconstrained)\end{minipage}}}%
-    \put(0.39887379,0.6910154){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.3087135\unitlength}\raggedright Reeds Shepp (constrained)\end{minipage}}}%
-    \put(0.48890556,0.57457178){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.44145665\unitlength}\raggedright Reeds Shepp Solution (analytical expansion)\end{minipage}}}%
-    \put(0.72187517,0.85377536){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.3087135\unitlength}\raggedright Distance Map\end{minipage}}}%
-    \put(0.37391133,0.85328142){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.3087135\unitlength}\raggedright Collision Lookup\end{minipage}}}%
-    \put(0.36050403,0.90422804){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Initialization}}}%
-    \put(0.70269074,0.41938501){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\calP$}}}%
+  \begin{picture}(1,0.81501605)%
+    \put(0,0){\includegraphics[width=\unitlength]{structure.pdf}}%
+    \put(-0.00196408,0.44448781){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Obstacle Map}}}%
+    \put(-0.00264724,0.51833173){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$q_g$}}}%
+    \put(0.34368889,0.60809923){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Hybrid A* Search}}}%
+    \put(0.34368889,0.23222004){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Path Smoothing
+}}}%
+    \put(0.68197228,0.04047916){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\calP_{smooth}$}}}%
+    \put(0.37520122,0.17906181){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30422128\unitlength}\raggedright Obstacle Term\end{minipage}}}%
+    \put(0.69906336,0.17906181){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30422128\unitlength}\raggedright Smoothness Term\end{minipage}}}%
+    \put(0.69639978,0.57133576){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30421285\unitlength}\raggedright 2D A* Search (unconstrained)\end{minipage}}}%
+    \put(0.37417002,0.57133551){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30422128\unitlength}\raggedright Reeds Shepp (constrained)\end{minipage}}}%
+    \put(0.47129797,0.45658631){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.43503283\unitlength}\raggedright Reeds Shepp Solution (analytical expansion)\end{minipage}}}%
+    \put(0.69552801,0.73172709){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30422128\unitlength}\raggedright Distance Map\end{minipage}}}%
+    \put(0.37520122,0.73124034){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30422128\unitlength}\raggedright Collision Lookup\end{minipage}}}%
+    \put(0.34476487,0.78844116){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Initialization}}}%
+    \put(0.68197228,0.31065328){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\calP$}}}%
   \end{picture}%
 \endgroup%

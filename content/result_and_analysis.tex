@@ -1,7 +1,7 @@
 \chapter{Results and Discussion}\label{chap:resultsAndDiscussion}
-For the test of the algorithm different scenarios have been chosen and simulations were conducted to test the efficiency and accuracy of the path planning. The scenarios chosen for the simulation describe common problems path planning algorithms need to be able to overcome in order to be usable for the navigation in unstructured environments.
+For the test of the algorithm different scenarios have been chosen and simulations were conducted to test the efficiency, accuracy and driveability of the solutions provided by HA*. The scenarios chosen for the simulation describe common problems path planning algorithms need to be able to overcome in order to be usable for the navigation in unstructured environments.
 
-The following scenarios were simulated and are analyzed in the following. While the scenarios are different with regard to obstacle configurations. The term Euclidean refers to the use of an unconstrained Euclidean distance heuristic; 2D A* refers to the unconstrained shortest distance heuristic, taking obstacles into account; Dubins refers to the constrained shortest Dubins curve heuristic, limited to one driving direction; and Reeds Shepp refers to the constrained shortest Reed Shepp curve heuristic allowing for two driving directions.
+The following scenarios were simulated and are analyzed in the following. Each scenario is different with regard to its obstacle configuration and tests different capabilities. The term Euclidean refers to the use of an unconstrained Euclidean distance heuristic; 2D A* refers to the unconstrained shortest distance heuristic, taking obstacles into account; Dubins refers to the constrained shortest Dubins curve heuristic, limited to one driving direction; and Reeds Shepp refers to the constrained shortest Reed Shepp curve heuristic allowing for two driving directions.
 
 Dark grey areas are free space. Black areas are obstacles. Yellow paths represent the different configurations of the vehicle while traversing the path and are used to visually check paths for collisions. Pink arrows represent a forward motion of the vehicle, while purple arrows correspond to a reverse motion. If the path is not accompanied by either pink or purple arrows then the analytical expansion has directly connected the most promising current state and the goal state. Yellow dots represent the area the 2D A* search has visited. A gradient of colors represent the relative cost estimate of each cell among all cells of the 2D A* search.
 
@@ -28,14 +28,14 @@ Dark grey areas are free space. Black areas are obstacles. Yellow paths represen
 \section{Simulation Results}
 
 \subsection{Parking Structure}
-The size of the binary obstacle grid for the parking structure scenario is 50\,m $\times$ 100\,m. The parking structure is horizontally divided by obstacles with two small passages connecting both sides. The passages have a width of 4 meters. In the scenario a path needs to be found from the initial state $x_s$ in the lower half, facing the top to a final state $x_g$ in the upper half facing the wall the bottom.
+The size of the binary obstacle grid for the parking structure scenario is 50\,m $\times$ 100\,m. The parking structure is horizontally divided by obstacles with two small passages connecting both sides. The passages have a width of 4 meters. In the scenario a path needs to be found from the initial state $x_s$ (in the lower half), facing north to a final state $x_g$ (in the upper half) facing south.
 
 \subsubsection{Analysis}
-\Fref{fig:scenarioParkingEuclidean} depicts the planners result using only a Euclidean heuristic. It can be seen that the planner finds a non colliding path that is close to the shortest possible path. The number of vertices the planner needed to expand for reaching the goal is 47559. The planner has searched the area around the start position with a bias towards the goal position. The solution path lies in the opposite direction of the search focus.
+\Fref{fig:scenarioParkingEuclidean} depicts the planners result using only a Euclidean heuristic. It can be seen that the planner finds a non colliding path that is close to the shortest possible path. The planner has searched the area around the start position with a bias towards the goal position. The solution path lies in the opposite direction of the search focus.
 
-The found path in \Fref{fig:scenarioParking2D} is identical, however the 2D A* heuristic is used. The search progresses away from the goal biased towards the passage on the left. The number of vertices expanded is 4767.
+The found path in \Fref{fig:scenarioParking2D} is identical, however the 2D A* heuristic is used. The search progresses away from the goal biased towards the passage on the left.
 
-\Fref{fig:scenarioParkingCost} shows the area explored by 2D A* and the colors represent the relative cost of each cell among all explored cells. Red areas are associated with the highest cost, blue areas with the lowest cost. When looking at the color gradient it can be seen that the found path follows the gradient very closely. Only at the beginning, when the vehicle is backing up the costs are increasing. 
+\Fref{fig:scenarioParking2dCost} shows the area explored by 2D A* and the colors represent the relative cost of each cell among all explored cells. Red areas are associated with the highest cost, blue areas with the lowest cost. When looking at the color gradient it can be seen that the found path follows the gradient very closely. Only at the beginning, when the vehicle is backing up the costs are increasing. 
 
 \subsubsection{Discussion}
 Since the Euclidean heuristic only accounts for relative distance between two points and has no information with regard to the obstacles in the environment it heavily underestimates the cost to the goal and drives the search in the wrong direction expanding almost one order of magnitude more vertices than the 2D A* heuristic, which gives a clear picture of the environment. Since the 2D A* heuristics is much more informed it underestimates the true cost much less, and hence avoids wasteful expansion of unpromising vertices. The found path in \Fref{fig:scenarioParking2D} follows the cost gradient in most parts, but since 2D A* does not account for the non-holonomic nature of the vehicle, it does not account for the vehicle's need to back up out of initial parking position.
@@ -62,12 +62,12 @@ Since the Euclidean heuristic only accounts for relative distance between two po
 \end{figure}
 
 \subsection{Obstacles}
-The size of the binary obstacle grid for the obstacles scenario is 50\,m $\times$ 100\,m. The environment is randomly scattered with quadratic obstacles of 1\,m and 2\,m width. The initial state $x_s$ as well as the goal $x_g$ both face towards the left.
+The size of the binary obstacle grid for the obstacles scenario is 50\,m $\times$ 100\,m. The environment is randomly scattered with quadratic obstacles of 1\,m and 2\,m width. The initial state $x_s$ (left) as well as the goal state $x_g$ (right) face west.
 
 \subsubsection{Analysis}
 \Fref{fig:scenarioObstacles2d} shows the path found using the 2D A* heuristic. The search expands vertices in a more or less straight forward manner towards the goal. In roughly the middle of the grid the analytical expansion finds a solution and connects collision free to the goal.
 
-Adding the Dubins heuristic in \Fref{fig:scenarioObstacles2dDubins} the search expands less vertices at the beginning, especially less reversing states. Afterwards the search continues towards the goal but not using the shortest Euclidean path. Much later than 2D A* the search ends due to a successful analytical expansion.
+Adding the Dubins heuristic in \Fref{fig:scenarioObstacles2dDubins} the search expands less vertices at the beginning, especially less reversing states. Afterwards the search continues towards the goal, but not using the shortest Euclidean path. Much later than 2D A* the search ends due to a successful analytical expansion.
 
 Using the Reeds Shepp heuristic, in \Fref{fig:scenarioObstacles2dReedsShepp} the search searches a much larger amount of states in the vicinity of the initial state. While the search progresses towards the goal, it is noticeable that the search expands states in a circular fashion along the path, until the analytical expansion connects to the goal.
 
@@ -106,6 +106,18 @@ Since the 2D A* heuristic does not account for the non-holonomic constrains of t
 \end{figure}
 
 \subsection{Wall}
+The size of the binary obstacle grid for the wall scenario is 50\,m $\times$ 100\,m. The environment consits of a wall obstacle of 6\,m width. The initial state $x_s$ (left) faces east and the goal state $x_g$ (right) faces north.
+
+\subsubsection{Analysis}
+
+\Fref{fig:scenarioWall} shows the path found using the Euclidean heuristic. The search progresses in a straight line towards the wall, until the analytical expansion finds a non colliding solution.
+
+Using the 2D A* heuristic in \Fref{fig:scenarioWall2d} the search is biased to the area above the wall. The path connects with an analytical expansion.
+
+\Fref{fig:scenarioWallReedsShepp} shows the resulting path using the Reeds Shepp heuristic. The search progresses early on to the area below the wall until the analytical expansion finds an appropriate solution.
+
+\subsubsection{Discussion}
+Since the Euclidean heuristic is oblivious to the wall, the search progresses straight towards the goal. Due to the analytical expansion the search ends early otherwise the search would have expanded cells that are located in the area top of the wall and possibly connected via a Reeds Shepp path instead of a Dubins. In the second figure, the 2D A* heuristic does account for the wall, but does not model the non-holonomic constraints appropriately, hence the search diverges to the wrong direction increasing the path length unnecessarily. The Reeds Shepp heuristic on the other hand, even though not aware of the wall, incorporates the non-holonomic characteristics and tries to approach the goal with the right heading from the start, leading to an overall much shorter path.
 
 \begin{figure}[h]
     \centering
@@ -129,6 +141,19 @@ Since the 2D A* heuristic does not account for the non-holonomic constrains of t
 \end{figure}
 
 \subsection{Dead End}
+The size of the binary obstacle grid for the dead end scenario is 50\,m $\times$ 100\,m. The environment consist of a large u-shaped obstacle. The initial state $x_s$ (left) faces east, while the goal state $x_g$ (right) faces north.
+
+\subsubsection{Analysis}
+
+\Fref{fig:scenarioDeadEnd} shows the path found using the Euclidean heuristic. The search expands a large amount of the available cells and searches the inner part of the u-shaped obstacle before it searches outside of the same. Shortly before the search reaches the goal the analytical expansion completes the path.
+
+The 2D A* heuristic in \Fref{fig:scenarioDeadEnd2d} barely searches the inner part of the obstacle. It quickly searches around it and creates a solution passing the lower part and then converging straight towards the goal, until the analytical expansion completes the path.
+
+Adding the Reeds Shepp heuristic in \Fref{fig:scenarioWallReedsShepp} the search expands much less cells in the area above and below the obstacle and eventually connects via analytical expansion.
+
+\subsubsection{Discussion}
+A u-shaped obstacle or dead end is a tough hurdle to take for the Euclidean heuristic that is not aware of its surroundings. The Euclidean heuristic heavily underestimates the cost and gets stuck inside the obstacle until the cost of the solutions so far increase to a level that justifies the detour below the obstacle. While the resulting path is approaching the optimal the number of vertices expanded is unacceptable for a real-time implementation.
+Using the 2D A* heuristic the problem gets circumvented as it is aware of the dead end ahead. The solution quickly converges towards the goal around the obstacle. However as 2D A* does not take the heading into account the angle at which it approaches the goal is inadequate for a good analytical expansion; the result is an unnecessary circle for the correction of the heading. Taking the heading into account, the addition of the Reeds Shepp heuristic further reduces the number of vertices expanded, and thus considered optimal. While the analytical expansion finds a solution prior to leaving the obstacle behind Reeds Shepp would have approached the obstacle in the right way either way.
 
 \begin{figure}[h]
     \centering
@@ -156,7 +181,14 @@ Since the 2D A* heuristic does not account for the non-holonomic constrains of t
     \label{fig:scenarioDeadEnd}
 \end{figure}
 
-\subsection{Additional Tests}
+\subsection{Additional Simulations}
+In order to test the HA* planner for turning as well as parking maneuvers two additional simulations are conducted.
+
+\subsubsection{Analysis}
+\Fref{fig:scenarioTurningSpot} shows HA* finding a path in a 5\,m wide alley allowing the vehicle to change heading by 180 degrees. The turning is conducted in a star shape, where the vehicle reverses with the maximum steering angle right, changes to the maximum steering angle left and drives forward and repeats the process. For the parallel parking case a similar behavior can be observed as depicted by \Fref{fig:scenarioParallelParking}.
+
+\subsubsection{Discussion}
+HA* does solve both problems adequately. In these cases the heuristics have no noticeable impact on the found paths, as the paths are mainly constrained by the collisions with obstacles. While the vehicle is able to turn around in the alley scenario with 5\,m width, it cannot do so for an alley of 4\,m width. This is mainly do to the fact that the motion primitives for the expansion of the vertices have a constant length and would continuously yield collisions, exhausting all available options quickly, without generating a solution. In the parallel parking scenario the solution can be attained as the goal position is not in the middle allowing it sufficient space in one direction to do repeated revers as well as forward expansion.
 
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{scenarioTurningSpot.png}
@@ -183,3 +215,7 @@ Since the 2D A* heuristic does not account for the non-holonomic constrains of t
 %\end{figure}
 
 \section{Real-world Results}
+Due to a number of problems related to the RCV real-world experiments were not conducted in a organized fashion. While the planner has been used and tested on the RCV interfacing with the inputs as well as outputs, and generating satisfying paths, which a pure pursuit controller followed, it was not possible to actually setup an experiment to conduct the capabilities in real-world open space.
+
+\section{Conclusion}
+During all tested scenarios HA* has shown its ability to find a path. Since HA* accounts for the turning radius of the vehicle the paths found are drivable. With the use of well informed heuristics that model the vehicle constraints as well as capture the environment, HA* can make well informed decisions, allowing it to converge to the goal quickly. The analytical expansion heavily increases the speed of HA*, while keeping the constraints in mind. The post processing of the paths further improves the path locally. If the implementation of the curvature term would be complete, then the solution would attain the global optimum as, the weight of the smoothness term could be increased while ensuring an upper bound curvature.
