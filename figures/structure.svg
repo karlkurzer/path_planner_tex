@@ -14,7 +14,7 @@
    height="466.01965"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="structure.svg">
   <defs
      id="defs4">
@@ -157,9 +157,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="404.3337"
-     inkscape:cy="204.34515"
+     inkscape:zoom="1"
+     inkscape:cx="645.28491"
+     inkscape:cy="393.94591"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -169,16 +169,11 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="2462"
-     inkscape:window-height="1404"
-     inkscape:window-x="98"
-     inkscape:window-y="36"
-     inkscape:window-maximized="1">
-    <sodipodi:guide
-       orientation="0,1"
-       position="-56.949402,639.91577"
-       id="guide3784" />
-  </sodipodi:namedview>
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="2552"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -187,7 +182,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -222,16 +217,16 @@
          style="font-size:20px;text-align:start;text-anchor:start">$q_g$</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="246.46796"
-       y="361.57172"
+       y="360.66479"
        id="text2989-3"
        sodipodi:linespacing="125%"><tspan
          style="font-size:20px"
          sodipodi:role="line"
          id="tspan2991-6"
          x="246.46796"
-         y="361.57172">Hybrid A* Search</tspan></text>
+         y="360.66479">Hybrid A* Search</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text4192"
@@ -245,22 +240,22 @@
          sodipodi:role="line" /></text>
     <g
        id="g4460"
-       transform="translate(-676.98352,423.80682)">
+       transform="translate(-676.98352,435.80679)">
       <text
          sodipodi:linespacing="125%"
          id="text2989-3-5-7-1"
-         y="152.68961"
+         y="144.68961"
          x="923.45148"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
          xml:space="preserve"><tspan
            style="text-align:start;text-anchor:start"
            id="tspan3825-0-8"
-           y="152.68961"
+           y="144.68961"
            x="923.45148"
            sodipodi:role="line">Path Smoothing</tspan><tspan
            id="tspan4365-7"
            style="text-align:center;text-anchor:middle"
-           y="177.68961"
+           y="169.68961"
            x="923.45148"
            sodipodi:role="line" /></text>
     </g>
@@ -276,163 +271,67 @@
          x="439.89569"
          y="686.13232"
          style="font-size:20px;text-align:start;text-anchor:start">$\calP_{smooth}$</tspan></text>
-    <g
-       id="g4383"
-       transform="translate(-471.48907,245)">
-      <rect
-         y="348.15164"
-         x="720.43451"
-         height="53.95129"
-         width="173.95129"
-         id="rect4196-3"
-         style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-      <flowRoot
-         transform="translate(15.541016,13.740236)"
-         id="flowRoot4328"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
-         xml:space="preserve"><flowRegion
-           id="flowRegion4330"><use
-             height="524.70215"
-             width="563.47162"
-             id="use4332"
-             xlink:href="#rect4196-3"
-             y="0"
-             x="0" /></flowRegion><flowPara
-           id="flowPara4334">Obstacle Term</flowPara></flowRoot>      <rect
-         y="348.15164"
-         x="902.97375"
-         height="53.95129"
-         width="173.95129"
-         id="rect4196-3-2"
-         style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-      <flowRoot
-         transform="translate(18.183546,13.740236)"
-         id="flowRoot4375"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
-         xml:space="preserve"><flowRegion
-           id="flowRegion4377"><use
-             height="524.70215"
-             width="563.47162"
-             id="use4379"
-             xlink:href="#rect4196-3-2"
-             y="0"
-             x="0" /></flowRegion><flowPara
-           id="flowPara4381">Smoothness Term</flowPara></flowRoot>    </g>
-    <g
-       id="g4443"
-       transform="translate(-4.3388957,13.933518)">
-      <rect
-         style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         id="rect4196"
-         width="173.95129"
-         height="53.95129"
-         x="253.28433"
-         y="359.27905" />
-      <rect
-         style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.05349743;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         id="rect4196-7"
-         width="173.9465"
-         height="54.446495"
-         x="437.28668"
-         y="359.03116" />
-      <rect
-         style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.25170803;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         id="rect4196-9"
-         width="248.74829"
-         height="53.748295"
-         x="310.3858"
-         y="424.99356" />
-      <flowRoot
-         transform="translate(15.197434,9.6280971)"
-         id="flowRoot4419"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
-         xml:space="preserve"><flowRegion
-           id="flowRegion4421"><use
-             height="524.70215"
-             width="563.47162"
-             id="use4423"
-             xlink:href="#rect4196-7"
-             y="0"
-             x="0" /></flowRegion><flowPara
-           id="flowPara4425">2D A* Search (unconstrained)</flowPara></flowRoot>      <flowRoot
-         transform="translate(14.951389,9.380342)"
-         id="flowRoot4427"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
-         xml:space="preserve"><flowRegion
-           id="flowRegion4429"><use
-             height="524.70215"
-             width="563.47162"
-             id="use4431"
-             xlink:href="#rect4196"
-             y="0"
-             x="0" /></flowRegion><flowPara
-           id="flowPara4433">Reeds Shepp (constrained)</flowPara></flowRoot>      <flowRoot
-         transform="translate(13.386902,9.2785087)"
-         id="flowRoot4435"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
-         xml:space="preserve"><flowRegion
-           id="flowRegion4437"><use
-             height="524.70215"
-             width="563.47162"
-             id="use4439"
-             xlink:href="#rect4196-9"
-             y="0"
-             x="0" /></flowRegion><flowPara
-           id="flowPara4441">Reeds Shepp Solution (analytical expansion)</flowPara></flowRoot>    </g>
-    <g
-       id="g4383-7"
-       transform="translate(-471.48907,-76.87091)">
-      <rect
-         y="348.15164"
-         x="720.43451"
-         height="53.95129"
-         width="173.95129"
-         id="rect4196-3-5"
-         style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-      <rect
-         y="348.15164"
-         x="902.97375"
-         height="53.95129"
-         width="173.95129"
-         id="rect4196-3-2-0"
-         style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-      <flowRoot
-         transform="translate(16.162061,19.601564)"
-         id="flowRoot4375-4"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
-         xml:space="preserve"><flowRegion
-           id="flowRegion4377-8"><use
-             height="524.70215"
-             width="563.47162"
-             id="use4379-7"
-             xlink:href="#rect4196-3-2-0"
-             y="0"
-             x="0" /></flowRegion><flowPara
-           id="flowPara4381-6">Distance Map</flowPara></flowRoot>      <flowRoot
-         xml:space="preserve"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
-         id="flowRoot4539"
-         transform="translate(15.541016,19.879884)"><flowRegion
-           id="flowRegion4541"><use
-             x="0"
-             y="0"
-             xlink:href="#rect4196-3-5"
-             id="use4543"
-             width="563.47162"
-             height="524.70215" /></flowRegion><flowPara
-           id="flowPara4545">Collision Lookup</flowPara></flowRoot>    </g>
+    <rect
+       style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4196-3"
+       width="173.95129"
+       height="53.95129"
+       x="248.94543"
+       y="593.15161" />
+    <rect
+       style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4196-3-2"
+       width="173.95129"
+       height="53.95129"
+       x="432.9454"
+       y="593.15161" />
+    <rect
+       y="373.21259"
+       x="248.94543"
+       height="53.95129"
+       width="173.95129"
+       id="rect4196"
+       style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       y="372.96469"
+       x="432.94778"
+       height="54.446495"
+       width="173.9465"
+       id="rect4196-7"
+       style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.05349743;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       y="438.92709"
+       x="303.54691"
+       height="53.748295"
+       width="248.74829"
+       id="rect4196-9"
+       style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.25170803;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4196-3-5"
+       width="173.95129"
+       height="53.95129"
+       x="248.94543"
+       y="271.28073" />
+    <rect
+       style="opacity:0.6;fill:#f2f2f2;fill-opacity:1;stroke:#b3b3b3;stroke-width:1.04870999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4196-3-2-0"
+       width="173.95129"
+       height="53.95129"
+       x="432.9454"
+       y="271.28073" />
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="247.08319"
-       y="258.45364"
+       y="262.45364"
        id="text2989-3-7"
        sodipodi:linespacing="125%"><tspan
          style="font-size:20px"
          sodipodi:role="line"
          id="tspan2991-6-8"
          x="247.08319"
-         y="258.45364">Initialization</tspan></text>
+         y="262.45364">Initialization</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -465,5 +364,96 @@
        d="m 168.09503,410.96048 45.66896,0"
        id="path4585-2-0-4-2-6"
        inkscape:connector-curvature="0" />
-  </g>
+    <flowRoot
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot4967"
+       transform="translate(0,22)"><flowRegion
+         id="flowRegion4969"><use
+           x="0"
+           y="0"
+           xlink:href="#rect4196-3-5"
+           id="use4971"
+           width="100%"
+           height="100%" /></flowRegion><flowPara
+         id="flowPara4973"
+         style="text-align:center;text-anchor:middle">Collision Lookup</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot4975"
+       transform="translate(0,22)"><flowRegion
+         id="flowRegion4977"><use
+           x="0"
+           y="0"
+           xlink:href="#rect4196-3-2-0"
+           id="use4979"
+           width="100%"
+           height="100%" /></flowRegion><flowPara
+         id="flowPara4981"
+         style="text-align:center;text-anchor:middle">Distance Map</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot4983"
+       transform="translate(0,12)"><flowRegion
+         id="flowRegion4985"><use
+           x="0"
+           y="0"
+           xlink:href="#rect4196"
+           id="use4987"
+           width="100%"
+           height="100%" /></flowRegion><flowPara
+         id="flowPara4989"
+         style="text-align:center;text-anchor:middle">Reeds Shepp (constrained)</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot4991"
+       transform="translate(0,12)"><flowRegion
+         id="flowRegion4993"><use
+           x="0"
+           y="0"
+           xlink:href="#rect4196-7"
+           id="use4995"
+           width="100%"
+           height="100%" /></flowRegion><flowPara
+         id="flowPara4997"
+         style="text-align:center;text-anchor:middle">2D A* Search (unconstrained)</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot4999"
+       transform="translate(0,12)"><flowRegion
+         id="flowRegion5001"><use
+           x="0"
+           y="0"
+           xlink:href="#rect4196-9"
+           id="use5003"
+           width="100%"
+           height="100%" /></flowRegion><flowPara
+         id="flowPara5005"
+         style="text-align:center;text-anchor:middle">Reeds Shepp Solution (analytical expansion)</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot5007"
+       transform="translate(0,22)"><flowRegion
+         id="flowRegion5009"><use
+           x="0"
+           y="0"
+           xlink:href="#rect4196-3"
+           id="use5011"
+           width="100%"
+           height="100%" /></flowRegion><flowPara
+         id="flowPara5013"
+         style="text-align:center;text-anchor:middle">Obstacle Term</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot5015"
+       transform="translate(0,22)"><flowRegion
+         id="flowRegion5017"><use
+           x="0"
+           y="0"
+           xlink:href="#rect4196-3-2"
+           id="use5019"
+           width="100%"
+           height="100%" /></flowRegion><flowPara
+         id="flowPara5021"
+         style="text-align:center;text-anchor:middle">Smoothness Term</flowPara></flowRoot>  </g>
 </svg>

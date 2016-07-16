@@ -45,13 +45,13 @@ Since the configuration space only considers the static case, the regions define
     \label{fig:configurationSpace}
 \end{figure}
 
-\section{Distance Map and Voronoi Diagram}
-
-\begin{figure}[h]
-    \includegraphicsTex{MF.eps_tex}
-    \caption{Voronoi diagram of an unstructured environment}
-    \label{fig:voronoiDiagram}
-\end{figure}
+%\section{Distance Map and Voronoi Diagram}
+%
+%\begin{figure}[h]
+%    \includegraphicsTex{MF.eps_tex}
+%    \caption{Voronoi diagram of an unstructured environment}
+%    \label{fig:voronoiDiagram}
+%\end{figure}
 
 \section{Popular Approaches}
 As with most problems, there are a variety of different methods for path planning based on the requirements of the problem to be solved. The aim of this section is not to compare methods for path planning. Each has advantages and disadvantages, as discussed in many other places, but it should rather give the reader a quick overview over different type of solutions for the same problem. %In the area of sampling-based methods Probabilistic Roadmaps (PRMs), Rapidly-exploring Random Trees (RRTs) as well as State Lattice planners are among the most popular to solve problems in higher dimensional state spaces.\cite{LaValle.2006,Latombe.1991}
@@ -121,8 +121,32 @@ Even though a car can reach any position and orientation in the Euclidean plane,
 
 A common case for drivers of cars is to parallel park, in order to achieve a configuration $q_1$ that is parallel to $q_0$ it is necessary for a car to at least rotate and translate the same goes for a third configuration $q_2$ that has the same position but different orientation than $q_0$. \cite{Latombe.1991}
 
+The constraint that does not allow the vehicle to move sideways, but only in the direction of the heading, can be expressed as the velocity orthogonal to the the vehicles heading being equal to 0 at all times. This velocity is denoted by $v_\perp$.
+
+\begin{equation}
+v_\perp = \frac{\dot{x}}{\cos(\theta-\pi/2)}
+\end{equation}
+
+\begin{equation}
+v_\perp = \frac{-\dot{y}}{\sin(\theta-\pi/2)}
+\end{equation}
+
+\begin{equation}
+\frac{\dot{x}}{\cos(\theta-\pi/2)} = \frac{-\dot{y}}{\sin(\theta-\pi/2)}
+\end{equation}
+
+\begin{equation}
+\dot{x}\sin(\theta-\pi/2) + \dot{y}\cos(\theta-\pi/2) = 0
+\end{equation}
+
+The following describes the non-holonomic constraint.
+
+\begin{equation}
+\dot{x}\cos(\theta) - \dot{y}\sin(\theta) = 0
+\end{equation}
+
 \begin{figure}[h]
-    \includegraphicsTex{MF.eps_tex}
+    \includegraphicsTex{kinematicConstraints.pdf_tex}
     \caption{Kinematic Constraints of a car-like robot}
     \label{fig:kinematicConstraints}
 \end{figure}

@@ -50,18 +50,20 @@
   \makeatother%
   \begin{picture}(1,0.52461218)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{graph.pdf}}%
-    \put(0.46142841,0.44530179){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$V_1$}}}%
-    \put(0.17625423,0.2570238){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$V_2$}}}%
-    \put(0.74410133,0.2570302){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$V_2$}}}%
-    \put(0.03366712,0.06516691){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$V_3$}}}%
-    \put(0.31884133,0.06516691){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$V_4$}}}%
-    \put(0.60401555,0.06516691){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$V_5$}}}%
-    \put(0.88918981,0.06516691){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$V_6$}}}%
     \put(0.66544638,0.35626582){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1}}}%
     \put(0.31683706,0.35626582){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{2}}}%
     \put(0.11600496,0.16600192){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{3}}}%
     \put(0.29420966,0.16600192){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{2}}}%
     \put(0.68518161,0.16598213){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1}}}%
     \put(0.86359535,0.16598213){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{graph.pdf}}%
+    \put(0.1761174,0.2816762){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.07728961\unitlength}\centering $V_2$\end{minipage}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{graph.pdf}}%
+    \put(0.03366777,0.08982018){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.07728961\unitlength}\centering $V_4$\end{minipage}}}%
+    \put(0.31884019,0.08982018){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.07728963\unitlength}\centering $V_5$\end{minipage}}}%
+    \put(0.60401569,0.08982018){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.07728961\unitlength}\centering $V_6$\end{minipage}}}%
+    \put(0.74660195,0.28167619){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.07728961\unitlength}\centering $V_3$\end{minipage}}}%
+    \put(0.88919136,0.08982018){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.07728965\unitlength}\centering $V_7$\end{minipage}}}%
+    \put(0.46135518,0.46995355){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.07728961\unitlength}\centering $V_1$\end{minipage}}}%
   \end{picture}%
 \endgroup%
