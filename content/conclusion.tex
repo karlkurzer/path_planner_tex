@@ -9,3 +9,5 @@ This thesis has analyzed HA* thoroughly and developed a similar version for the 
 The resulting hybrid A* planner addresses the problem of finding a solution to the problem described in \fref{sec:problemDescription} properly. The planner models the non-holonomic nature of the vehicle in all stages of the process, vertex expansion, heuristic estimates, as well as analytic expansion. Thus, the most important characteristic of the paths is given--they are driveable. 
 
 The HA* planner solves a challenging problem in an elegant manner. HA* is fast, as it reduces the search space with the help of well informed heuristics, allowing it to converge to the goal quickly. Based on the initial solution the local smoothing attains a solution approaching the global optimum. Ideal scenarios for the planner are slow speed driving in unstructured environments. An example of that might be navigating parking lots as well as automated parking and valet parking.
+
+The source code for this project is publicly available and can be found here, \url{https://github.com/karlkurzer/path_planner}; an additional documentation can be found here \url{http://karlkurzer.github.io/path_planner}.
